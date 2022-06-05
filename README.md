@@ -29,7 +29,7 @@ cmsenv
 
 git clone https://github.com/Yucun-Xie/MATHUSLA.git
 mv HGCalTileSim/UserUtils .
-scram b -j4
+scram b -j4 # If you have error on this step, remove Plot dir and try again.
 ```
 
 ## Single event running
