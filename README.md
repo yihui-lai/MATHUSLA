@@ -12,7 +12,7 @@ under CMSSW for for batch running and plotting.
 ```bash
 git clone https://github.com/Yucun-Xie/MATHUSLA.git
 cd     HGCalTileSim
-source ./g4env.sh # If you do not have Geant4 already installed
+source LocalG4env.sh # Change it to your own Geant4 path. source ./g4env.sh # If you have CMSSW env
 cmake -DCMAKE_C_COMPILER=$(which gcc) -DCMAKE_CXX_COMPILER=$(which g++) .
 cmake --build .
 ```
