@@ -18,11 +18,11 @@ endif()
 execute_process(COMMAND "root-config" "--version"
                 OUTPUT_VARIABLE ROOTCONFIG_VERSION)
 string(SUBSTRING ${ROOTCONFIG_VERSION} 0 1 ROOTCONFIG_MAJOR_VERSION)
+set (CMAKE_CXX_STANDARD 17)
 if( ${ROOTCONFIG_MAJOR_VERSION} STREQUAL "6" )
   message("BUILDING WITH ROOT.CMAKE ")
   find_package(ROOT REQUIRED)
   include_directories(${ROOT_INCLUDE_DIRS})
-  add_compile_options("-std=c++17")
 else()
   ## Adding ROOT the old fashioned way
   message("BUILDING WITH root-config outputs")
