@@ -1,0 +1,9 @@
+<use name="root"/>
+<use name="geant4core"/>
+<use name="UserUtils/Common"/>
+<use name="HGCalTileSim/Tile"/>
+<flags CXXFLAGS="-g"/>
+
+<export>
+  <lib name="1"/>
+</export>
