@@ -1,5 +1,5 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimTrajectoryPoint.hh"
+#include "MATHUSLA/Tile/interface/LYSimTrajectoryPoint.hh"
 #else
 #include "LYSimTrajectoryPoint.hh"
 #endif

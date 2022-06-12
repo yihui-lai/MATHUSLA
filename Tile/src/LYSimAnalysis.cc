@@ -1,11 +1,11 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimAnalysis.hh"
-#include "HGCalTileSim/Tile/interface/LYSimDetectorConstruction.hh"
-#include "HGCalTileSim/Tile/interface/LYSimFormat.hh"
-#include "HGCalTileSim/Tile/interface/LYSimPrimaryGeneratorAction.hh"
-#include "HGCalTileSim/Tile/interface/LYSimProtonGeneratorAction.hh"
-#include "HGCalTileSim/Tile/interface/LYSimScintillation.hh"
-#include "HGCalTileSim/Tile/interface/LYSimTrajectoryPoint.hh"
+#include "MATHUSLA/Tile/interface/LYSimAnalysis.hh"
+#include "MATHUSLA/Tile/interface/LYSimDetectorConstruction.hh"
+#include "MATHUSLA/Tile/interface/LYSimFormat.hh"
+#include "MATHUSLA/Tile/interface/LYSimPrimaryGeneratorAction.hh"
+#include "MATHUSLA/Tile/interface/LYSimProtonGeneratorAction.hh"
+#include "MATHUSLA/Tile/interface/LYSimScintillation.hh"
+#include "MATHUSLA/Tile/interface/LYSimTrajectoryPoint.hh"
 #else
 #include "LYSimAnalysis.hh"
 #include "LYSimDetectorConstruction.hh"

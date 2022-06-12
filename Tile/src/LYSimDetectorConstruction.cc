@@ -1,8 +1,8 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimDetectorConstruction.hh"
-#include "HGCalTileSim/Tile/interface/LYSimDetectorMessenger.hh"
-#include "HGCalTileSim/Tile/interface/Materials.hh"
-#include "HGCalTileSim/Tile/interface/SurfaceProperty.hh"
+#include "MATHUSLA/Tile/interface/LYSimDetectorConstruction.hh"
+#include "MATHUSLA/Tile/interface/LYSimDetectorMessenger.hh"
+#include "MATHUSLA/Tile/interface/Materials.hh"
+#include "MATHUSLA/Tile/interface/SurfaceProperty.hh"
 #else
 #include "LYSimDetectorConstruction.hh"
 #include "LYSimDetectorMessenger.hh"

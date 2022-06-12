@@ -1,7 +1,7 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimAnalysis.hh"
-#include "HGCalTileSim/Tile/interface/LYSimDebugGeneratorAction.hh"
-#include "HGCalTileSim/Tile/interface/ProjectPath.hh"
+#include "MATHUSLA/Tile/interface/LYSimAnalysis.hh"
+#include "MATHUSLA/Tile/interface/LYSimDebugGeneratorAction.hh"
+#include "MATHUSLA/Tile/interface/ProjectPath.hh"
 #else
 #include "LYSimAnalysis.hh"
 #include "LYSimDebugGeneratorAction.hh"

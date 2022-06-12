@@ -1,7 +1,7 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimAnalysis.hh"
-#include "HGCalTileSim/Tile/interface/LYSimTrajectory.hh"
-#include "HGCalTileSim/Tile/interface/LYSimTrackingAction.hh"
+#include "MATHUSLA/Tile/interface/LYSimAnalysis.hh"
+#include "MATHUSLA/Tile/interface/LYSimTrajectory.hh"
+#include "MATHUSLA/Tile/interface/LYSimTrackingAction.hh"
 #else
 #include "LYSimAnalysis.hh"
 #include "LYSimTrajectory.hh"

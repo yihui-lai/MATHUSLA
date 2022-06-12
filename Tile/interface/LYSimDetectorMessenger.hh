@@ -2,8 +2,8 @@
 #define LYSimDetectorMessenger_h
 
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimAnalysis.hh"
-#include "HGCalTileSim/Tile/interface/LYSimDetectorConstruction.hh"
+#include "MATHUSLA/Tile/interface/LYSimAnalysis.hh"
+#include "MATHUSLA/Tile/interface/LYSimDetectorConstruction.hh"
 #else
 #include "LYSimAnalysis.hh"
 #include "LYSimDetectorConstruction.hh"

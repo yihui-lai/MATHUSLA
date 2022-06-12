@@ -1,5 +1,5 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimPMTHit.hh"
+#include "MATHUSLA/Tile/interface/LYSimPMTHit.hh"
 #else
 #include "LYSimPMTHit.hh"
 #endif

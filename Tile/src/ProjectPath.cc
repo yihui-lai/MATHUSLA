@@ -1,5 +1,5 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/ProjectPath.hh"
+#include "MATHUSLA/Tile/interface/ProjectPath.hh"
 #include "UserUtils/Common/interface/STLUtils/Filesystem.hpp"
 #else
 #include "ProjectPath.hh"
@@ -7,7 +7,7 @@
 
 #ifdef CMSSW_GIT_HASH
 extern const std::string project_base
-  = usr::subpkgpath("HGCalTileSim","Tile" ).string();
+  = usr::subpkgpath("MATHUSLA","Tile" ).string();
 #else
 extern const std::string project_base = std::string("/Users/yucun_xie/Git/MATHUSLA/MATHUSLA") + std::string("/Tile/");
 #endif

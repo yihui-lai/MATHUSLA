@@ -2,7 +2,7 @@
 #define LYSimDetectorConstruction_h 1
 
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimPMTSD.hh"
+#include "MATHUSLA/Tile/interface/LYSimPMTSD.hh"
 #else
 #include "LYSimPMTSD.hh"
 #endif

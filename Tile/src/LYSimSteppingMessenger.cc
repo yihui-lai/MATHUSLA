@@ -1,6 +1,6 @@
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimSteppingAction.hh"
-#include "HGCalTileSim/Tile/interface/LYSimSteppingMessenger.hh"
+#include "MATHUSLA/Tile/interface/LYSimSteppingAction.hh"
+#include "MATHUSLA/Tile/interface/LYSimSteppingMessenger.hh"
 #else
 #include "LYSimSteppingAction.hh"
 #include "LYSimSteppingMessenger.hh"
