@@ -1,4 +1,4 @@
-# HGCal Tile
+# MATHUSLA Tile
 
 GEANT4-based simulation of MATHUSLA extruded scintillator 
 
