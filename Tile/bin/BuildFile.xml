@@ -1,5 +1,5 @@
 <use name="geant4"/>
-<use name="HGCalTileSim/Tile"/>
+<use name="MATHUSLA/Tile"/>
 <use name="UserUtils/Common"/>
 
 <!--Interactive session should be used in standalone Geant4
