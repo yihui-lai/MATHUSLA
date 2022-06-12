@@ -30,7 +30,7 @@ cmsenv # Do this every time login to cluster
 
 git clone https://github.com/Yucun-Xie/MATHUSLA.git
 mv MATHUSLA/UserUtils .
-scram b -j4 # If you have error on this step, remove /HGCalTileSim/Plot dirctory and try again.
+scram b -j4 # If you have error on this step, remove /MATHUSLA/Plot dirctory and try again.
 ```
 
 ## Single event running
