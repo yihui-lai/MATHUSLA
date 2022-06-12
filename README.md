@@ -132,27 +132,3 @@ program option inputs takes in an array. All combinations of all geometric
 options will be have its corresponding jdl file generated. The JDL files
 themselves are essentially running a single instance of LYSim_SquareTrigger.
 
-## Generating the Light-yield v.s. beam x graph
-
-The command
-
-```bash
-$CMSSW_BASE/bin/$SCRAM_ARCH/LYSim_MakeLYvXGraph --inputfiles *.root --output graph.root
-```
-
-will take all the bunch of output file generated using the LYSim_SquareTrigger
-command, and use them to generate a Light yield verses beam x value graph, with
-different geometric configuration automatically listed in the Graph name. For
-details on the graph name, see the file `Plot/src/LYvX_Common.cc`.
-
-## Plotting the Light-yield v.s. graph
-
-The command
-
-```bash
-$CMSSW_BASE/bin/$SCRAM_ARCH/LYSim_PlotLYvXGraph --inputfiles graph.root <geometric parameters>
-```
-
-takes the output of the `MakeLYvXGraph` command, and plots the graphs into a
-standard CMS plots format. One of the geometric parameters can be a list to put
-more than one geometric comparison in the same plot for comparison.
