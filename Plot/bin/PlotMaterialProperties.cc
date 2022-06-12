@@ -1,5 +1,5 @@
-#include "HGCalTileSim/Tile/interface/LYSimDetectorConstruction.hh"
-#include "HGCalTileSim/Tile/interface/ProjectPath.hh"
+#include "MATHUSLA/Tile/interface/LYSimDetectorConstruction.hh"
+#include "MATHUSLA/Tile/interface/ProjectPath.hh"
 
 #include "UserUtils/PlotUtils/interface/PlotCommon.hpp"
 #include "UserUtils/PlotUtils/interface/Simple1DCanvas.hpp"

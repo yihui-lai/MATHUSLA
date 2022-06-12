@@ -1,7 +1,7 @@
-#ifndef HGCALTILESIM_PLOT_LYVX_COMMON_HPP
-#define HGCALTILESIM_PLOT_LYVX_COMMON_HPP
+#ifndef MATHUSLA_PLOT_LYVX_COMMON_HPP
+#define MATHUSLA_PLOT_LYVX_COMMON_HPP
 
-#include "HGCalTileSim/Tile/interface/LYSimFormat.hh"
+#include "MATHUSLA/Tile/interface/LYSimFormat.hh"
 // #include "UserUtils/Common/interface/ArgumentExtender.hpp"
 
 #include <boost/program_options.hpp>

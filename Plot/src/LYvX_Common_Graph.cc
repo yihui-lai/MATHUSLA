@@ -1,4 +1,4 @@
-#include "HGCalTileSim/Plot/interface/LYvX_Common.hpp"
+#include "MATHUSLA/Plot/interface/LYvX_Common.hpp"
 
 #include "TGraphErrors.h"
 #include "TH1D.h"

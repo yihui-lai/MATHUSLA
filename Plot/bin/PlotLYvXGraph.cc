@@ -5,7 +5,7 @@
 #include "UserUtils/PlotUtils/interface/Simple1DCanvas.hpp"
 #include "UserUtils/PlotUtils/interface/Ratio1DCanvas.hpp"
 
-#include "HGCalTileSim/Plot/interface/LYvX_Common.hpp"
+#include "MATHUSLA/Plot/interface/LYvX_Common.hpp"
 
 #include "TChain.h"
 #include "TFile.h"
@@ -19,7 +19,7 @@ main( int argc, char** argv )
     ( "inputfile,f", usr::po::value<std::string>(),
     "File containing the generated files" )
     ( "output,o", usr::po::defvalue<std::string>(
-    usr::resultpath( "HGCalTileSim", "Plot" ).string() ),
+    usr::resultpath( "MATHUSLA", "Plot" ).string() ),
     "Output plot directory" )
   ;
 

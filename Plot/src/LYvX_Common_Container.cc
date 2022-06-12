@@ -1,4 +1,4 @@
-#include "HGCalTileSim/Plot/interface/LYvX_Common.hpp"
+#include "MATHUSLA/Plot/interface/LYvX_Common.hpp"
 
 #include "UserUtils/Common/interface/STLUtils/StringUtils.hpp"
 

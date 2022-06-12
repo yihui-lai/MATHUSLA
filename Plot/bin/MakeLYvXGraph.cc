@@ -1,5 +1,5 @@
-#include "HGCalTileSim/Plot/interface/LYvX_Common.hpp"
-#include "HGCalTileSim/Tile/interface/LYSimFormat.hh"
+#include "MATHUSLA/Plot/interface/LYvX_Common.hpp"
+#include "MATHUSLA/Tile/interface/LYSimFormat.hh"
 
 #include "UserUtils/Common/interface/ArgumentExtender.hpp"
 #include "UserUtils/Common/interface/Maths.hpp"
@@ -21,7 +21,7 @@ main( int argc, char** argv )
     ( "inputfile,f", usr::po::multivalue<std::string>(),
     "Input root file" )
     ( "output,o", usr::po::defvalue<std::string>(
-    ( usr::resultpath( "HGCalTileSim", "Plot" )/"LYvX.root" ).string() ),
+    ( usr::resultpath( "MATHUSLA", "Plot" )/"LYvX.root" ).string() ),
     "Output root file" )
   ;
 
