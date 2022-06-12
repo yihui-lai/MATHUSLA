@@ -146,9 +146,11 @@ parser.add_argument('--prefix',
 
 args = parser.parse_args()
 
+#BASE_DIR = os.path.abspath(os.environ['CMSSW_BASE'] + '/src/' +
+#                           '/HGCalTileSim/condor/')
 BASE_DIR = os.path.abspath(os.environ['CMSSW_BASE'] + '/src/' +
-                           '/HGCalTileSim/condor/')
-DATA_DIR = os.path.abspath(BASE_DIR + '/FNALNew_trial220516_testcladdirt/')
+                           '/MATHUSLA/condor/')
+DATA_DIR = os.path.abspath(BASE_DIR + '/JDL_root/')
 Store_DIR = DATA_DIR
 #Store_DIR = os.path.abspath('/store/user/yilai/test_T3/FNALNew_trial0329_Holeradius/')
 
