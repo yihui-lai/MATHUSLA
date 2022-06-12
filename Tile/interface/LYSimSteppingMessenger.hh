@@ -2,7 +2,7 @@
 #define LYSimSteppingMessenger_h
 
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimSteppingAction.hh"
+#include "MATHUSLA/Tile/interface/LYSimSteppingAction.hh"
 #else
 #include "LYSimSteppingAction.hh"
 #endif

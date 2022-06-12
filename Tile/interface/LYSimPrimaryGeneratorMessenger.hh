@@ -2,7 +2,7 @@
 #define LYSimPrimaryGeneratorMessenger_h
 
 #ifdef CMSSW_GIT_HASH
-#include "HGCalTileSim/Tile/interface/LYSimPrimaryGeneratorAction.hh"
+#include "MATHUSLA/Tile/interface/LYSimPrimaryGeneratorAction.hh"
 #else
 #include "LYSimPrimaryGeneratorAction.hh"
 #endif
