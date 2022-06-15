@@ -58,9 +58,9 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 {
   fdetectorMessenger = new LYSimDetectorMessenger( this );
 
-  _tilex        = 40*mm;
-  _tiley        = 40*mm;
-  _tilez        = 50.0*mm;  //200*mm
+  _tilex        = 50*mm;
+  _tiley        = 20*mm;
+  _tilez        = 60.0*mm;  //200*mm
   _tile_x1      = 0.0*mm;
   _tile_x2      = 0.0*mm;
   wrapgap       = 0.1*mm;
@@ -126,8 +126,8 @@ _WLSfiber_clad2_thick = 0.05*mm;
 
 _hole_radius = (_WLSfiberR+_WLSfiber_clad_thick+_WLSfiber_clad2_thick)*1.01; //1.0*mm;
 _hole_radius = 4*mm;//
-_hole_x1 = 0*mm;
-_hole_x2 = 12.5*mm;
+_hole_x1 = -13*mm;
+_hole_x2 = 13*mm;
 
 _WLSfiberZ = 5.2*m;
 _WLS_zoff = 1.7*m;
@@ -222,14 +222,16 @@ LYSimDetectorConstruction::Construct()
 
 
 //second hole
-/*
+
   G4VSolid* solidWrap = new G4SubtractionSolid( "solidWrap"
                             , solidWrap1, solidHoleBound
                             , 0, G4ThreeVector( _hole_x2, 0, 0 ) );
-  logicWrap = new G4LogicalVolume( solidWrap, fEpoxy,  "Wrap" );
-*/
 
-  logicWrap = new G4LogicalVolume( solidWrap1, fEpoxy,  "Wrap" );
+//---------------------------
+  logicWrap = new G4LogicalVolume( solidWrap, fEpoxy,  "Wrap" );
+
+
+ // logicWrap = new G4LogicalVolume( solidWrap1, fEpoxy,  "Wrap" ); // comment this line when second hole enabled
 
   G4VPhysicalVolume* physWrap = new G4PVPlacement( 0
                                                  , G4ThreeVector( 0, 0, 0 )
@@ -276,19 +278,21 @@ LYSimDetectorConstruction::Construct()
                             , solidTile, solidHoleBound
                             , 0, G4ThreeVector( _hole_x1, 0, 0 ) );
 
-//second hole
-/*
+//second hole ----------
+
   G4VSolid* tileBulk
     = new G4SubtractionSolid( "TileSolid_Bulk"
                             , tileBulk1, solidHoleBound
                             , 0, G4ThreeVector( _hole_x2, 0, 0 ) );
+
   G4LogicalVolume* logicTileBulk = new G4LogicalVolume( tileBulk
                                                       , fEJ200
                                                       , "TileBulkLogic" );
-*/
-  G4LogicalVolume* logicTileBulk = new G4LogicalVolume( tileBulk1
+//----------------
+  /*G4LogicalVolume* logicTileBulk = new G4LogicalVolume( tileBulk1
                                                       , fEJ200
-                                                      , "TileBulkLogic" );
+                                                      , "TileBulkLogic" ); // comment this line when second hole enabled
+*/
   G4VPhysicalVolume* physTileBulk = new G4PVPlacement( 0
                                                      , G4ThreeVector( 0, 0, 0 )
                                                      , logicTileBulk
