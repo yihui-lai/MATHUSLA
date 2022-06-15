@@ -120,7 +120,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 //wls
 _handwrap   = true;
 _cladlayer  = 1;
-_holeshape = 2; //0 circle; 1 square; 2 el
+_holeshape = 0; //0 circle; 1 square; 2 el
 _WLSfiberR = 0.7*mm;
 _WLSfiber_clad_thick = 0.05*mm;
 _WLSfiber_clad2_thick = 0.05*mm;
