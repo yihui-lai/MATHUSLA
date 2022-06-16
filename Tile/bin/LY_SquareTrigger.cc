@@ -85,7 +85,7 @@ main( int argc, char** argv )
   detector->SetFiberXoff( 0 );
   detector->SetFiberZoff( fiberZshift );
   detector->SetFiberClad( cladlayer );
-  detector->SetHoleShape( 0 ); //changed
+  detector->SetHoleShape( 2 ); //changed
   detector->SetTileAbsMult( absmult );
   detector->SetTileDecaytime(tiledecay);
   detector->SetTileRisetime(tilerise);

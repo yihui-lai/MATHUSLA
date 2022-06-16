@@ -120,7 +120,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 //wls
 _handwrap   = true;
 _cladlayer  = 1;
-_holeshape = 0; //0 circle; 1 square; 2 el
+_holeshape = 2; //0 circle; 1 square; 2 el
 _WLSfiberR = 0.7*mm;
 _WLSfiber_clad_thick = 0.05*mm;
 _WLSfiber_clad2_thick = 0.05*mm;
@@ -212,6 +212,7 @@ LYSimDetectorConstruction::Construct()
   G4VSolid* solidHoleBound;
   if(_holeshape==0) solidHoleBound = new G4Tubs( "TileHole", 0, _hole_radius, _tilez, 0, 2*pi  );
   else if(_holeshape==1) solidHoleBound = new G4Box( "TileHole", _hole_radius, _hole_radius, _tilez  );
+  else if (_holeshape==2) solidHoleBound = new G4EllipticalTube( "TileHole", _hole_radius, 2, _tilez*0.5 );
 
   G4LogicalVolume* logicWrap;
 
