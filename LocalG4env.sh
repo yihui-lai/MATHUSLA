@@ -12,3 +12,5 @@ export G4INCLDATA="/Users/yucun_xie/G4.10/share/Geant4-10.7.3/data/G4INCL1.0"
 export G4ENSDFSTATEDATA="/Users/yucun_xie/G4.10/share/Geant4-10.7.3/data/G4ENSDFSTATE2.3"
 DYLD_FALLBACK_LIBRARY_PATH=$DYLD_FALLBACK_LIBRARY_PATH:$PWD/lib
 
+#cd $(geant4-config --prefix)
+#source $(geant4-config --prefix)

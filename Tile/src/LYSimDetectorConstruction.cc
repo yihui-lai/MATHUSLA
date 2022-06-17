@@ -401,7 +401,7 @@ LYSimDetectorConstruction::Construct()
 
   }
 */
-
+/*//comment
   G4OpticalSurface* surface_IdealnonPolished = new G4OpticalSurface("IdealnonPolished", glisur, ground, dielectric_dielectric, 1);
   double surface_IdealnonPolishedphoE2[2]        = {1.0*eV,8.0*eV };
   double surface_IdealnonPolishedreflectivity[2] = {1-_claddirt, 1-_claddirt};
@@ -417,7 +417,7 @@ LYSimDetectorConstruction::Construct()
                                    physHole, surface_IdealnonPolished);
         new G4LogicalBorderSurface("surfaceClad1In",  physHole, physWLSfiber_clad,
                                    surface_IdealnonPolished);
-
+*///end here
 
   //G4OpticalSurface* surface_p =MakeS_TiO2Surface();
   //new G4LogicalBorderSurface("surfaceCladin", physWLSfiber_clad, physHole, surface_p); 
