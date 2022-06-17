@@ -212,7 +212,7 @@ LYSimDetectorConstruction::Construct()
   G4VSolid* solidHoleBound;
   if(_holeshape==0) solidHoleBound = new G4Tubs( "TileHole", 0, _hole_radius, _tilez, 0, 2*pi  );
   else if(_holeshape==1) solidHoleBound = new G4Box( "TileHole", _hole_radius, _hole_radius, _tilez  );
-  else if (_holeshape==2) solidHoleBound = new G4EllipticalTube( "TileHole", _hole_radius, 2, _tilez*0.5 );
+  else if (_holeshape==2) solidHoleBound = new G4EllipticalTube( "TileHole", _hole_radius, 2, _tilez );
 
   G4LogicalVolume* logicWrap;
 
