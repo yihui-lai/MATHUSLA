@@ -397,22 +397,45 @@ G4OpticalSurface*
 MakeS_TiO2Surface()
 {
   //Coating clad
-  G4OpticalSurface* TiO2Surface = new G4OpticalSurface(
-    "TiO2Surface", glisur, ground, dielectric_metal, 1); 
+  //G4OpticalSurface* TiO2Surface = new G4OpticalSurface(
+  //  "TiO2Surface", glisur, ground, dielectric_metal, 1); 
 
-  G4MaterialPropertiesTable* TiO2SurfaceProperty =
-    new G4MaterialPropertiesTable();
+  //G4MaterialPropertiesTable* TiO2SurfaceProperty =
+  //  new G4MaterialPropertiesTable();
 
-  G4double p_TiO2[] = { 1.0 * eV, 6.0 * eV };
-  G4double refl_TiO2[] = { 1, 1 };
-  G4double effi_TiO2[] = { 0., 0. };
+  //G4double p_TiO2[] = { 1.0 * eV, 6.0 * eV };
+  //G4double refl_TiO2[] = { 1, 1 };
+  //G4double effi_TiO2[] = { 0., 0. };
 
-  TiO2SurfaceProperty->AddProperty("REFLECTIVITY", p_TiO2, refl_TiO2,2);
-  TiO2SurfaceProperty->AddProperty("EFFICIENCY", p_TiO2, effi_TiO2,2);
+  //TiO2SurfaceProperty->AddProperty("REFLECTIVITY", p_TiO2, refl_TiO2,2);
+  //TiO2SurfaceProperty->AddProperty("EFFICIENCY", p_TiO2, effi_TiO2,2);
 
-  TiO2Surface->SetMaterialPropertiesTable(TiO2SurfaceProperty);
+  //TiO2Surface->SetMaterialPropertiesTable(TiO2SurfaceProperty);
 
+  //return TiO2Surface;
+
+
+  G4OpticalSurface* TiO2Surface = new G4OpticalSurface("TiO2Surface",unified,
+                                                       ground,dielectric_metal,1.5);
+  G4MaterialPropertiesTable* TiO2SurfaceProperty = new G4MaterialPropertiesTable();
+
+  G4double p_TiO2[11] =    {2.00*eV, 2.75*eV, 2.88*eV, 2.95*eV, 3.02*eV, 3.10*eV, 3.18*eV, 3.26*eV, 3.35*eV, 3.44*eV, 15.75*eV};
+  G4double refl_TiO2[11] = {0.91,    0.91,    0.90,    0.85,    0.69,    0.44,    0.27,    0.13,    0.08,    0.07,    0.07}; //assume a constant value for energies > 3.44eV (most photons with these energies get absorbed and wave length shifted)
+  G4double effi_TiO2[11] = {0,       0 ,      0,       0,       0,       0,       0,       0,       0,       0,       0};
+  for(int i=0; i<11; i++) refl_TiO2[i]=1.0-0.75*(1.0-refl_TiO2[i]);  //a higher reflectivities comparared to the numbers given by Anna 
+  TiO2SurfaceProperty->AddProperty("REFLECTIVITY",p_TiO2,refl_TiO2,11);
+  TiO2SurfaceProperty->AddProperty("EFFICIENCY",p_TiO2,effi_TiO2,11);
+
+  G4double pp[2] = {2.00*eV, 15.75*eV};
+  G4double specularlobe[2] = {1.0, 1.0};
+  G4double specularspike[2] = {0.0, 0.0};
+  G4double backscatter[2] = {0.0, 0.0};
+  TiO2SurfaceProperty->AddProperty("SPECULARLOBECONSTANT",pp,specularlobe,2);
+  TiO2SurfaceProperty->AddProperty("SPECULARSPIKECONSTANT",pp,specularspike,2);
+  TiO2SurfaceProperty->AddProperty("BACKSCATTERCONSTANT",pp,backscatter,2);
+  TiO2Surface -> SetMaterialPropertiesTable(TiO2SurfaceProperty);
   return TiO2Surface;
+
 }
 
 
