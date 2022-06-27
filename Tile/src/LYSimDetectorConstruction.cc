@@ -61,7 +61,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
   _tilex        = 50*mm;
   _tiley        = 20*mm;
-  _tilez        = 60.0*mm;  //200*mm
+  _tilez        = 3000*mm;  //200*mm
   _tile_x1      = 0.0*mm;
   _tile_x2      = 0.0*mm;
   wrapgap       = 0.1*mm;
@@ -134,7 +134,7 @@ _WLSfiberZ = 5.2*m;
 _WLS_zoff = 1.7*m;
 
 _WLSfiberZ = _tilez*1.5;
-_WLSfiberZ = 100;
+_WLSfiberZ = 3000;
 _WLS_zoff = 0;
 _WLS_xoff = 0;//3.25*mm;
 _claddirt = 0.01;
