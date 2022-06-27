@@ -845,15 +845,15 @@ LYSimDetectorConstruction::SetWrapReflect( const double r )
     fESROpSurface->SetMaterialPropertiesTable( table );
   }
 
-  G4MaterialPropertiesTable* table2 = fTiO2Surface->GetMaterialPropertiesTable();
-  if( table2 ){
-    table2->RemoveProperty( "REFLECTIVITY" );
-    table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
-  } else {
-    table2 = new G4MaterialPropertiesTable();
-    table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
-    fTiO2Surface->SetMaterialPropertiesTable( table2 );
-  }
+  //G4MaterialPropertiesTable* table2 = fTiO2Surface->GetMaterialPropertiesTable();
+  //if( table2 ){
+  //  table2->RemoveProperty( "REFLECTIVITY" );
+  //  table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
+  //} else {
+  //  table2 = new G4MaterialPropertiesTable();
+  //  table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
+  //  fTiO2Surface->SetMaterialPropertiesTable( table2 );
+  //}
 
 }
 
@@ -862,9 +862,21 @@ LYSimDetectorConstruction::SetSiPMReflect( const double r )
 {
   // Add entries into properties table
   _sipm_eff = r;
-  static const unsigned nentries = 2;
-  static double phoE[nentries]   = {1.0*eV, 6.0*eV};
-  double efficiency[nentries]  = {r, r};
+  //static const unsigned nentries = 2;
+  //static double phoE[nentries]   = {1.0*eV, 6.0*eV};
+  //double efficiency[nentries]  = {r, r};
+  G4double p_mppc[21] = {2.0*eV, 2.1*eV, 2.2*eV, 2.3*eV, 2.4*eV, 
+                         2.5*eV, 2.6*eV, 2.7*eV, 2.8*eV, 2.9*eV, 
+                         3.0*eV, 3.1*eV, 3.2*eV, 3.3*eV, 3.4*eV, 
+                         3.5*eV, 3.6*eV, 3.7*eV, 3.8*eV, 3.9*eV,
+                       15.75*eV};
+  G4double effi_mppc[21] = {0.602, 0.697, 0.784, 0.858, 0.933,
+                            0.970, 0.990, 1.000, 0.978, 0.958,
+                            0.920, 0.871, 0.803, 0.709, 0.622,
+                            0.547, 0.398, 0.249, 0.100, 0.000,
+                            0.000};
+  for(int i=0; i<21; i++) effi_mppc[i]*=_sipm_eff;
+
   /*
   const int nentries = 51;
   double phoE[nentries]   = {
@@ -918,12 +930,12 @@ LYSimDetectorConstruction::SetSiPMReflect( const double r )
     table->RemoveProperty( "EFFICIENCY" );
     //table->RemoveProperty( "REFLECTIVITY" );
     //table->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
-    table->AddProperty( "EFFICIENCY",   phoE,  efficiency,   nentries );
-    //table->AddProperty( "REFLECTIVITY", phoE2, reflectivity, ref_ent  );
-
+    //table->AddProperty( "EFFICIENCY",   phoE,  efficiency,   nentries );
+    table->AddProperty( "EFFICIENCY",   p_mppc, effi_mppc,21);
   } else {
     table = new G4MaterialPropertiesTable();
-    table->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
+    //table->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
+    table->AddProperty( "EFFICIENCY",   p_mppc, effi_mppc,21);
     //table->AddProperty( "REFLECTIVITY", phoE2, reflectivity, ref_ent  );
     fSiPMSurface3->SetMaterialPropertiesTable( table );
   }
@@ -932,13 +944,14 @@ LYSimDetectorConstruction::SetSiPMReflect( const double r )
   if( table4 ){
     table4->RemoveProperty( "EFFICIENCY" );
     //table4->RemoveProperty( "REFLECTIVITY" );
-    table4->AddProperty( "EFFICIENCY",   phoE,  efficiency,   nentries );
+    //table4->AddProperty( "EFFICIENCY",   phoE,  efficiency,   nentries );
     //table4->AddProperty( "REFLECTIVITY", phoE2, reflectivity, ref_ent  );
-
+    table4->AddProperty( "EFFICIENCY",   p_mppc, effi_mppc,21);
   } else {
     table4 = new G4MaterialPropertiesTable();
-    table4->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
+    //table4->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
     //table4->AddProperty( "REFLECTIVITY", phoE2, reflectivity, ref_ent  );
+    table4->AddProperty( "EFFICIENCY",   p_mppc, effi_mppc,21);
     fSiPMSurface4->SetMaterialPropertiesTable( table4 );
   }
 

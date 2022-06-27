@@ -1,3 +1,10 @@
+
+
+# Find the attenuation length that gives best results colse to mu2e measurement
+# USe -H 0, so it is not hand wrapped, and will use the TiO2 surface 
+./condor-LYSquareTrigger_CMSSW.sh -x 0.0 -z 0.0 -X 50.0 -Y 20.0 -l 3000.0 -w 40.0 -f 3.2 -s 0.0 -a 300.0 --tiledecay 2.5 --tilerise 0.5 -b 5000.0 -y 10000.0 -m 0.985 -d 7.193 -e 1 -P 1 -H 0 -c 1 -r 0.7 -R 1.0 -S 0.01 -N 10 -o test_.root
+
+
 ./condor-LYSquareTrigger_CMSSW.sh -x -10.0 -z 0.0 -X 40.0 -Y 40.0 -l 200.0 -w 10.0 -f 0.6 -s 0.0 -a 400.0 --tiledecay 3.945 --tilerise 0.5 -b 5000.0 -y 10000.0 -m 0.985 -d 7.193 -e 1.0 -P 1 -H 0 -c 1 -r 1.0 -R 4.0 -N 50 -o test_propagatetoend_goodcore_ALLtrans_refrac_1p0.root
 
 ./condor-LYSquareTrigger_CMSSW.sh -x -0.0 -z 0.0 -X 40.0 -Y 40.0 -l 200.0 -w 10.0 -f 0.6 -s 0.0 -a 400.0 --tiledecay 3.945 --tilerise 0.5 -b 5000.0 -y 10000.0 -m 0.985 -d 7.193 -e 1.0 -P 1 -H 0 -c 1 -r 1.0 -R 4.0 -N 10 -o test_propagatetoend_goodcore_clad_refrac 1
