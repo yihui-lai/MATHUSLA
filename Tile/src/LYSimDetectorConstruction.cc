@@ -62,6 +62,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   _tilex        = 50*mm;
   _tiley        = 20*mm;
   _tilez        = 60.0*mm;  //200*mm
+
   _tile_x1      = 0.0*mm;
   _tile_x2      = 0.0*mm;
   wrapgap       = 0.1*mm;
@@ -102,6 +103,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   fEJ200    = Make_EJ200();
   fResin    = Make_Resin();
   SetTileAbsMult( _absmult );
+  //SetY11attenu(5000);
   SetTileScintillation( _ScintiN ); // N/keV
   SetTileDecaytime(_tiledecay);
   SetTileRisetime(_tilerise);
@@ -118,7 +120,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
 
 //wls
-_handwrap   = true;
+_handwrap   = false;
 _cladlayer  = 1;
 _holeshape = 2; //0 circle; 1 square; 2 el
 _WLSfiberR = 0.7*mm;
@@ -130,14 +132,14 @@ _hole_radius = 1*mm;//
 _hole_x1 = -13*mm;
 _hole_x2 = 13*mm;
 
-_WLSfiberZ = 5.2*m;
+_WLSfiberZ = 3.2*m;
 _WLS_zoff = 1.7*m;
 
 _WLSfiberZ = _tilez*1.5;
-_WLSfiberZ = 100;
+//_WLSfiberZ = 100;
 _WLS_zoff = 0;
 _WLS_xoff = 0;//3.25*mm;
-_claddirt = 0.01;
+_claddirt = 0.0;
 //---------------
 //material
 //---------------
@@ -215,7 +217,7 @@ LYSimDetectorConstruction::Construct()
   else if (_holeshape==2) solidHoleBound = new G4EllipticalTube( "TileHole", _hole_radius, 2, _tilez );
 
   G4LogicalVolume* logicWrap;
-
+  G4LogicalVolume* logicWrapface;
   if(_handwrap){
   G4VSolid* solidWrap0 = ConstructHollowWrapSolid();
   G4VSolid* solidWrap1 = new G4SubtractionSolid( "solidWrap"
@@ -265,7 +267,46 @@ LYSimDetectorConstruction::Construct()
   G4LogicalSkinSurface* WrapSurface =
     new G4LogicalSkinSurface( "WrapSurface"
                               , logicWrap, fTiO2Surface );
-  }
+
+  G4VSolid* wrapface
+    = ConstructTrapazoidSolid( "Wrapface", _tilex+2*wrapthickness, _tilex+2*wrapthickness, 2*wrapthickness, 0, 0 );
+
+  G4VSolid* solidWrapface = new G4SubtractionSolid( "solidWrapface"
+                            , wrapface, solidHoleBound
+                            , 0, G4ThreeVector( _hole_x1, 0, 0 ) );
+  G4VSolid* solidWrapfacee = new G4SubtractionSolid( "solidWrapfacee"
+                            , solidWrapface, solidHoleBound
+                            , 0, G4ThreeVector( _hole_x2, 0, 0 ) );
+
+
+logicWrapface = new G4LogicalVolume( solidWrapfacee, fEpoxy,  "Wrapface" );
+
+  G4LogicalSkinSurface* WrapfaceSurface =
+    new G4LogicalSkinSurface( "WrapfaceSurface"
+                              , logicWrapface, MakeS_Absorbing() );
+
+  G4VPhysicalVolume* physWrap3 = new G4PVPlacement( 0
+                                                 , G4ThreeVector( 0, 0, _tilez*0.5 + wrapthickness +
+						 0.001)
+                                                 , logicWrapface
+                                                 , "Wrapface3"
+                                                 , logicWorld
+                                                 , false
+                                                 , 0
+                                                 , checkOverlaps );
+  G4VPhysicalVolume* physWrap4 = new G4PVPlacement( 0
+                                                 , G4ThreeVector( 0, 0, -_tilez*0.5 - wrapthickness
+						 -0.001)
+                                                 , logicWrapface
+                                                 , "Wrapface4"
+                                                 , logicWorld
+                                                 , false
+                                                 , 0
+                                                 , checkOverlaps );
+
+
+
+}
   ///////////////////////////////////////////////////////////////////////////////
   // extruded scintillator
   ///////////////////////////////////////////////////////////////////////////////
@@ -401,7 +442,8 @@ LYSimDetectorConstruction::Construct()
 
   }
 */
-//comment
+
+
   G4OpticalSurface* surface_IdealnonPolished = new G4OpticalSurface("IdealnonPolished", glisur, ground, dielectric_dielectric, 1);
   double surface_IdealnonPolishedphoE2[2]        = {1.0*eV,8.0*eV };
   double surface_IdealnonPolishedreflectivity[2] = {1-_claddirt, 1-_claddirt};
@@ -865,9 +907,9 @@ LYSimDetectorConstruction::SetSiPMReflect( const double r )
   //static const unsigned nentries = 2;
   //static double phoE[nentries]   = {1.0*eV, 6.0*eV};
   //double efficiency[nentries]  = {r, r};
-  G4double p_mppc[21] = {2.0*eV, 2.1*eV, 2.2*eV, 2.3*eV, 2.4*eV, 
-                         2.5*eV, 2.6*eV, 2.7*eV, 2.8*eV, 2.9*eV, 
-                         3.0*eV, 3.1*eV, 3.2*eV, 3.3*eV, 3.4*eV, 
+  G4double p_mppc[21] = {2.0*eV, 2.1*eV, 2.2*eV, 2.3*eV, 2.4*eV,
+                         2.5*eV, 2.6*eV, 2.7*eV, 2.8*eV, 2.9*eV,
+                         3.0*eV, 3.1*eV, 3.2*eV, 3.3*eV, 3.4*eV,
                          3.5*eV, 3.6*eV, 3.7*eV, 3.8*eV, 3.9*eV,
                        15.75*eV};
   G4double effi_mppc[21] = {0.602, 0.697, 0.784, 0.858, 0.933,
@@ -932,6 +974,7 @@ LYSimDetectorConstruction::SetSiPMReflect( const double r )
     //table->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
     //table->AddProperty( "EFFICIENCY",   phoE,  efficiency,   nentries );
     table->AddProperty( "EFFICIENCY",   p_mppc, effi_mppc,21);
+
   } else {
     table = new G4MaterialPropertiesTable();
     //table->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
@@ -947,6 +990,7 @@ LYSimDetectorConstruction::SetSiPMReflect( const double r )
     //table4->AddProperty( "EFFICIENCY",   phoE,  efficiency,   nentries );
     //table4->AddProperty( "REFLECTIVITY", phoE2, reflectivity, ref_ent  );
     table4->AddProperty( "EFFICIENCY",   p_mppc, effi_mppc,21);
+
   } else {
     table4 = new G4MaterialPropertiesTable();
     //table4->AddProperty( "EFFICIENCY", phoE, efficiency, nentries );
