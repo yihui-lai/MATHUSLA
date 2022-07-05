@@ -61,7 +61,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
   _tilex        = 50*mm;
   _tiley        = 20*mm;
-  _tilez        = 3000*mm;  //200*mm
+  _tilez        = 200*mm;  //200*mm
   _tile_x1      = 0.0*mm;
   _tile_x2      = 0.0*mm;
   wrapgap       = 0.1*mm;
@@ -118,7 +118,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
 
 //wls
-_handwrap   = true;
+_handwrap   = false;
 _cladlayer  = 1;
 _holeshape = 2; //0 circle; 1 square; 2 el
 _WLSfiberR = 0.7*mm;
@@ -130,14 +130,15 @@ _hole_radius = 1*mm;//
 _hole_x1 = -13*mm;
 _hole_x2 = 13*mm;
 
-_WLSfiberZ = 5.2*m;
+_WLSfiberZ = 3.2*m;
 _WLS_zoff = 1.7*m;
 
 _WLSfiberZ = _tilez*1.5;
-_WLSfiberZ = 3000;
+//_WLSfiberZ = 3000;
 _WLS_zoff = 0;
 _WLS_xoff = 0;//3.25*mm;
-_claddirt = 0.01;
+//_claddirt = 0.01;
+_claddirt = 0.0;
 //---------------
 //material
 //---------------
@@ -215,7 +216,7 @@ LYSimDetectorConstruction::Construct()
   else if (_holeshape==2) solidHoleBound = new G4EllipticalTube( "TileHole", _hole_radius, 2, _tilez );
 
   G4LogicalVolume* logicWrap;
-
+  G4LogicalVolume* logicWrapface;
   if(_handwrap){
   G4VSolid* solidWrap0 = ConstructHollowWrapSolid();
   G4VSolid* solidWrap1 = new G4SubtractionSolid( "solidWrap"
@@ -265,6 +266,45 @@ LYSimDetectorConstruction::Construct()
   G4LogicalSkinSurface* WrapSurface =
     new G4LogicalSkinSurface( "WrapSurface"
                               , logicWrap, fTiO2Surface );
+
+  G4VSolid* wrapface
+    = ConstructTrapazoidSolid( "Wrapface", _tilex+2*wrapthickness, _tilex+2*wrapthickness, 2*wrapthickness, 0, 0 );
+
+  G4VSolid* solidWrapface = new G4SubtractionSolid( "solidWrapface"
+                            , wrapface, solidHoleBound
+                            , 0, G4ThreeVector( _hole_x1, 0, 0 ) );
+  G4VSolid* solidWrapfacee = new G4SubtractionSolid( "solidWrapfacee"
+                            , solidWrapface, solidHoleBound
+                            , 0, G4ThreeVector( _hole_x2, 0, 0 ) );
+
+
+logicWrapface = new G4LogicalVolume( solidWrapfacee, fEpoxy,  "Wrapface" );
+
+  G4LogicalSkinSurface* WrapfaceSurface =
+    new G4LogicalSkinSurface( "WrapfaceSurface"
+                              , logicWrapface, MakeS_Absorbing() );
+
+  G4VPhysicalVolume* physWrap3 = new G4PVPlacement( 0
+                                                 , G4ThreeVector( 0, 0, _tilez*0.5 + wrapthickness +
+						 0.001)
+                                                 , logicWrapface
+                                                 , "Wrapface3"
+                                                 , logicWorld
+                                                 , false
+                                                 , 0
+                                                 , checkOverlaps );
+  G4VPhysicalVolume* physWrap4 = new G4PVPlacement( 0
+                                                 , G4ThreeVector( 0, 0, -_tilez*0.5 - wrapthickness
+						 -0.001)
+                                                 , logicWrapface
+                                                 , "Wrapface4"
+                                                 , logicWorld
+                                                 , false
+                                                 , 0
+                                                 , checkOverlaps );
+
+
+
   }
   ///////////////////////////////////////////////////////////////////////////////
   // extruded scintillator
