@@ -14,6 +14,7 @@ extern G4OpticalSurface* MakeS_Mirror();
 extern G4OpticalSurface* MakeS_IdealMirror();
 extern G4OpticalSurface* MakeS_IdealWhiteSurface();
 extern G4OpticalSurface* MakeS_Absorbing();
+extern G4OpticalSurface* MakeS_NoAbsorbing();
 extern G4OpticalSurface* MakeS_RoughMirror();
 extern G4OpticalSurface* MakeS_RoughInterface( double );
 extern G4OpticalSurface* MakeS_SiPM();

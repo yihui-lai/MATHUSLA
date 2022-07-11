@@ -282,7 +282,7 @@ logicWrapface = new G4LogicalVolume( solidWrapfacee, fEpoxy,  "Wrapface" );
 
   G4LogicalSkinSurface* WrapfaceSurface =//define surface by Yucun
     new G4LogicalSkinSurface( "WrapfaceSurface"
-                              , logicWrapface, MakeS_Absorbing() );
+                              , logicWrapface, MakeS_NoAbsorbing() );
 
   G4VPhysicalVolume* physWrap3 = new G4PVPlacement( 0
                                                  , G4ThreeVector( 0, 0, _tilez*0.5 + wrapthickness +
