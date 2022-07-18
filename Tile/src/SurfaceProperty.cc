@@ -263,6 +263,26 @@ MakeS_Absorbing()
 
   return surface;
 }
+G4OpticalSurface*
+MakeS_NoAbsorbing()
+{
+  const unsigned nentries       = 2;
+  double phoE[nentries]         = {1.0*eV, 6.0*eV};
+  double reflectivity[nentries] = {0.0, 1};
+  //////////////////////////////////
+  // Absorbing surface
+  //////////////////////////////////
+  G4OpticalSurface* surface = new G4OpticalSurface( "AbsorbingOpSurface" );
+  surface->SetType( dielectric_dielectric );
+  surface->SetFinish( groundfrontpainted );
+  surface->SetModel( unified );
+
+  G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
+  table->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
+  surface->SetMaterialPropertiesTable( table );
+
+  return surface;
+}
 
 G4OpticalSurface*
 MakeS_RoughInterface( const double alpha )

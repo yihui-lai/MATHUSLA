@@ -283,7 +283,9 @@ LYSimDetectorConstruction::Construct()
 
 logicWrapface = new G4LogicalVolume( solidWrapfacee, fEpoxy,  "Wrapface" );
 
-//  G4LogicalSkinSurface* WrapfaceSurface = new G4LogicalSkinSurface( "WrapfaceSurface" , logicWrapface, MakeS_Absorbing() );
+  G4LogicalSkinSurface* WrapfaceSurface =//define surface by Yucun
+    new G4LogicalSkinSurface( "WrapfaceSurface"
+                              , logicWrapface, MakeS_NoAbsorbing() );
 
 
   physWrap3 = new G4PVPlacement( 0
