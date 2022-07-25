@@ -409,8 +409,8 @@ logicWrapface = new G4LogicalVolume( solidWrapfacee, fEpoxy,  "Wrapface" );
 
   G4VSolid* solidWLSfiberFrame = new G4Tubs("WLSFiberFrame", 0., holeinner, _WLSfiberZ*0.5, 0., 2*pi);
   G4VSolid* solidHole_subs= new G4SubtractionSolid( "TileHole_Subs", solidHole, solidWLSfiberFrame, 0, G4ThreeVector( _WLS_xoff, 0, 0 ) );
-  G4LogicalVolume* logicHole = new G4LogicalVolume( solidHole_subs, fAir,  "Hole" );
-  //G4LogicalVolume* logicHole = new G4LogicalVolume( solidHole_subs, fResin,  "Hole" );
+  //G4LogicalVolume* logicHole = new G4LogicalVolume( solidHole_subs, fAir,  "Hole" ); //Jul19 edited 
+  G4LogicalVolume* logicHole = new G4LogicalVolume( solidHole_subs, fResin,  "Hole" );
 
   G4VPhysicalVolume* physHole = new G4PVPlacement( 0
                                                  , G4ThreeVector( _hole_x1, 0, 0 )
