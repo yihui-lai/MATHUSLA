@@ -58,7 +58,6 @@ void sigp()
     //PrintArray(sigma[3]);
     
     
-    //---------everything ok before this point------------------
     
     TGraphErrors *sca[4];
     TMultiGraph *gg=new TMultiGraph();
