@@ -97,8 +97,8 @@ main( int argc, char** argv )
   detector->SetFiberR(fiberR);
   detector->SetHoleRadius(HoleR);
 
-  detector->SetGaprefrac_index(1.4); //Gap material refraction index
-  detector->Setcladdirt(spare);  //dirt on the clad
+  detector->SetGaprefrac_index(spare); //Gap material refraction index
+  detector->Setcladdirt( 0 );  //dirt on the clad
   detector->SetWrapReflect( wrapref );
   detector->SetSiPMReflect( sipmeff );  
   detector->Set_handwrap( handwrap );
