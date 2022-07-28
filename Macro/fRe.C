@@ -100,15 +100,18 @@ void fReDraw(){
         double xTmp = stod(fileName[i].substr(2, 3));
         xAxis[i] = xTmp;
     }
+    TH1F * histoTmp=new TH1F("h","h",1000,0,1000);
     toString(xAxis, fileNum);
     for (int i = 0; i < fileNum; i++){
-        yAxis[i] = fileChain[i] -> GetEntries("detectphotons3+detectphotons4");
+        fileChain[i]->Draw("detectphotons3+detectphotons4>>h");
+        yAxis[i] = histoTmp -> GetMean();
     }
     toString(yAxis, fileNum);
-    auto g = new TGraph(11, xAxis, yAxis);
-    g -> GetXaxis() -> SetTitle("Spare parameter");
+    auto g = new TGraph(fileNum, xAxis, yAxis);
+    g -> GetXaxis() -> SetTitle("Refraction");
     g -> GetYaxis() -> SetTitle("PE");
-    g->Draw();
+    g -> Draw();
+
 
 }
 
