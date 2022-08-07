@@ -1,3 +1,6 @@
+#include<iostream>
+
+using namespace std;
 
 void set_root_style();
 
