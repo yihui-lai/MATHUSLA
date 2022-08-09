@@ -21,20 +21,19 @@
 #include "G4Poisson.hh"
 
 // Static helper functions.
-static double CalcNumPhotons( const double thickness );
+static double CalcNumPhotons(const double thickness);
 
-LYSimPrimaryGeneratorAction::LYSimPrimaryGeneratorAction( LYSimDetectorConstruction* det ) :
-  particleSource( new G4GeneralParticleSource() ),
-  fDetector( det ),
-  messenger( new LYSimPrimaryGeneratorMessenger( this ) ),
-  _beamx( 0 ),
-  _beamy( 0 ),
-  _width( 0 ),
-  _photon_multiplier( 1 ),
-  _open_angle( CLHEP::pi )
+LYSimPrimaryGeneratorAction::LYSimPrimaryGeneratorAction(LYSimDetectorConstruction *det) : particleSource(new G4GeneralParticleSource()),
+                                                                                           fDetector(det),
+                                                                                           messenger(new LYSimPrimaryGeneratorMessenger(this)),
+                                                                                           _beamx(0),
+                                                                                           _beamy(0),
+                                                                                           _width(0),
+                                                                                           _photon_multiplier(1),
+                                                                                           _open_angle(CLHEP::pi)
 {
   // For our use case, we will need to randomize on a event by event basis
-  particleSource->SetMultipleVertex( true );
+  particleSource->SetMultipleVertex(true);
 }
 
 LYSimPrimaryGeneratorAction::~LYSimPrimaryGeneratorAction()
@@ -42,20 +41,17 @@ LYSimPrimaryGeneratorAction::~LYSimPrimaryGeneratorAction()
   delete particleSource;
 }
 
-void
-LYSimPrimaryGeneratorAction::GeneratePrimaries( G4Event* anEvent )
+void LYSimPrimaryGeneratorAction::GeneratePrimaries(G4Event *anEvent)
 {
   RandomizePosition();
 
-  assert( particleSource->GetParticleDefinition()->GetParticleName()
-    == "opticalphoton" );
+  assert(particleSource->GetParticleDefinition()->GetParticleName() == "opticalphoton");
 
   // We still need to generate the primary vertex.
-  particleSource->GeneratePrimaryVertex( anEvent );
+  particleSource->GeneratePrimaryVertex(anEvent);
 }
 
-void
-LYSimPrimaryGeneratorAction::RandomizePosition()
+void LYSimPrimaryGeneratorAction::RandomizePosition()
 {
   /**
    * This particle source will be directly controlled via the /gps commands In
@@ -67,60 +63,59 @@ LYSimPrimaryGeneratorAction::RandomizePosition()
    */
   particleSource->ClearAll();
   // Randomizing position of the the source for each event.
-  const double x = ( 2*G4UniformRand()-1 )*_width + _beamx;
-  const double y = ( 2*G4UniformRand()-1 )*_width + _beamy;
-  const double z = 0.1*CLHEP::mm;//fDetector->GetTileY();
-  const double t = fDetector->GetTileScintillation();//LocalTileZ( x, y );
-  const int np   = t;//G4Poisson(_photon_multiplier* CalcNumPhotons( t ) );
+  const double x = (2 * G4UniformRand() - 1) * _width + _beamx;
+  const double y = (2 * G4UniformRand() - 1) * _width + _beamy;
+  const double z = 0.1 * CLHEP::mm;                   // fDetector->GetTileY();
+  const double t = fDetector->GetTileScintillation(); // LocalTileZ( x, y );
+  const int np = t;                                   // G4Poisson(_photon_multiplier* CalcNumPhotons( t ) );
 
-  for( int i = 0; i < np; ++i ){
+  for (int i = 0; i < np; ++i)
+  {
     // Creating a new particle source with just 1 photon
-    particleSource->AddaSource( 1 );
-    particleSource->GetCurrentSource()->SetNumberOfParticles( 1 );
+    particleSource->AddaSource(1);
+    particleSource->GetCurrentSource()->SetNumberOfParticles(1);
     particleSource->GetCurrentSource()->SetParticleDefinition(
-      G4OpticalPhoton::OpticalPhotonDefinition() );
+        G4OpticalPhoton::OpticalPhotonDefinition());
 
     // Setting default spacial distribution
-    //TODO
-    G4SPSPosDistribution* pos = particleSource->GetCurrentSource()->GetPosDist();
-    pos->SetPosDisType( "Volume" );
-    pos->SetPosDisShape( "Cylinder" );
-    pos->SetRadius( 0.0001*CLHEP::mm );
-    pos->SetHalfZ( z/2 );
-    pos->SetPosRot2(G4ThreeVector( 0., 0, -1 ));
-    pos->SetCentreCoords( G4ThreeVector( x, 0, y ) );
+    // TODO
+    G4SPSPosDistribution *pos = particleSource->GetCurrentSource()->GetPosDist();
+    pos->SetPosDisType("Volume");
+    pos->SetPosDisShape("Cylinder");
+    pos->SetRadius(0.0001 * CLHEP::mm);
+    pos->SetHalfZ(z / 2);
+    pos->SetPosRot2(G4ThreeVector(0., 0, -1));
+    pos->SetCentreCoords(G4ThreeVector(x, 0, y));
 
-//std::cout<<"z/2: "<<z/2<<std::endl;
-//std::cout<<"("<<x<<" 0 "<<y<<")"<<std::endl;
+    // std::cout<<"z/2: "<<z/2<<std::endl;
+    // std::cout<<"("<<x<<" 0 "<<y<<")"<<std::endl;
 
     // Setting default angular distrution of particle  (isotropic)
-    G4SPSAngDistribution* ang = particleSource->GetCurrentSource()->GetAngDist();
-    ang->SetAngDistType( "iso" );
-    ang->SetMinTheta( CLHEP::pi - _open_angle );
-    ang->SetMaxTheta( CLHEP::pi );
+    G4SPSAngDistribution *ang = particleSource->GetCurrentSource()->GetAngDist();
+    ang->SetAngDistType("iso");
+    ang->SetMinTheta(CLHEP::pi - _open_angle);
+    ang->SetMaxTheta(CLHEP::pi);
 
     // Energy distribution.
-    G4SPSEneDistribution* ene = particleSource->GetCurrentSource()->GetEneDist();
-    ene->SetEnergyDisType( "Arb" );
-    ene->ArbEnergyHistoFile( project_base + "/data/PhotonSpectrum.dat" );
-    ene->ArbInterpolate( "Lin" );
+    G4SPSEneDistribution *ene = particleSource->GetCurrentSource()->GetEneDist();
+    ene->SetEnergyDisType("Arb");
+    ene->ArbEnergyHistoFile(project_base + "/data/PhotonSpectrum.dat");
+    ene->ArbInterpolate("Lin");
 
     // Randomizing the polarization.
     const G4ThreeVector normal(
-      G4UniformRand(), G4UniformRand(), G4UniformRand() );
-    const G4ThreeVector kphoton
-      = particleSource->GetParticleMomentumDirection();
-    const G4ThreeVector product = normal.cross( kphoton.unit() );
-    particleSource->SetParticlePolarization( product.unit() );
+        G4UniformRand(), G4UniformRand(), G4UniformRand());
+    const G4ThreeVector kphoton = particleSource->GetParticleMomentumDirection();
+    const G4ThreeVector product = normal.cross(kphoton.unit());
+    particleSource->SetParticlePolarization(product.unit());
   }
-
 }
 
 double
 LYSimPrimaryGeneratorAction::NPhotons() const
 {
-  const double t = fDetector->LocalTileZ( _beamx, _beamy );
-  return _photon_multiplier * CalcNumPhotons( t );
+  const double t = fDetector->LocalTileZ(_beamx, _beamy);
+  return _photon_multiplier * CalcNumPhotons(t);
 }
 
 unsigned
@@ -130,7 +125,7 @@ LYSimPrimaryGeneratorAction::NSources() const
 }
 
 double
-CalcNumPhotons( const double thickness )
+CalcNumPhotons(const double thickness)
 {
-  return 6677.0 * thickness/3000.0;
+  return 6677.0 * thickness / 3000.0;
 }

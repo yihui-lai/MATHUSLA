@@ -37,20 +37,19 @@ using namespace CLHEP;
 
 // Static Helper fuction
 static void
-CloseAll( int signal )
+CloseAll(int signal)
 {
   LYSimAnalysis::GetInstance()->EndOfExperiment();
-  std::exit( signal );
+  std::exit(signal);
 }
 
-static bool IsSiPMTrajectory( G4Navigator*, const G4ThreeVector& );
+static bool IsSiPMTrajectory(G4Navigator *, const G4ThreeVector &);
 
 // LYSimAnalysis Programs
-LYSimAnalysis* LYSimAnalysis::singleton = 0;
+LYSimAnalysis *LYSimAnalysis::singleton = 0;
 
-LYSimAnalysis::LYSimAnalysis() :
-  generatorAction( nullptr ),
-  protonAction( nullptr )
+LYSimAnalysis::LYSimAnalysis() : generatorAction(nullptr),
+                                 protonAction(nullptr)
 {
 }
 
@@ -58,76 +57,78 @@ LYSimAnalysis::~LYSimAnalysis()
 {
 }
 
-void
-LYSimAnalysis::PrepareExperiment()
+void LYSimAnalysis::PrepareExperiment()
 {
-  file      = TFile::Open( filename.c_str(), "RECREATE" );
-  tree      = new TTree( "LYSim", "LYSim" );
-  runtree   = new TTree( "LYSimRun", "LYSimRun" );
-  format    = new LYSimFormat();
+  file = TFile::Open(filename.c_str(), "RECREATE");
+  tree = new TTree("LYSim", "LYSim");
+  runtree = new TTree("LYSimRun", "LYSimRun");
+  format = new LYSimFormat();
   runformat = new LYSimRunFormat();
-  format->AddToTree( tree );
-  runformat->AddToTree( runtree );
+  format->AddToTree(tree);
+  runformat->AddToTree(runtree);
 
   // Preparing the signal termination function
-  signal( SIGABRT, CloseAll );
+  signal(SIGABRT, CloseAll);
   // signal( SIGFPE,  CloseAll );
   // signal( SIGILL,  CloseAll );
-  signal( SIGINT,  CloseAll );
+  signal(SIGINT, CloseAll);
   // signal( SIGSEGV, CloseAll );
-  signal( SIGTERM, CloseAll );
+  signal(SIGTERM, CloseAll);
 }
 
-void
-LYSimAnalysis::PrepareNewRun( const G4Run* )
+void LYSimAnalysis::PrepareNewRun(const G4Run *)
 {
   runformat->tile_x = DetectorConstruction->GetTileX();
   runformat->tile_y = DetectorConstruction->GetTileY();
   runformat->tile_z = DetectorConstruction->GetTileZ();
 
-  //runformat->sipm_width = DetectorConstruction->GetSiPMX();
-  //runformat->sipm_rim   = DetectorConstruction->GetSiPMRim();
-  //runformat->sipm_stand = DetectorConstruction->GetSiPMStand();
+  // runformat->sipm_width = DetectorConstruction->GetSiPMX();
+  // runformat->sipm_rim   = DetectorConstruction->GetSiPMRim();
+  // runformat->sipm_stand = DetectorConstruction->GetSiPMStand();
 
-  //runformat->dimple_rad  = DetectorConstruction->GetDimpleRadius();
-  //runformat->dimple_ind  = DetectorConstruction->GetDimpleIndent();
-  //runformat->dimple_type = DetectorConstruction->GetDimpleType();
+  // runformat->dimple_rad  = DetectorConstruction->GetDimpleRadius();
+  // runformat->dimple_ind  = DetectorConstruction->GetDimpleIndent();
+  // runformat->dimple_type = DetectorConstruction->GetDimpleType();
 
-  runformat->abs_mult     = DetectorConstruction->GetTileAbsMult();
-  runformat->wrap_ref     = DetectorConstruction->GetWrapReflect();
-  //runformat->tile_alpha   = DetectorConstruction->GetTileAlpha();
-  //runformat->dimple_alpha = DetectorConstruction->GetDimpleAlpha();
+  runformat->abs_mult = DetectorConstruction->GetTileAbsMult();
+  runformat->wrap_ref = DetectorConstruction->GetWrapReflect();
+  // runformat->tile_alpha   = DetectorConstruction->GetTileAlpha();
+  // runformat->dimple_alpha = DetectorConstruction->GetDimpleAlpha();
 
-  //runformat->pcb_rad = DetectorConstruction->GetPCBRadius();
-  //runformat->pcb_ref = DetectorConstruction->GetPCBReflect();
+  // runformat->pcb_rad = DetectorConstruction->GetPCBRadius();
+  // runformat->pcb_ref = DetectorConstruction->GetPCBReflect();
 
-  if( generatorAction ){
+  if (generatorAction)
+  {
     runformat->beam_x = generatorAction->GetBeamX();
     runformat->beam_z = generatorAction->GetBeamY();
     runformat->beam_w = generatorAction->GetWidth();
-  } else if( protonAction ){
+  }
+  else if (protonAction)
+  {
     runformat->beam_x = protonAction->GetBeamX();
     runformat->beam_z = protonAction->GetBeamZ();
     runformat->beam_w = protonAction->GetWidth();
-  } else {
+  }
+  else
+  {
     runformat->beam_x = 0;
     runformat->beam_z = 0;
     runformat->beam_w = 0;
   }
 
 #ifdef CMSSW_GIT_HASH
-  //runformat->UpdateHash();
+  // runformat->UpdateHash();
 #endif
 }
 
-void
-LYSimAnalysis::PrepareNewEvent( const G4Event* event )
+void LYSimAnalysis::PrepareNewEvent(const G4Event *event)
 {
   // All primary vertex's in the event share the same x,y values
-  format->beam_x   = event->GetPrimaryVertex()->GetX0();
-  format->beam_z   = event->GetPrimaryVertex()->GetZ0();
-  //std::cout<<"(x,y,z)=("<<event->GetPrimaryVertex()->GetX0()<<" "<<event->GetPrimaryVertex()->GetY0()<<" "<<event->GetPrimaryVertex()->GetZ0()<<")"<<std::endl;
-  //format->run_hash = runformat->run_hash;
+  format->beam_x = event->GetPrimaryVertex()->GetX0();
+  format->beam_z = event->GetPrimaryVertex()->GetZ0();
+  // std::cout<<"(x,y,z)=("<<event->GetPrimaryVertex()->GetX0()<<" "<<event->GetPrimaryVertex()->GetY0()<<" "<<event->GetPrimaryVertex()->GetZ0()<<")"<<std::endl;
+  // format->run_hash = runformat->run_hash;
   format->genphotons = 0;
   format->wlsphotons = 0;
   format->detectphotons3 = 0;
@@ -142,8 +143,7 @@ LYSimAnalysis::PrepareNewEvent( const G4Event* event )
   format->ph_z.clear();
 }
 
-void
-LYSimAnalysis::EndOfEvent( const G4Event* event )
+void LYSimAnalysis::EndOfEvent(const G4Event *event)
 {
   /*
   if( generatorAction ){
@@ -236,105 +236,115 @@ LYSimAnalysis::EndOfEvent( const G4Event* event )
   }
 */
 
-      if(format->chan3_photon.size()!=0 || format->chan4_photon.size()!=0){
-          double t_mean1,t_mean2;
-      if(format->chan3_photon.size()!=0){
-          t_mean1=format->chan3_photon.at(0);
-          for( unsigned i=1;i<format->chan3_photon.size();i++ ){if(t_mean1>format->chan3_photon.at(i)) t_mean1=format->chan3_photon.at(i);}
-          format->dt_rms3 = t_mean1;
+  if (format->chan3_photon.size() != 0 || format->chan4_photon.size() != 0)
+  {
+    double t_mean1, t_mean2;
+    if (format->chan3_photon.size() != 0)
+    {
+      t_mean1 = format->chan3_photon.at(0);
+      for (unsigned i = 1; i < format->chan3_photon.size(); i++)
+      {
+        if (t_mean1 > format->chan3_photon.at(i))
+          t_mean1 = format->chan3_photon.at(i);
       }
-      if(format->chan4_photon.size()!=0){
-          t_mean2=format->chan4_photon.at(0);
-          for( unsigned i=1;i<format->chan4_photon.size();i++ ){if(t_mean2>format->chan4_photon.at(i)) t_mean2=format->chan4_photon.at(i);}
-          format->dt_rms4 = t_mean2;
+      format->dt_rms3 = t_mean1;
+    }
+    if (format->chan4_photon.size() != 0)
+    {
+      t_mean2 = format->chan4_photon.at(0);
+      for (unsigned i = 1; i < format->chan4_photon.size(); i++)
+      {
+        if (t_mean2 > format->chan4_photon.at(i))
+          t_mean2 = format->chan4_photon.at(i);
       }
-      if(format->chan3_photon.size()!=0 && format->chan4_photon.size()!=0) format->dt_firstphoton = t_mean2-t_mean1 ;
-      }
+      format->dt_rms4 = t_mean2;
+    }
+    if (format->chan3_photon.size() != 0 && format->chan4_photon.size() != 0)
+      format->dt_firstphoton = t_mean2 - t_mean1;
+  }
 
-/*
-//calculate the std
-double sum,m,accum;
-if(format->chan3_photon.size()>=2){
-  sum = std::accumulate(std::begin(format->chan3_photon), std::end(format->chan3_photon), 0.0);
-  m =  sum / format->chan3_photon.size();
-  accum = 0.0;
-  std::for_each (std::begin(format->chan3_photon), std::end(format->chan3_photon), [&](const double d) {
-      accum += (d - m) * (d - m);
-  });
+  /*
+  //calculate the std
+  double sum,m,accum;
+  if(format->chan3_photon.size()>=2){
+    sum = std::accumulate(std::begin(format->chan3_photon), std::end(format->chan3_photon), 0.0);
+    m =  sum / format->chan3_photon.size();
+    accum = 0.0;
+    std::for_each (std::begin(format->chan3_photon), std::end(format->chan3_photon), [&](const double d) {
+        accum += (d - m) * (d - m);
+    });
 
-  format->dt_rms3 = sqrt(accum / (format->chan3_photon.size()-1));
+    format->dt_rms3 = sqrt(accum / (format->chan3_photon.size()-1));
 
-}
-if(format->chan4_photon.size()>=2){
+  }
+  if(format->chan4_photon.size()>=2){
 
-  sum = std::accumulate(std::begin(format->chan4_photon), std::end(format->chan4_photon), 0.0);
-  m =  sum / format->chan4_photon.size();
-  accum = 0.0;
-  std::for_each (std::begin(format->chan4_photon), std::end(format->chan4_photon), [&](const double d) {
-      accum += (d - m) * (d - m);
-  });
-  format->dt_rms4 = sqrt(accum / (format->chan4_photon.size()-1));
+    sum = std::accumulate(std::begin(format->chan4_photon), std::end(format->chan4_photon), 0.0);
+    m =  sum / format->chan4_photon.size();
+    accum = 0.0;
+    std::for_each (std::begin(format->chan4_photon), std::end(format->chan4_photon), [&](const double d) {
+        accum += (d - m) * (d - m);
+    });
+    format->dt_rms4 = sqrt(accum / (format->chan4_photon.size()-1));
 
-}
-*/
+  }
+  */
 
 #ifdef CMSSW_GIT_HASH
-  //format->UpdateHash();
+  // format->UpdateHash();
 #endif
 
   // Filling the tree
   tree->Fill();
   // tree->Write( NULL, TObject::kOverwrite );
 
-#ifdef CMSSW_GIT_HASH// Disabling event saving for non-interactive stuff
+#ifdef CMSSW_GIT_HASH // Disabling event saving for non-interactive stuff
   G4EventManager::GetEventManager()
-  ->GetNonconstCurrentEvent()
-  ->KeepTheEvent( false );
+      ->GetNonconstCurrentEvent()
+      ->KeepTheEvent(false);
 #endif
 }
 
-
-void
-LYSimAnalysis::EndOfRun( const G4Run* )
+void LYSimAnalysis::EndOfRun(const G4Run *)
 {
-  //runtree->Fill();
-  //runtree->Write();// NULL, TObject::kOverwrite );
+  // runtree->Fill();
+  // runtree->Write();// NULL, TObject::kOverwrite );
 }
 
-void
-LYSimAnalysis::EndOfExperiment()
+void LYSimAnalysis::EndOfExperiment()
 {
   // Flushing run tree if no entries is present
-  if( runtree->GetEntries() == 0 ){
+  if (runtree->GetEntries() == 0)
+  {
     runtree->Fill();
   }
-  //format->chan3_time->Write();
-  //format->chan4_time->Write();
-  runtree->Write();// NULL, TObject::kOverwrite );
-  tree->Write();// NULL, TObject::kOverwrite );
+  // format->chan3_time->Write();
+  // format->chan4_time->Write();
+  runtree->Write(); // NULL, TObject::kOverwrite );
+  tree->Write();    // NULL, TObject::kOverwrite );
   file->Close();
 }
 
-int
-LYSimAnalysis::GetNPhotons( const G4Event* event )
+int LYSimAnalysis::GetNPhotons(const G4Event *event)
 {
-  static G4SDManager* SDman = G4SDManager::GetSDMpointer();
-  static G4int hitCollID    = SDman->GetCollectionID( "PMTHitsCollection" );
+  static G4SDManager *SDman = G4SDManager::GetSDMpointer();
+  static G4int hitCollID = SDman->GetCollectionID("PMTHitsCollection");
 
-  G4HCofThisEvent* hitsCollections = event->GetHCofThisEvent();
-  if( !hitsCollections ){
+  G4HCofThisEvent *hitsCollections = event->GetHCofThisEvent();
+  if (!hitsCollections)
+  {
     G4cerr << "hitsCollection not found" << G4endl;
     return -1;
   }
 
-  LYSimPMTHitsCollection* hits
-    = static_cast<LYSimPMTHitsCollection*>(
-        hitsCollections->GetHC( hitCollID ) );
+  LYSimPMTHitsCollection *hits = static_cast<LYSimPMTHitsCollection *>(
+      hitsCollections->GetHC(hitCollID));
 
   unsigned EventPhotonCount = 0;
 
-  for( size_t i = 0; i < hits->entries(); ++i ){
-    assert( ( *hits )[i]->GetPhotonCount() == 1 );
+  for (size_t i = 0; i < hits->entries(); ++i)
+  {
+    assert((*hits)[i]->GetPhotonCount() == 1);
     ++EventPhotonCount;
   }
 
@@ -343,42 +353,46 @@ LYSimAnalysis::GetNPhotons( const G4Event* event )
 
 // Implementation of helper functions
 static bool
-IsSiPMTrajectory( G4Navigator* nav, const G4ThreeVector& endpoint )
+IsSiPMTrajectory(G4Navigator *nav, const G4ThreeVector &endpoint)
 {
-  const G4ThreeVector zvec( 0, 0, 1 );
-  const G4VPhysicalVolume* endvol
-    = nav->LocateGlobalPointAndSetup( endpoint, &zvec, false, false );
+  const G4ThreeVector zvec(0, 0, 1);
+  const G4VPhysicalVolume *endvol = nav->LocateGlobalPointAndSetup(endpoint, &zvec, false, false);
   // Expecting SiPM hits to be pointing in the z direction.
-  if( endvol ){
+  if (endvol)
+  {
     return endvol->GetName() == "SiPM";
-  } else {// Rare occassion that endvol is not found
+  }
+  else
+  { // Rare occassion that endvol is not found
     return false;
   }
 }
 
-
-void LYSimAnalysis::addgenphoton(){
+void LYSimAnalysis::addgenphoton()
+{
   format->genphotons++;
 }
 
-void LYSimAnalysis::addwlsphoton(){
+void LYSimAnalysis::addwlsphoton()
+{
   format->wlsphotons++;
 }
-void LYSimAnalysis::pushchan3(float t){
-  //std::cout<<t<<std::endl;
+void LYSimAnalysis::pushchan3(float t)
+{
+  // std::cout<<t<<std::endl;
   format->chan3_photon.push_back(t);
   format->detectphotons3++;
-  //format->chan3_time.Fill(t);
+  // format->chan3_time.Fill(t);
 }
-void LYSimAnalysis::pushchan4(float t){
+void LYSimAnalysis::pushchan4(float t)
+{
   format->chan4_photon.push_back(t);
   format->detectphotons4++;
-  //format->chan4_time.Fill(t);
+  // format->chan4_time.Fill(t);
 }
-void LYSimAnalysis::push_ph_xyz(float x, float y, float z){
+void LYSimAnalysis::push_ph_xyz(float x, float y, float z)
+{
   format->ph_x.push_back(x);
   format->ph_y.push_back(y);
   format->ph_z.push_back(z);
 }
-
-

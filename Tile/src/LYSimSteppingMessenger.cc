@@ -9,20 +9,18 @@
 #include "G4UIcmdWithADoubleAndUnit.hh"
 #include "G4UIdirectory.hh"
 
-LYSimSteppingMessenger::LYSimSteppingMessenger( LYSimSteppingAction* act ) :
-  action( act )
+LYSimSteppingMessenger::LYSimSteppingMessenger(LYSimSteppingAction *act) : action(act)
 {
-  detDir = new G4UIdirectory( "/LYSim/" );
-  detDir->SetGuidance( " Geometry Setup " );
+  detDir = new G4UIdirectory("/LYSim/");
+  detDir->SetGuidance(" Geometry Setup ");
 
-  SetMaxTrackLengthCmd
-    = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetMaxTrackLength", this );
+  SetMaxTrackLengthCmd = new G4UIcmdWithADoubleAndUnit("/LYSim/SetMaxTrackLength", this);
   SetMaxTrackLengthCmd->SetGuidance(
-    "Set maximum length of tracking computations" );
-  SetMaxTrackLengthCmd->SetParameterName( "TrackLength", false );
-  SetMaxTrackLengthCmd->SetUnitCategory( "Length" );
-  SetMaxTrackLengthCmd->SetDefaultUnit( "mm" );
-  SetMaxTrackLengthCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+      "Set maximum length of tracking computations");
+  SetMaxTrackLengthCmd->SetParameterName("TrackLength", false);
+  SetMaxTrackLengthCmd->SetUnitCategory("Length");
+  SetMaxTrackLengthCmd->SetDefaultUnit("mm");
+  SetMaxTrackLengthCmd->AvailableForStates(G4State_PreInit, G4State_Idle);
 }
 
 LYSimSteppingMessenger::~LYSimSteppingMessenger()
@@ -31,11 +29,11 @@ LYSimSteppingMessenger::~LYSimSteppingMessenger()
   delete SetMaxTrackLengthCmd;
 }
 
-void
-LYSimSteppingMessenger::SetNewValue( G4UIcommand* command, G4String val )
+void LYSimSteppingMessenger::SetNewValue(G4UIcommand *command, G4String val)
 {
-  if( command == SetMaxTrackLengthCmd ){
+  if (command == SetMaxTrackLengthCmd)
+  {
     action->SetMaxTrackLength(
-      G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+        G4UIcmdWithADoubleAndUnit::GetNewDoubleValue(val));
   }
 }

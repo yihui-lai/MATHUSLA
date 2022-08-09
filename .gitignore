@@ -10,3 +10,5 @@ Makefile
 *ProjectPath.cc
 *.vscode
 *.code-workspace
+/build
+/bin

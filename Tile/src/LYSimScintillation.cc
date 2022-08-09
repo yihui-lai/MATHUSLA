@@ -11,8 +11,8 @@
 
 using namespace CLHEP;
 
-LYSimScintillation::LYSimScintillation( const G4String & processName, G4ProcessType type )
-  : G4Scintillation( processName, type )
+LYSimScintillation::LYSimScintillation(const G4String &processName, G4ProcessType type)
+    : G4Scintillation(processName, type)
 {
   G4AnalysisManager::Instance();
 }
@@ -21,16 +21,17 @@ LYSimScintillation::~LYSimScintillation()
 {
 }
 
-G4VParticleChange*
-LYSimScintillation::PostStepDoIt( const G4Track& aTrack, const G4Step& aStep )
+G4VParticleChange *
+LYSimScintillation::PostStepDoIt(const G4Track &aTrack, const G4Step &aStep)
 {
-  G4VParticleChange* result          = G4Scintillation::PostStepDoIt( aTrack, aStep );
-  G4double depenergy                 = aStep.GetTotalEnergyDeposit();
-  G4double TotEnergy                 = 0;
-  G4ParticleDefinition* particleType = aTrack.GetDefinition();
-  G4String particleName              = particleType->GetParticleName();
-  G4AnalysisManager* man             = G4AnalysisManager::Instance();
-  if( depenergy > 0.0 ){
+  G4VParticleChange *result = G4Scintillation::PostStepDoIt(aTrack, aStep);
+  G4double depenergy = aStep.GetTotalEnergyDeposit();
+  G4double TotEnergy = 0;
+  G4ParticleDefinition *particleType = aTrack.GetDefinition();
+  G4String particleName = particleType->GetParticleName();
+  G4AnalysisManager *man = G4AnalysisManager::Instance();
+  if (depenergy > 0.0)
+  {
     G4ThreeVector pos = aStep.GetPreStepPoint()->GetPosition();
     depenergy += TotEnergy;
 
