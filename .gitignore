@@ -19,15 +19,7 @@ log*
 Makefile
 **/*.cmake
 
-# Specific file exclusion
-# [relative/path/to/file]
-Tile/src/ProjectPath.cc
 
-# Specific file inclusion
-# ![relative/path/to/file]
-!CMakeLists.txt
-
-CMakeFiles/
 *.cmake
 CMakeCache.txt
 null.d
@@ -41,3 +33,13 @@ Makefile
 *.code-workspace
 /build
 /bin
+uncrustify.cfg
+
+# Specific file exclusion
+# [relative/path/to/file]
+Tile/src/ProjectPath.cc
+
+# Specific file inclusion
+# ![relative/path/to/file]
+!CMakeLists.txt
+
