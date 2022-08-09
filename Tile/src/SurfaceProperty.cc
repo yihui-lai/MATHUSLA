@@ -320,70 +320,13 @@ G4OpticalSurface*
 MakeS_SiPM()
 {
   // From Meeting on HB SiPM selection (James Hirschauer)
-  G4double p_mppc[62] = {3.91*eV,
-3.87*eV,
-3.82*eV,
-3.80*eV,
-3.72*eV,
-3.70*eV,
-3.65*eV,
-3.64*eV,
-3.64*eV,
-3.58*eV,
-3.58*eV,
-3.57*eV,
-3.53*eV,
-3.50*eV,
-3.44*eV,
-3.43*eV,
-3.36*eV,
-3.31*eV,
-3.30*eV,
-3.24*eV,
-3.17*eV,
-3.09*eV,
-2.99*eV,
-2.96*eV,
-2.94*eV,
-2.80*eV,
-2.80*eV,
-2.71*eV,
-2.62*eV,
-2.55*eV,
-2.47*eV,
-2.47*eV,
-2.39*eV,
-2.37*eV,
-2.37*eV,
-2.30*eV,
-2.29*eV,
-2.23*eV,
-2.23*eV,
-2.18*eV,
-2.12*eV,
-2.00*eV,
-1.97*eV,
-1.95*eV,
-1.92*eV,
-1.87*eV,
-1.78*eV,
-1.77*eV,
-1.72*eV,
-1.69*eV,
-1.68*eV,
-1.64*eV,
-1.59*eV,
-1.55*eV,
-1.53*eV,
-1.51*eV,
-1.48*eV,
-1.47*eV,
-1.43*eV,
-1.43*eV,
-1.39*eV,
-1.38*eV};
-  G4double refl_mppc[62];
-  for(int i=0; i<62; i++) refl_mppc[i]=0.2;
+  G4double p_mppc[21] = {2.0*eV, 2.1*eV, 2.2*eV, 2.3*eV, 2.4*eV, 
+                         2.5*eV, 2.6*eV, 2.7*eV, 2.8*eV, 2.9*eV, 
+                         3.0*eV, 3.1*eV, 3.2*eV, 3.3*eV, 3.4*eV, 
+                         3.5*eV, 3.6*eV, 3.7*eV, 3.8*eV, 3.9*eV,
+                       15.75*eV};
+  G4double refl_mppc[21];
+  for(int i=0; i<21; i++) refl_mppc[i]=0.2;
 
   G4OpticalSurface* surface = new G4OpticalSurface( "SiPM_Surface",glisur,ground,dielectric_metal,1.0 );
   G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
@@ -391,7 +334,7 @@ MakeS_SiPM()
   G4double p_perfectSIPM[] = { 1.0 * eV, 6.0 * eV };
   G4double effi_perfectSIPM[] = { 0.5, 0.5 };
 
-  table -> AddProperty("REFLECTIVITY",p_mppc,refl_mppc,62);
+  table -> AddProperty("REFLECTIVITY",p_mppc,refl_mppc,21);
   table->AddProperty("EFFICIENCY", p_perfectSIPM, effi_perfectSIPM,2);
 
   surface->SetMaterialPropertiesTable( table );
