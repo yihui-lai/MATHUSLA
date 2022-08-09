@@ -32,7 +32,6 @@ Makefile
 *.vscode
 *.code-workspace
 /build
-/bin
 uncrustify.cfg
 
 # Specific file exclusion
