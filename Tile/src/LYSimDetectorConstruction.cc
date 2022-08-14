@@ -59,8 +59,8 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 {
   fdetectorMessenger = new LYSimDetectorMessenger(this);
 
-  _tilex = 40 * mm;
-  _tiley = 40 * mm;
+  _tilex = 50 * mm;
+  _tiley = 20 * mm;
   _tilez = 200 * mm; // 200*mm
   _tile_x1 = 0.0 * mm;
   _tile_x2 = 0.0 * mm;
@@ -119,7 +119,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   // wls
   _handwrap = false;
   _cladlayer = 1;
-  _holeshape = 2; // 0 circle; 1 square; 2 el
+  _holeshape = 0; // 0 circle; 1 square; 2 el
   _WLSfiberR = 0.7 * mm;
   _WLSfiber_clad_thick = 0.05 * mm;
   _WLSfiber_clad2_thick = 0.05 * mm;
