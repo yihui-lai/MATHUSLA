@@ -15,31 +15,31 @@
 int main(int argc, char **argv)
 {
   usr::po::options_description desc("Running a run with a certain geometry");
-  desc.add_options()                                                                                  //
-      ("beamx,x", usr::po::defvalue<double>(0), "x center of beam [mm]")                              //
-      ("beamz,z", usr::po::defvalue<double>(0), "z center of beam [mm]")                              //
-      ("tileZ,l", usr::po::defvalue<double>(200), "Length of tile [mm]")                              //
-      ("tileX,X", usr::po::defvalue<double>(50), "X of tile [mm]")                                    //
-      ("tileY,Y", usr::po::defvalue<double>(20), "Y of tile [mm]")                                    //
-      ("beamwidth,w", usr::po::defvalue<double>(30), "width of beam [mm]")                            //
-      ("fiberZ,f", usr::po::defvalue<float>(5), "fiber length [m]")                                   //
-      ("fiberZshift,s", usr::po::defvalue<double>(0), "fiber shift [m]")                              //
-      ("absmult,a", usr::po::defvalue<double>(1000), "absorption length at 425nm, unit mm")           //
-      ("tiledecay,td", usr::po::defvalue<double>(2.5), "tile decay time, unit ns")                    //
-      ("tilerise,tr", usr::po::defvalue<double>(0.5), "tile rise time, unit ns")                      //
-      ("absY11,b", usr::po::defvalue<double>(100), "absorption length of Y11, unit mm")               //
-      ("yield,y", usr::po::defvalue<double>(10), "light yield / MeV")                                 //
-      ("wrapreflect,m", usr::po::defvalue<float>(0.985), "Wrap reflectivity")                         //
-      ("sipmeff,e", usr::po::defvalue<double>(1), "SiPM eff")                                         //
-      ("Y11decayTime,d", usr::po::defvalue<double>(7.193), "Y11 WLS time constant")                   //
-      ("NEvents,N", usr::po::defvalue<unsigned>(1), "Number of events to run")                        //
-      ("useProton,P", usr::po::defvalue<int>(1), "Flag to switch the source to a true proton source") //
-      ("handwrap,H", usr::po::defvalue<int>(0), "Flag to switch to handwrap")                         //
-      ("cladlayer,c", usr::po::defvalue<unsigned>(1), "Number of cladlayers")                         //
-      ("fiberR,r", usr::po::defvalue<double>(0.7), "Fiber radius")                                    //
-      ("HoleR,R", usr::po::defvalue<double>(1), "Hole radius")                                        //
-      ("output,o", usr::po::defvalue<std::string>("test.root"), "output file")                        //
-      ("spare,S", usr::po::defvalue<double>(1.0), "Spare Parameter")                                  //
+  desc.add_options()                                                                                //
+      ("beamx,x", usr::po::defvalue<double>(0), "x center of beam [mm]")                            //
+      ("beamz,z", usr::po::defvalue<double>(0), "z center of beam [mm]")                            //
+      ("tileZ,l", usr::po::defvalue<double>(200), "Length of tile [mm]")                            //
+      ("tileX,X", usr::po::defvalue<double>(50), "X of tile [mm]")                                  //
+      ("tileY,Y", usr::po::defvalue<double>(20), "Y of tile [mm]")                                  //
+      ("beamwidth,w", usr::po::defvalue<double>(30), "width of beam [mm]")                          //
+      ("fiberZ,f", usr::po::defvalue<float>(5), "fiber length [m]")                                 //
+      ("fiberZshift,s", usr::po::defvalue<double>(0), "fiber shift [m]")                            //
+      ("absmult,a", usr::po::defvalue<double>(1000), "absorption length at 425nm, unit mm")         //
+      ("tiledecay,td", usr::po::defvalue<double>(2.5), "tile decay time, unit ns")                  //
+      ("tilerise,tr", usr::po::defvalue<double>(0.5), "tile rise time, unit ns")                    //
+      ("absY11,b", usr::po::defvalue<double>(5000), "absorption length of Y11, unit mm")            //
+      ("yield,y", usr::po::defvalue<double>(10), "light yield / MeV")                               //
+      ("wrapreflect,m", usr::po::defvalue<float>(0.985), "Wrap reflectivity")                       //
+      ("sipmeff,e", usr::po::defvalue<double>(1), "SiPM eff")                                       //
+      ("Y11decayTime,d", usr::po::defvalue<double>(7.193), "Y11 WLS time constant")                 //
+      ("NEvents,N", usr::po::defvalue<unsigned>(1), "Number of events to run")                      //
+      ("useProton,P", usr::po::defvalue<int>(1), "Flag to switch the source to a true muon source") //
+      ("handwrap,H", usr::po::defvalue<int>(0), "Flag to switch to handwrap")                       //
+      ("cladlayer,c", usr::po::defvalue<unsigned>(1), "Number of cladlayers")                       //
+      ("fiberR,r", usr::po::defvalue<double>(0.7), "Fiber radius")                                  //
+      ("HoleR,R", usr::po::defvalue<double>(1), "Hole radius")                                      //
+      ("output,o", usr::po::defvalue<std::string>("test.root"), "output file")                      //
+      ("spare,S", usr::po::defvalue<double>(1.0), "Spare Parameter")                                //
       ;
 
   usr::ArgumentExtender args;
@@ -97,7 +97,7 @@ int main(int argc, char **argv)
   detector->SetHoleRadius(HoleR);
 
   detector->SetGaprefrac_index(1.4); // Gap material refraction index
-  detector->Setcladdirt(0);            // dirt on the clad
+  detector->Setcladdirt(0);          // dirt on the clad
   detector->SetWrapReflect(wrapref);
   detector->SetSiPMReflect(sipmeff);
   detector->Set_handwrap(handwrap);
