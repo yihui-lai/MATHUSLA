@@ -25,10 +25,10 @@ int main(int argc, char **argv)
       ("fiberZ,f", usr::po::defvalue<float>(5), "fiber length [m]")                                 //
       ("fiberZshift,s", usr::po::defvalue<double>(0), "fiber shift [m]")                            //
       ("absmult,a", usr::po::defvalue<double>(1000), "absorption length at 425nm, unit mm")         //
-      ("tiledecay,td", usr::po::defvalue<double>(2.5), "tile decay time, unit ns")                  //
+      ("tiledecay,td", usr::po::defvalue<double>(5), "tile decay time, unit ns, 11.5 ms overall")   //
       ("tilerise,tr", usr::po::defvalue<double>(0.5), "tile rise time, unit ns")                    //
       ("absY11,b", usr::po::defvalue<double>(5000), "absorption length of Y11, unit mm")            //
-      ("yield,y", usr::po::defvalue<double>(10000), "light yield / MeV")                               //
+      ("yield,y", usr::po::defvalue<double>(10000), "light yield / MeV")                            //
       ("wrapreflect,m", usr::po::defvalue<float>(0.985), "Wrap reflectivity")                       //
       ("sipmeff,e", usr::po::defvalue<double>(1), "SiPM eff")                                       //
       ("Y11decayTime,d", usr::po::defvalue<double>(7.193), "Y11 WLS time constant")                 //
