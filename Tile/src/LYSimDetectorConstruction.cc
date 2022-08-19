@@ -245,9 +245,9 @@ LYSimDetectorConstruction::Construct()
     G4VSolid *wrapface = ConstructTrapazoidSolid("Wrapface", _tilex, _tiley, wrapthickness, 0, 0);
 
     G4VSolid *solidWrapface = new G4SubtractionSolid("solidWrapface", wrapface, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0, 0));
-    G4VSolid *solidWrapfacee = new G4SubtractionSolid("solidWrapfacee", solidWrapface, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
+    //G4VSolid *solidWrapfacee = new G4SubtractionSolid("solidWrapfacee", solidWrapface, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
 
-    logicWrapface = new G4LogicalVolume(solidWrapfacee, fEpoxy, "Wrapface");
+    logicWrapface = new G4LogicalVolume(solidWrapface, fEpoxy, "Wrapface");
 
     G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_NoAbsorbing()); // define surface
 
