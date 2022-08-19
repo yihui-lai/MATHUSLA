@@ -67,10 +67,10 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   wrapgap = 0.1 * mm;
   wrapthickness = 0.1 * mm;
 
-  _absmult = 800;   // mm
-  _ScintiN = 100;   // Set scintillation to 10 /keV
-  _tiledecay = 2.5; // ns
-  _tilerise = 0.5;  // ns
+  _absmult = 800;  // mm
+  _ScintiN = 100;  // Set scintillation to 10 /keV
+  _tiledecay = 5;  // ns
+  _tilerise = 0.5; // ns
   _wrap_reflect = 0.985;
   _tile_alpha = 0.01;
   _dimple_alpha = 0.1;
@@ -126,10 +126,10 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
   _hole_radius = (_WLSfiberR + _WLSfiber_clad_thick + _WLSfiber_clad2_thick) * 1.01; // 1.0*mm;
   _hole_radius = 1 * mm;                                                             //
-  _hole_x1 = -13 * mm;
+  _hole_x1 = 0 * mm;
   _hole_x2 = 13 * mm;
 
-  _WLSfiberZ = 3.2 * m;
+  _WLSfiberZ = 5 * m;
   _WLS_zoff = 1.7 * m;
 
   _WLSfiberZ = _tilez * 1.5;
@@ -221,12 +221,12 @@ LYSimDetectorConstruction::Construct()
 
     // second hole
 
-    G4VSolid *solidWrap = new G4SubtractionSolid("solidWrap", solidWrap1, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
+    // G4VSolid *solidWrap = new G4SubtractionSolid("solidWrap", solidWrap1, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
 
     //---------------------------
-    logicWrap = new G4LogicalVolume(solidWrap, fEpoxy, "Wrap");
+    // logicWrap = new G4LogicalVolume(solidWrap, fEpoxy, "Wrap");
 
-    // logicWrap = new G4LogicalVolume( solidWrap1, fEpoxy,  "Wrap" ); // comment this line when second hole enabled
+    logicWrap = new G4LogicalVolume(solidWrap1, fEpoxy, "Wrap"); // comment this line when second hole enabled
 
     G4VPhysicalVolume *physWrap = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), logicWrap, "Wrap", logicWorld, false, 0, checkOverlaps);
     G4LogicalSkinSurface *WrapSurface =
@@ -236,13 +236,11 @@ LYSimDetectorConstruction::Construct()
   {
     G4VSolid *solidExtrusion = ConstructHollowWrapCladSolid();
 
-    logicWrap =
-        new G4LogicalVolume(solidExtrusion, fcoating, "Extrusion");
+    logicWrap = new G4LogicalVolume(solidExtrusion, fcoating, "Extrusion");
 
     G4VPhysicalVolume *physWrap = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), logicWrap, "Wrap", logicWorld, false, 0, checkOverlaps);
 
-    G4LogicalSkinSurface *WrapSurface =
-        new G4LogicalSkinSurface("WrapSurface", logicWrap, fTiO2Surface);
+    G4LogicalSkinSurface *WrapSurface = new G4LogicalSkinSurface("WrapSurface", logicWrap, fTiO2Surface);
 
     G4VSolid *wrapface = ConstructTrapazoidSolid("Wrapface", _tilex, _tiley, wrapthickness, 0, 0);
 
@@ -251,8 +249,7 @@ LYSimDetectorConstruction::Construct()
 
     logicWrapface = new G4LogicalVolume(solidWrapfacee, fEpoxy, "Wrapface");
 
-    G4LogicalSkinSurface *WrapfaceSurface = // define surface by Yucun
-        new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_NoAbsorbing());
+    G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_NoAbsorbing()); // define surface
 
     physWrap3 = new G4PVPlacement(0, G4ThreeVector(0, 0, _tilez * 0.5 + wrapthickness * 0.5), logicWrapface, "Wrapface3", logicWorld, false, 0, checkOverlaps);
     physWrap4 = new G4PVPlacement(0, G4ThreeVector(0, 0, -_tilez * 0.5 - wrapthickness * 0.5), logicWrapface, "Wrapface4", logicWorld, false, 0, checkOverlaps);
@@ -265,14 +262,12 @@ LYSimDetectorConstruction::Construct()
 
   // second hole ----------
 
-  G4VSolid *tileBulk = new G4SubtractionSolid("TileSolid_Bulk", tileBulk1, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
+  // G4VSolid *tileBulk = new G4SubtractionSolid("TileSolid_Bulk", tileBulk1, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
 
-  G4LogicalVolume *logicTileBulk = new G4LogicalVolume(tileBulk, fEJ200, "TileBulkLogic");
+  // G4LogicalVolume *logicTileBulk = new G4LogicalVolume(tileBulk, fEJ200, "TileBulkLogic");
   //----------------
-  /*G4LogicalVolume* logicTileBulk = new G4LogicalVolume( tileBulk1
-                                                      , fEJ200
-                                                      , "TileBulkLogic" ); // comment this line when second hole enabled
-*/
+  G4LogicalVolume *logicTileBulk = new G4LogicalVolume(tileBulk1, fEJ200, "TileBulkLogic"); // comment this line when second hole enabled
+
   G4VPhysicalVolume *physTileBulk = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), logicTileBulk, "TileBulkPhysic", logicWorld, false, 0, checkOverlaps);
 
   if (!_handwrap)
@@ -326,8 +321,8 @@ LYSimDetectorConstruction::Construct()
 
   G4VSolid *solidWLSfiberFrame = new G4Tubs("WLSFiberFrame", 0., holeinner, _WLSfiberZ * 0.5, 0., 2 * pi);
   G4VSolid *solidHole_subs = new G4SubtractionSolid("TileHole_Subs", solidHole, solidWLSfiberFrame, 0, G4ThreeVector(_WLS_xoff, 0, 0));
-  G4LogicalVolume* logicHole = new G4LogicalVolume( solidHole_subs, fAir,  "Hole" ); //Jul19 edited
-  //G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fResin, "Hole");
+  G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fAir, "Hole"); // Jul19 edited
+  // G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fResin, "Hole");
 
   G4VPhysicalVolume *physHole = new G4PVPlacement(0, G4ThreeVector(_hole_x1, 0, 0), logicHole, "Hole", logicWorld, false, 0, checkOverlaps);
 
