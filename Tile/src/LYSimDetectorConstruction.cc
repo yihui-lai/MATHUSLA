@@ -321,8 +321,8 @@ LYSimDetectorConstruction::Construct()
 
   G4VSolid *solidWLSfiberFrame = new G4Tubs("WLSFiberFrame", 0., holeinner, _WLSfiberZ * 0.5, 0., 2 * pi);
   G4VSolid *solidHole_subs = new G4SubtractionSolid("TileHole_Subs", solidHole, solidWLSfiberFrame, 0, G4ThreeVector(_WLS_xoff, 0, 0));
-  G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fAir, "Hole"); // Jul19 edited
-  // G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fResin, "Hole");
+  //G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fAir, "Hole"); // normal air gap
+  G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fResin, "Hole");//testing gap material 
 
   G4VPhysicalVolume *physHole = new G4PVPlacement(0, G4ThreeVector(_hole_x1, 0, 0), logicHole, "Hole", logicWorld, false, 0, checkOverlaps);
 
@@ -352,7 +352,7 @@ LYSimDetectorConstruction::Construct()
 
     }
   */
-
+/* //remove clad
   G4OpticalSurface *surface_IdealnonPolished = new G4OpticalSurface("IdealnonPolished", glisur, ground, dielectric_dielectric, 1);
   double surface_IdealnonPolishedphoE2[2] = {1.0 * eV, 8.0 * eV};
   double surface_IdealnonPolishedreflectivity[2] = {1 - _claddirt, 1 - _claddirt};
@@ -369,7 +369,7 @@ LYSimDetectorConstruction::Construct()
   new G4LogicalBorderSurface("surfaceClad1In", physHole, physWLSfiber_clad,
                              surface_IdealnonPolished);
   // end here
-
+*///------------remove clad
   // G4OpticalSurface* surface_p =MakeS_TiO2Surface();
   // new G4LogicalBorderSurface("surfaceCladin", physWLSfiber_clad, physHole, surface_p);
   /*new G4LogicalBorderSurface("surfacecladout", physWLSfiber_clad, physHole, opSurface);
