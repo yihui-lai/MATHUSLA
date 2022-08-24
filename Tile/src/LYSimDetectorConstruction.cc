@@ -59,8 +59,8 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 {
   fdetectorMessenger = new LYSimDetectorMessenger(this);
 
-  _tilex = 50 * mm;
-  _tiley = 20 * mm;
+  _tilex = 40 * mm;
+  _tiley = 40 * mm;
   _tilez = 200 * mm; // 200*mm
   _tile_x1 = 0.0 * mm;
   _tile_x2 = 0.0 * mm;
@@ -69,7 +69,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
   _absmult = 800;  // mm
   _ScintiN = 100;  // Set scintillation to 10 /keV
-  _tiledecay = 5;  // ns
+  _tiledecay = 5;  // ns // tuning to 11.53 ns overall
   _tilerise = 0.5; // ns
   _wrap_reflect = 0.985;
   _tile_alpha = 0.01;
@@ -125,7 +125,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   _WLSfiber_clad2_thick = 0.05 * mm;
 
   _hole_radius = (_WLSfiberR + _WLSfiber_clad_thick + _WLSfiber_clad2_thick) * 1.01; // 1.0*mm;
-  _hole_radius = 1 * mm;                                                             //
+  _hole_radius = 4 * mm;                                                             //
   _hole_x1 = 0 * mm;
   _hole_x2 = 13 * mm;
 
