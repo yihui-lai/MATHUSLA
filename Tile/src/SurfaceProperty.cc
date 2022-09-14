@@ -251,7 +251,7 @@ MakeS_Absorbing()
   // Absorbing surface
   //////////////////////////////////
   G4OpticalSurface *surface = new G4OpticalSurface("AbsorbingOpSurface");
-  surface->SetType(dielectric_dielectric);
+  surface->SetType(dielectric_metal);
   surface->SetFinish(groundfrontpainted);
   surface->SetModel(unified);
 
@@ -266,12 +266,12 @@ MakeS_NoAbsorbing()
 {
   const unsigned nentries = 2;
   double phoE[nentries] = {1.0 * eV, 6.0 * eV};
-  double reflectivity[nentries] = {0.0, 1};
+  double reflectivity[nentries] = {1, 1};
   //////////////////////////////////
   // Absorbing surface
   //////////////////////////////////
   G4OpticalSurface *surface = new G4OpticalSurface("AbsorbingOpSurface");
-  surface->SetType(dielectric_dielectric);
+  surface->SetType(dielectric_metal);
   surface->SetFinish(groundfrontpainted);
   surface->SetModel(unified);
 
