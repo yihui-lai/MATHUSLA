@@ -251,7 +251,7 @@ MakeS_Absorbing()
   // Absorbing surface
   //////////////////////////////////
   G4OpticalSurface *surface = new G4OpticalSurface("AbsorbingOpSurface");
-  surface->SetType(dielectric_metal);
+  surface->SetType(dielectric_dielectric);
   surface->SetFinish(groundfrontpainted);
   surface->SetModel(unified);
 
