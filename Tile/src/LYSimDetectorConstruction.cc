@@ -240,7 +240,7 @@ LYSimDetectorConstruction::Construct()
 
     G4VPhysicalVolume *physWrap = new G4PVPlacement(0, G4ThreeVector(0, 0, 0), logicWrap, "Wrap", logicWorld, false, 0, checkOverlaps);
 
-    G4LogicalSkinSurface *WrapSurface = new G4LogicalSkinSurface("WrapSurface", logicWrap, fTiO2Surface);
+    G4LogicalSkinSurface *WrapSurface = new G4LogicalSkinSurface("WrapSurface", logicWrap, fTiO2Surface);//surface clading 
 
     G4VSolid *wrapface = ConstructTrapazoidSolid("Wrapface", _tilex, _tiley, wrapthickness, 0, 0);
 
