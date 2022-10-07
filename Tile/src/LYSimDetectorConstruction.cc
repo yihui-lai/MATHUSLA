@@ -119,13 +119,13 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   // wls
   _handwrap = false;
   _cladlayer = 1;
-  _holeshape = 2; // 0 circle; 1 square; 2 el
+  _holeshape = 1; // 0 circle; 1 square; 2 el
   _WLSfiberR = 0.7 * mm;
   _WLSfiber_clad_thick = 0.05 * mm;
   _WLSfiber_clad2_thick = 0.05 * mm;
 
   _hole_radius = (_WLSfiberR + _WLSfiber_clad_thick + _WLSfiber_clad2_thick) * 1.01; // 1.0*mm;
-  _hole_radius = 2 * mm;                                                             //
+  _hole_radius = 1 * mm;                                                             //
   _hole_x1 = 0 * mm;
   _hole_x2 = 13 * mm;
 
@@ -217,7 +217,7 @@ LYSimDetectorConstruction::Construct()
   if (_handwrap)
   {
     G4VSolid *solidWrap0 = ConstructHollowWrapSolid();
-    G4VSolid *solidWrap1 = new G4SubtractionSolid("solidWrap", solidWrap0, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0, 0));
+    G4VSolid *solidWrap1 = new G4SubtractionSolid("solidWrap", solidWrap0, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0.5 * _tiley - _hole_radius, 0));
 
     // second hole
 
@@ -244,7 +244,7 @@ LYSimDetectorConstruction::Construct()
 
     G4VSolid *wrapface = ConstructTrapazoidSolid("Wrapface", _tilex, _tiley, wrapthickness, 0, 0);
 
-    G4VSolid *solidWrapface = new G4SubtractionSolid("solidWrapface", wrapface, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0, 0));
+    G4VSolid *solidWrapface = new G4SubtractionSolid("solidWrapface", wrapface, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0.5 * _tiley - _hole_radius, 0));
     //G4VSolid *solidWrapfacee = new G4SubtractionSolid("solidWrapfacee", solidWrapface, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
 
     logicWrapface = new G4LogicalVolume(solidWrapface, fEpoxy, "Wrapface");
@@ -258,7 +258,7 @@ LYSimDetectorConstruction::Construct()
   // extruded scintillator
   ///////////////////////////////////////////////////////////////////////////////
   G4VSolid *solidTile = ConstructTrapazoidSolid("TileTrap", _tilex, _tiley, _tilez, _tile_x1, _tile_x2);
-  G4VSolid *tileBulk1 = new G4SubtractionSolid("TileSolid_Bulk", solidTile, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0, 0));
+  G4VSolid *tileBulk1 = new G4SubtractionSolid("TileSolid_Bulk", solidTile, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0.5 * _tiley - _hole_radius, 0));
 
   // second hole ----------
 
@@ -286,9 +286,9 @@ LYSimDetectorConstruction::Construct()
   G4LogicalVolume *logicWLSfiber = new G4LogicalVolume(solidWLSfiber, mfiber, "logicWLSfiber");
   G4LogicalVolume *logicWLSfiber_clad = new G4LogicalVolume(solidWLSfiber_clad, mfiber_clad, "logicWLSfiber_clad");
 
-  G4VPhysicalVolume *physWLSfiber = new G4PVPlacement(0, G4ThreeVector(_hole_x1 + _WLS_xoff, 0, -_WLS_zoff), logicWLSfiber, "PhyhWLSfiber_core", logicWorld, false, 0, checkOverlaps);
+  G4VPhysicalVolume *physWLSfiber = new G4PVPlacement(0, G4ThreeVector(_hole_x1 + _WLS_xoff, 0.5 * _tiley - _hole_radius, -_WLS_zoff), logicWLSfiber, "PhyhWLSfiber_core", logicWorld, false, 0, checkOverlaps);
 
-  G4VPhysicalVolume *physWLSfiber_clad = new G4PVPlacement(0, G4ThreeVector(_hole_x1 + _WLS_xoff, 0, -_WLS_zoff), logicWLSfiber_clad, "PhyhWLSfiber_cald", logicWorld, false, 0, checkOverlaps);
+  G4VPhysicalVolume *physWLSfiber_clad = new G4PVPlacement(0, G4ThreeVector(_hole_x1 + _WLS_xoff, 0.5 * _tiley - _hole_radius, -_WLS_zoff), logicWLSfiber_clad, "PhyhWLSfiber_cald", logicWorld, false, 0, checkOverlaps);
 
   ///////////////////////////////////////////////////////////////////////////////
   // fiber. second layer clad
@@ -324,7 +324,7 @@ LYSimDetectorConstruction::Construct()
   //G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fAir, "Hole"); // normal air gap
   G4LogicalVolume *logicHole = new G4LogicalVolume(solidHole_subs, fResin, "Hole");//testing gap material 
 
-  G4VPhysicalVolume *physHole = new G4PVPlacement(0, G4ThreeVector(_hole_x1, 0, 0), logicHole, "Hole", logicWorld, false, 0, checkOverlaps);
+  G4VPhysicalVolume *physHole = new G4PVPlacement(0, G4ThreeVector(_hole_x1, 0.5 * _tiley - _hole_radius, 0), logicHole, "Hole", logicWorld, false, 0, checkOverlaps);
 
   /*
     if(_cladlayer==2){
