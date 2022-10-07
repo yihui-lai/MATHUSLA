@@ -249,7 +249,7 @@ LYSimDetectorConstruction::Construct()
 
     logicWrapface = new G4LogicalVolume(solidWrapface, fEpoxy, "Wrapface");
 
-    G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_Absorbing()); // define surface at end 
+    G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_RoughInterface(0.5)); // define surface at end 
 
     physWrap3 = new G4PVPlacement(0, G4ThreeVector(0, 0, _tilez * 0.5 + wrapthickness * 0.5), logicWrapface, "Wrapface3", logicWorld, false, 0, checkOverlaps);
     physWrap4 = new G4PVPlacement(0, G4ThreeVector(0, 0, -_tilez * 0.5 - wrapthickness * 0.5), logicWrapface, "Wrapface4", logicWorld, false, 0, checkOverlaps);
