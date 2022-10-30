@@ -119,7 +119,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   // wls
   _handwrap = false;
   _cladlayer = 1;
-  _holeshape = 1; // 0 circle; 1 square; 2 el
+  _holeshape = 0; // 0 circle; 1 square; 2 el
   _WLSfiberR = 0.7 * mm;
   _WLSfiber_clad_thick = 0.05 * mm;
   _WLSfiber_clad2_thick = 0.05 * mm;
@@ -247,12 +247,16 @@ LYSimDetectorConstruction::Construct()
     G4VSolid *solidWrapface = new G4SubtractionSolid("solidWrapface", wrapface, solidHoleBound, 0, G4ThreeVector(_hole_x1, 0.5 * _tiley - _hole_radius, 0));
     //G4VSolid *solidWrapfacee = new G4SubtractionSolid("solidWrapfacee", solidWrapface, solidHoleBound, 0, G4ThreeVector(_hole_x2, 0, 0));
 
-    logicWrapface = new G4LogicalVolume(solidWrapface, fEpoxy, "Wrapface");
 
+
+    logicWrapface = new G4LogicalVolume(solidWrapface, fEpoxy, "Wrapface");
+    //G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_Mirror()); // define surface at end 
     G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_RoughInterface(0.5)); // define surface at end 
 
     physWrap3 = new G4PVPlacement(0, G4ThreeVector(0, 0, _tilez * 0.5 + wrapthickness * 0.5), logicWrapface, "Wrapface3", logicWorld, false, 0, checkOverlaps);
     physWrap4 = new G4PVPlacement(0, G4ThreeVector(0, 0, -_tilez * 0.5 - wrapthickness * 0.5), logicWrapface, "Wrapface4", logicWorld, false, 0, checkOverlaps);
+
+
   }
   ///////////////////////////////////////////////////////////////////////////////
   // extruded scintillator
