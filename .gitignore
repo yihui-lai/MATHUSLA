@@ -27,6 +27,7 @@ lib/
 Interactive_Session.root
 Makefile
 .DS_Store
+**/.DS_Store/**
 *.json
 *ProjectPath.cc
 *.vscode
