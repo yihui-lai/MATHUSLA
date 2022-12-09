@@ -59,9 +59,9 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 {
   fdetectorMessenger = new LYSimDetectorMessenger(this);
 
-  _tilex = 40 * mm;
+  _tilex = 50 * mm;
   _tiley = 10 * mm;
-  _tilez = 500 * mm; // 200*mm
+  _tilez = 200 * mm; // 200*mm
   _tile_x1 = 0.0 * mm;
   _tile_x2 = 0.0 * mm;
   wrapgap = 0.1 * mm;
