@@ -85,10 +85,10 @@ main( int argc, char** argv )
   detector->SetFiberXoff( 0 );
   detector->SetFiberZoff( fiberZshift );
   detector->SetFiberClad( cladlayer );
-  detector->SetHoleShape( 2 ); //changed
+  detector->SetHoleShape( 1 ); // //0 circle; 1 square; 2 el
   detector->SetTileAbsMult( absmult );
   detector->SetTileDecaytime(tiledecay);
-  detector->SetTileRisetime(tilerise);
+  detector->SetTileRisetime(tilerise); 
   //detector->SetClad_refrac_index(tilerise,tiledecay);  //clad1, clad2
 
   detector->SetTileScintillation(yield);
@@ -97,8 +97,8 @@ main( int argc, char** argv )
   detector->SetFiberR(fiberR);
   detector->SetHoleRadius(HoleR);
 
-  //detector->SetGaprefrac_index(fiberR); //Gap material refraction index
-  detector->Setcladdirt(spare);  //dirt on the clad
+  detector->SetGaprefrac_index(spare); //Gap material refraction index
+  //detector->Setcladdirt(spare);  //dirt on the clad
   detector->SetWrapReflect( wrapref );
   detector->SetSiPMReflect( sipmeff );  
   detector->Set_handwrap( handwrap );

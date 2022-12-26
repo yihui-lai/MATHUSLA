@@ -8,7 +8,7 @@ extern G4Material* Make_Bialkali();
 extern G4Material* Make_Epoxy();
 extern G4Material* Make_EJ200();
 extern G4Material* Make_Resin();
-extern void        Update_EJ200_AbsLength( G4Material*, const double x );
+extern void        Set_Flat_AbsLength( G4Material*, const double x );
 extern void        Update_EJ200_Scinti( G4Material*, const double x );
 extern void        Update_EJ200_FASTTIMECONSTANT( G4Material*, const double x );
 extern void        Update_EJ200_RISETIME( G4Material*, const double x );

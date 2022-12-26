@@ -268,7 +268,7 @@ MakeS_NoAbsorbing()
 {
   const unsigned nentries       = 2;
   double phoE[nentries]         = {1.0*eV, 6.0*eV};
-  double reflectivity[nentries] = {0.0, 1};
+  double reflectivity[nentries] = {0.0, 0.0};
   //////////////////////////////////
   // Absorbing surface
   //////////////////////////////////
