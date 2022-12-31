@@ -318,10 +318,10 @@ LYSimDetectorConstruction::Construct()
   ///////////////////////////////////////////////////////////////////////////////
   G4LogicalVolume* logicWLSfiber_clad2;
   G4VSolid* solidWLSfiber_clad2;
-  std::cout<<"============  add a second cladding! ================="<<std::endl;
   solidWLSfiber_clad2 = new G4Tubs("WLSFiber_clad2", _WLSfiberR+_WLSfiber_clad_thick, _WLSfiberR+_WLSfiber_clad_thick+_WLSfiber_clad2_thick, _WLSfiberZ*0.5, 0., 2*pi);
   logicWLSfiber_clad2 = new G4LogicalVolume( solidWLSfiber_clad2 , mfiber_clad2,  "logicWLSfiber_clad2" );
   if(_cladlayer==2){
+     std::cout<<"============  add a second cladding! ================="<<std::endl;
      G4VPhysicalVolume* physWLSfiber_clad2 = new G4PVPlacement( 0, G4ThreeVector(_hole_x1+_WLS_xoff, 0, -_WLS_zoff)
                                                       , logicWLSfiber_clad2
                                                       , "PhyhWLSfiber_cald2"
@@ -409,8 +409,10 @@ LYSimDetectorConstruction::Construct()
   ///////////////////////////////////////////////////////////////////////////////
   // Simple version of SiPM
   ///////////////////////////////////////////////////////////////////////////////
-  const G4ThreeVector SiPMOffset_chan3( _hole_x1+_WLS_xoff, 0, _WLSfiberZ*0.5 - _WLS_zoff + 0.5*_sipm_z + 0.01*mm);  
-  const G4ThreeVector SiPMOffset_chan4( _hole_x1+_WLS_xoff, 0, -_WLSfiberZ*0.5 - _WLS_zoff - 0.5*_sipm_z - 0.01*mm);
+  double Sipmgap=0.01*mm;
+  //Sipmgap=0;
+  const G4ThreeVector SiPMOffset_chan3( _hole_x1+_WLS_xoff, 0, _WLSfiberZ*0.5 - _WLS_zoff + 0.5*_sipm_z + Sipmgap);  
+  const G4ThreeVector SiPMOffset_chan4( _hole_x1+_WLS_xoff, 0, -_WLSfiberZ*0.5 - _WLS_zoff - 0.5*_sipm_z - Sipmgap);
   G4Tubs* solidSiPMInnerBox = new G4Tubs( "solidSiPMInnerBox", 0., _WLSfiberR, _sipm_z*0.5, 0., 2*pi);
   G4LogicalVolume* logicSiPM = new G4LogicalVolume( solidSiPMInnerBox
                                                   , fBialkali,  "SiPM" );
@@ -428,6 +430,13 @@ LYSimDetectorConstruction::Construct()
                                                  , false
                                                  , 0
                                                  , checkOverlaps );
+
+  G4Tubs* solidSiPMcase = new G4Tubs( "solidSiPMcase", _WLSfiberR,_WLSfiberR+0.1*mm, _sipm_z*0.5, 0., 2*pi);
+  G4LogicalVolume* logicSiPMcase = new G4LogicalVolume( solidSiPMcase, fBialkali,  "SiPMcase" );
+  G4VPhysicalVolume* physSiPM_chan3case = new G4PVPlacement( 0, SiPMOffset_chan3, logicSiPMcase, "physSiPM_chan3case", logicWorld, false, 0, checkOverlaps );
+  G4VPhysicalVolume* physSiPM_chan4case = new G4PVPlacement( 0, SiPMOffset_chan4, logicSiPMcase, "physSiPM_chan4case", logicWorld, false, 0, checkOverlaps );
+
+
   /*
   G4OpticalSurface* FiberEndSurface = new G4OpticalSurface("FiberEndSurface",
                                                          unified,
@@ -447,11 +456,16 @@ LYSimDetectorConstruction::Construct()
   // Tile surfaces
   G4LogicalBorderSurface* TileBulkSurface = new G4LogicalBorderSurface( "TileBulkSurface", physTileBulk, physWorld, fTileBulkSurface );
   // SiPM surface
-  new G4LogicalBorderSurface("SiPMSurface3_out", physWorld, physSiPM_chan3, fSiPMSurface3);
-  new G4LogicalBorderSurface("SiPMSurface4_out", physWorld, physSiPM_chan4, fSiPMSurface4);
-  new G4LogicalBorderSurface("SiPMSurface3_in", physSiPM_chan3,physWorld, fSiPMSurface3);
-  new G4LogicalBorderSurface("SiPMSurface4_in", physSiPM_chan4,physWorld, fSiPMSurface4);
-  
+  new G4LogicalSkinSurface( "SiPMSurface", logicSiPM, fSiPMSurface3 );
+  G4OpticalSurface* FiberEndSurface = new G4OpticalSurface("FiberEndSurface",unified,ground,dielectric_dielectric,0.02);
+  new G4LogicalSkinSurface( "SiPMSurfacecase", logicSiPMcase, MakeS_Mirror() );
+  /*
+  new G4LogicalBorderSurface("SiPMSurface3_out", physWLSfiber, physSiPM_chan3, fSiPMSurface3);
+  new G4LogicalBorderSurface("SiPMSurface4_out", physWLSfiber, physSiPM_chan4, fSiPMSurface4);
+  new G4LogicalBorderSurface("SiPMSurface3_in", physSiPM_chan3,physWLSfiber, fSiPMSurface3);
+  new G4LogicalBorderSurface("SiPMSurface4_in", physSiPM_chan4,physWLSfiber, fSiPMSurface4);
+  */
+
   // Setting the sensitive detector
   if( !fPMTSD ){
     fPMTSD = new LYSimPMTSD( "/LYSimPMT" );
