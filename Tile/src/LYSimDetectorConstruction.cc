@@ -59,9 +59,9 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 {
   fdetectorMessenger = new LYSimDetectorMessenger(this);
 
-  _tilex = 50 * mm;
+  _tilex = 10 * mm;
   _tiley = 10 * mm;
-  _tilez = 200 * mm; // 200*mm
+  _tilez = 250 * mm; // 200*mm
   _tile_x1 = 0.0 * mm;
   _tile_x2 = 0.0 * mm;
   wrapgap = 0.1 * mm;
@@ -125,7 +125,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   _WLSfiber_clad2_thick = 0.05 * mm;
 
   _hole_radius = (_WLSfiberR + _WLSfiber_clad_thick + _WLSfiber_clad2_thick) * 1.01; // 1.0*mm;
-  _hole_radius = 1 * mm;                                                             //
+  _hole_radius = 0.9 * mm;                                                             //
   _hole_x1 = 0 * mm;
   _hole_x2 = 13 * mm;
 
@@ -251,7 +251,7 @@ LYSimDetectorConstruction::Construct()
 
     logicWrapface = new G4LogicalVolume(solidWrapface, fEpoxy, "Wrapface");
     //G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_Mirror()); // define surface at end 
-    G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_RoughInterface(0.5)); // define surface at end 
+    G4LogicalSkinSurface *WrapfaceSurface = new G4LogicalSkinSurface("WrapfaceSurface", logicWrapface, MakeS_ESR()); // define surface at end 
 
     physWrap3 = new G4PVPlacement(0, G4ThreeVector(0, 0, _tilez * 0.5 + wrapthickness * 0.5), logicWrapface, "Wrapface3", logicWorld, false, 0, checkOverlaps);
     physWrap4 = new G4PVPlacement(0, G4ThreeVector(0, 0, -_tilez * 0.5 - wrapthickness * 0.5), logicWrapface, "Wrapface4", logicWorld, false, 0, checkOverlaps);
