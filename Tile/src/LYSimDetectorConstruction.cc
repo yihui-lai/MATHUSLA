@@ -119,13 +119,13 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   // wls
   _handwrap = false;
   _cladlayer = 1;
-  _holeshape = 0; // 0 circle; 1 square; 2 el
+  _holeshape = 2; // 0 circle; 1 square; 2 el
   _WLSfiberR = 0.7 * mm;
   _WLSfiber_clad_thick = 0.05 * mm;
   _WLSfiber_clad2_thick = 0.05 * mm;
 
   _hole_radius = (_WLSfiberR + _WLSfiber_clad_thick + _WLSfiber_clad2_thick) * 1.01; // 1.0*mm;
-  _hole_radius = 0.9 * mm;                                                             //
+  _hole_radius = 1.2 * mm;                                                             //
   _hole_x1 = 0 * mm;
   _hole_x2 = 13 * mm;
 
@@ -208,7 +208,7 @@ LYSimDetectorConstruction::Construct()
   else if (_holeshape == 1)
     solidHoleBound = new G4Box("TileHole", _hole_radius, _hole_radius, _tilez);
   else if (_holeshape == 2)
-    solidHoleBound = new G4EllipticalTube("TileHole", _hole_radius, 1.5, _tilez);
+    solidHoleBound = new G4EllipticalTube("TileHole", _hole_radius, 1.2, _tilez);
 
   G4LogicalVolume *logicWrap;
   G4LogicalVolume *logicWrapface;
@@ -321,7 +321,7 @@ LYSimDetectorConstruction::Construct()
   else if (_holeshape == 1)
     solidHole = new G4Box("TileHole", _hole_radius, _hole_radius, _tilez * 0.5);
   else if (_holeshape == 2)
-    solidHole = new G4EllipticalTube("TileHole", _hole_radius, 1.5, _tilez * 0.5);
+    solidHole = new G4EllipticalTube("TileHole", _hole_radius, 1.2, _tilez * 0.5);
 
   G4VSolid *solidWLSfiberFrame = new G4Tubs("WLSFiberFrame", 0., holeinner, _WLSfiberZ * 0.5, 0., 2 * pi);
   G4VSolid *solidHole_subs = new G4SubtractionSolid("TileHole_Subs", solidHole, solidWLSfiberFrame, 0, G4ThreeVector(_WLS_xoff, 0, 0));
