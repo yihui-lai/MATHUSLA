@@ -758,15 +758,15 @@ void LYSimDetectorConstruction::SetWrapReflect(const double r)
     fESROpSurface->SetMaterialPropertiesTable(table);
   }
 
-  // G4MaterialPropertiesTable* table2 = fTiO2Surface->GetMaterialPropertiesTable();
-  // if( table2 ){
-  //   table2->RemoveProperty( "REFLECTIVITY" );
-  //   table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
-  // } else {
-  //   table2 = new G4MaterialPropertiesTable();
-  //   table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
-  //   fTiO2Surface->SetMaterialPropertiesTable( table2 );
-  // }
+  G4MaterialPropertiesTable* table2 = fTiO2Surface->GetMaterialPropertiesTable();
+  if( table2 ){
+    table2->RemoveProperty( "REFLECTIVITY" );
+    table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
+  } else {
+    table2 = new G4MaterialPropertiesTable();
+    table2->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
+    fTiO2Surface->SetMaterialPropertiesTable( table2 );
+  }
 }
 
 void LYSimDetectorConstruction::SetSiPMReflect(const double r)
