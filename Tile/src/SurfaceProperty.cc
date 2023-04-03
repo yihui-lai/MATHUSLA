@@ -262,7 +262,7 @@ MakeS_Absorbing()
   return surface;
 }
 G4OpticalSurface *
-MakeS_NoAbsorbing()
+MakeS_VAbsorbing()
 {
   const unsigned nentries = 2;
   double phoE[nentries] = {1.0 * eV, 6.0 * eV};
