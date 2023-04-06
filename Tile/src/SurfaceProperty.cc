@@ -266,7 +266,7 @@ MakeS_VAbsorbing()
 {
   const unsigned nentries = 2;
   double phoE[nentries] = {1.0 * eV, 6.0 * eV};
-  double reflectivity[nentries] = {0, 0}; //end surface reflectivity
+  double reflectivity[nentries] = {0.3, 0.3};
   //////////////////////////////////
   // Absorbing surface
   //////////////////////////////////
