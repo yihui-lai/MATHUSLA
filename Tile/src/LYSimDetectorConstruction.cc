@@ -61,7 +61,7 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
   _tilex = 10 * mm;
   _tiley = 10 * mm;
-  _tilez = 250 * mm; // 200*mm
+  _tilez = 50 * mm; // 200*mm
   _tile_x1 = 0.0 * mm;
   _tile_x2 = 0.0 * mm;
   wrapgap = 0.1 * mm;
