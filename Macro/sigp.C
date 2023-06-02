@@ -1,3 +1,6 @@
+#include<iostream>
+
+using namespace std;
 
 void set_root_style();
 
@@ -58,7 +61,6 @@ void sigp()
     //PrintArray(sigma[3]);
     
     
-    //---------everything ok before this point------------------
     
     TGraphErrors *sca[4];
     TMultiGraph *gg=new TMultiGraph();
