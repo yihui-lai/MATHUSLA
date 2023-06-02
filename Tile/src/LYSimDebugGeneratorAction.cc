@@ -42,6 +42,7 @@ LYSimDebugGeneratorAction::LYSimDebugGeneratorAction() : particleSource(new G4Ge
   ang->SetMaxPhi(0);
 
   // Energy distribution.
+  std::cout<<project_base<<std::endl;
   G4SPSEneDistribution *ene = particleSource->GetCurrentSource()->GetEneDist();
   ene->SetEnergyDisType("Arb");
   ene->ArbEnergyHistoFile(project_base + "/data/PhotonSpectrum.dat");
