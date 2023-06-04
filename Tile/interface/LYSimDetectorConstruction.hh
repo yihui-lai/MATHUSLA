@@ -99,15 +99,16 @@ public:
   GetTileAbsMult() const { return _absmult; }
   double
   GetTileScintillation() const { return _ScintiN; }
-  void SetY11decaytime( const double x );
+  void SetFiberdecaytime( const double x );
   double
-  GetY11decaytime() const { return _y11_decaytime; }
+  GetFiberdecaytime() const { return _fiber_decaytime; }
 
-  void SetY11attenu( const double x );
+  void SetFiberattenu( const double x );
 
   void SetGaprefrac_index( const double x );
   void SetClad_refrac_index( const double x1, const double x2 );
   void SetWrapReflect( const double x );
+  void SetfrontendReflect( const double x );
   inline double
   GetWrapReflect() const { return _wrap_reflect; }
 
@@ -220,6 +221,7 @@ private:
 
   // Pointers to surfaces
   G4OpticalSurface* fESROpSurface;
+  G4OpticalSurface* ffrontendSurface;
   G4OpticalSurface* fIdealPolishedOpSurface;
   G4OpticalSurface* fTileBulkSurface;
   G4OpticalSurface* fTileDimpleSurface;
@@ -267,6 +269,7 @@ private:
 
   //wls
   bool _handwrap;
+  bool _coverends;
   double _hole_radius;
   double _hole_x1;
   double _hole_x2;
@@ -281,8 +284,9 @@ private:
   double _ScintiN;
   double _tilerise;
   double _tiledecay;
-  double _y11_decaytime;
+  double _fiber_decaytime;
   double _claddirt;
+  double _frontend_reflect;
   G4Material* mfiber;
   G4Material* mfiber_clad;
   G4Material* mfiber_clad2;
