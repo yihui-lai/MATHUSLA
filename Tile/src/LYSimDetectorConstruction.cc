@@ -261,12 +261,12 @@ LYSimDetectorConstruction::Construct()
 
     physWrap3 = new G4PVPlacement(0, G4ThreeVector(0, 0, _tilez * 0.5 + wrapthickness * 0.5), logicWrapface, "Wrapface3", logicWorld, false, 0, checkOverlaps);
     physWrap4 = new G4PVPlacement(0, G4ThreeVector(0, 0, -_tilez * 0.5 - wrapthickness * 0.5), logicWrapface, "Wrapface4", logicWorld, false, 0, checkOverlaps);
-    /*
+    
     new G4LogicalBorderSurface("surfacewrapout1", physWrap3, physTileBulk, MakeS_Absorbing());
     new G4LogicalBorderSurface("surfacewrapout2", physTileBulk, physWrap3, MakeS_Absorbing());
     new G4LogicalBorderSurface("surfacewrapout3", physTileBulk, physWrap4, MakeS_Absorbing());
     new G4LogicalBorderSurface("surfacewrapout4", physWrap4, physTileBulk, MakeS_Absorbing());
-    */
+    
   }
 
 
