@@ -141,8 +141,8 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
   //---------------
   // material
   //---------------
-  // mfiber  = Make_Y11();
-  mfiber = Make_sgc();
+  mfiber  = Make_Y11();
+  // mfiber = Make_sgc();
   // mfiber_clad = Make_Pethylene(); //cald 1
   mfiber_clad = Make_acrylic();        // cald 1
   mfiber_clad2 = Make_Fluor_acrylic(); // clad 2
