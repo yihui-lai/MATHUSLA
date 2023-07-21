@@ -84,8 +84,10 @@ void LYSimPrimaryGeneratorAction::RandomizePosition()
     pos->SetPosDisShape("Cylinder");
     pos->SetRadius(0.0001 * CLHEP::mm);
     pos->SetHalfZ(z / 2);
-    pos->SetPosRot2(G4ThreeVector(0., 0, -1));
-    pos->SetCentreCoords(G4ThreeVector(x, 0, y));
+    // pos->SetPosRot2(G4ThreeVector(0., 0, -1));//normal setup
+    // pos->SetCentreCoords(G4ThreeVector(x, 0, y));//normal setup
+    pos->SetPosRot2(G4ThreeVector(0., -1, 0));
+    pos->SetCentreCoords(G4ThreeVector(0, 0, 0));//test fiber
 
     // std::cout<<"z/2: "<<z/2<<std::endl;
     // std::cout<<"("<<x<<" 0 "<<y<<")"<<std::endl;

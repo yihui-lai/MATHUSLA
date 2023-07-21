@@ -28,6 +28,8 @@ LYSimProtonGeneratorAction::LYSimProtonGeneratorAction() : particleSource(new G4
    */
   // particleSource->SetParticleDefinition( G4Proton::ProtonDefinition() );
   particleSource->SetParticleDefinition(G4MuonPlus::MuonPlusDefinition());
+  // particleSource->SetParticleDefinition(G4Photon::PhotonDefinition());
+
   particleSource->GetCurrentSource()->SetNumberOfParticles(1);
 
   G4SPSAngDistribution *ang = particleSource->GetCurrentSource()->GetAngDist();
