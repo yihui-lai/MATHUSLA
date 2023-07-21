@@ -44,3 +44,5 @@ Tile/src/ProjectPath.cc
 # ![relative/path/to/file]
 !CMakeLists.txt
 
+Tile/.DS_Store
+Tile/data/.DS_Store
