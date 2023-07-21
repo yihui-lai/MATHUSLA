@@ -172,8 +172,7 @@ MakeS_IdealPolished()
 {
   // Set the Surface Roughness between Cladding 1 and WLS fiber
   //  Pre: 0 < roughness <= 1
-  G4OpticalSurface *surface = new G4OpticalSurface("IdealPolished", glisur, ground,
-                                                   dielectric_dielectric, 1);
+  G4OpticalSurface *surface = new G4OpticalSurface("IdealPolished", glisur, ground,                           dielectric_dielectric, 1);
 
   return surface;
 }
@@ -285,13 +284,12 @@ MakeS_VAbsorbing()
 G4OpticalSurface *
 MakeS_RoughInterface(const double alpha)
 {
-  char name[1024];
-  sprintf(name, "RoughInterfaceOpSurface%.lf", alpha);
+  std::cout<< "RoughInterfaceOpSurface alpha: " << alpha <<std::endl;
 
   //////////////////////////////////
   // Rough surface
   //////////////////////////////////
-  G4OpticalSurface *surface = new G4OpticalSurface(name);
+  G4OpticalSurface *surface = new G4OpticalSurface("MakeS_RoughInterface");
   surface->SetType(dielectric_dielectric);
   surface->SetModel(unified);
   surface->SetFinish(ground);
@@ -318,68 +316,7 @@ G4OpticalSurface *
 MakeS_SiPM()
 {
   // From Meeting on HB SiPM selection (James Hirschauer)
-  G4double p_mppc[62] = {1.38 * eV,
-                         1.39 * eV,
-                         1.43 * eV,
-                         1.43 * eV,
-                         1.47 * eV,
-                         1.48 * eV,
-                         1.51 * eV,
-                         1.53 * eV,
-                         1.55 * eV,
-                         1.59 * eV,
-                         1.64 * eV,
-                         1.68 * eV,
-                         1.69 * eV,
-                         1.72 * eV,
-                         1.77 * eV,
-                         1.78 * eV,
-                         1.87 * eV,
-                         1.92 * eV,
-                         1.95 * eV,
-                         1.97 * eV,
-                         2.00 * eV,
-                         2.12 * eV,
-                         2.18 * eV,
-                         2.23 * eV,
-                         2.23 * eV,
-                         2.29 * eV,
-                         2.30 * eV,
-                         2.37 * eV,
-                         2.37 * eV,
-                         2.39 * eV,
-                         2.47 * eV,
-                         2.47 * eV,
-                         2.55 * eV,
-                         2.62 * eV,
-                         2.71 * eV,
-                         2.80 * eV,
-                         2.80 * eV,
-                         2.94 * eV,
-                         2.96 * eV,
-                         2.99 * eV,
-                         3.09 * eV,
-                         3.17 * eV,
-                         3.24 * eV,
-                         3.30 * eV,
-                         3.31 * eV,
-                         3.36 * eV,
-                         3.43 * eV,
-                         3.44 * eV,
-                         3.50 * eV,
-                         3.53 * eV,
-                         3.57 * eV,
-                         3.58 * eV,
-                         3.58 * eV,
-                         3.64 * eV,
-                         3.64 * eV,
-                         3.65 * eV,
-                         3.70 * eV,
-                         3.72 * eV,
-                         3.80 * eV,
-                         3.82 * eV,
-                         3.87 * eV,
-                         3.91 * eV};
+  G4double p_mppc[62] = {1.38 * eV, 1.39 * eV, 1.43 * eV, 1.43 * eV, 1.47 * eV, 1.48 * eV, 1.51 * eV, 1.53 * eV, 1.55 * eV, 1.59 * eV, 1.64 * eV, 1.68 * eV, 1.69 * eV, 1.72 * eV, 1.77 * eV, 1.78 * eV, 1.87 * eV, 1.92 * eV, 1.95 * eV, 1.97 * eV, 2.00 * eV, 2.12 * eV, 2.18 * eV, 2.23 * eV, 2.23 * eV, 2.29 * eV, 2.30 * eV, 2.37 * eV, 2.37 * eV, 2.39 * eV, 2.47 * eV, 2.47 * eV, 2.55 * eV, 2.62 * eV, 2.71 * eV, 2.80 * eV, 2.80 * eV, 2.94 * eV, 2.96 * eV, 2.99 * eV, 3.09 * eV, 3.17 * eV, 3.24 * eV, 3.30 * eV, 3.31 * eV, 3.36 * eV, 3.43 * eV, 3.44 * eV, 3.50 * eV, 3.53 * eV, 3.57 * eV, 3.58 * eV, 3.58 * eV, 3.64 * eV, 3.64 * eV, 3.65 * eV, 3.70 * eV, 3.72 * eV, 3.80 * eV, 3.82 * eV, 3.87 * eV, 3.91 * eV};
   G4double refl_mppc[62];
   for (int i = 0; i < 62; i++)
     refl_mppc[i] = 0.2;
@@ -422,8 +359,7 @@ MakeS_TiO2Surface()
 {
   // Coating clad
 
-  G4OpticalSurface *TiO2Surface = new G4OpticalSurface("TiO2Surface", unified,
-                                                       ground, dielectric_metal, 1.5);
+  G4OpticalSurface *TiO2Surface = new G4OpticalSurface("TiO2Surface", unified,                               ground, dielectric_metal, 1.5);
   G4MaterialPropertiesTable *TiO2SurfaceProperty = new G4MaterialPropertiesTable();
 
   G4double p_TiO2[11] = {2.00 * eV, 2.75 * eV, 2.88 * eV, 2.95 * eV, 3.02 * eV, 3.10 * eV, 3.18 * eV, 3.26 * eV, 3.35 * eV, 3.44 * eV, 15.75 * eV};
