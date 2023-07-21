@@ -27,11 +27,11 @@ int main(int argc, char **argv)
       ("absmult,a", usr::po::defvalue<double>(1000), "absorption length at 425nm, unit mm")         //
       ("tiledecay,td", usr::po::defvalue<double>(5), "tile decay time, unit ns, 11.5 ms overall")   //
       ("tilerise,tr", usr::po::defvalue<double>(0.5), "tile rise time, unit ns")                    //
-      ("absY11,b", usr::po::defvalue<double>(5000), "absorption length of Y11, unit mm")            //
+      ("absFiber,b", usr::po::defvalue<double>(5000), "absorption length of Fiber, unit mm")            //
       ("yield,y", usr::po::defvalue<double>(10000), "light yield / MeV")                            //
       ("wrapreflect,m", usr::po::defvalue<float>(0.985), "Wrap reflectivity")                       //
       ("sipmeff,e", usr::po::defvalue<double>(1), "SiPM eff")                                       //
-      ("Y11decayTime,d", usr::po::defvalue<double>(7.193), "Y11 WLS time constant")                 //
+      ("FiberdecayTime,d", usr::po::defvalue<double>(7.193), "WLS time constant")                 //
       ("NEvents,N", usr::po::defvalue<unsigned>(1), "Number of events to run")                      //
       ("useProton,P", usr::po::defvalue<int>(1), "Flag to switch the source to a true muon source") //
       ("handwrap,H", usr::po::defvalue<int>(0), "Flag to switch to handwrap")                       //
@@ -55,10 +55,10 @@ int main(int argc, char **argv)
   const double fiberZ = args.Arg<float>("fiberZ");
   const double fiberZshift = args.Arg<double>("fiberZshift");
   const double absmult = args.Arg<double>("absmult");
-  const double absY11 = args.Arg<double>("absY11");
+  const double absFiber = args.Arg<double>("absFiber");
   const double yield = args.Arg<double>("yield");
   const double wrapref = args.Arg<float>("wrapreflect");
-  const double Y11decayTime = args.Arg<double>("Y11decayTime");
+  const double FiberdecayTime = args.Arg<double>("FiberdecayTime");
   const double sipmeff = args.Arg<double>("sipmeff");
   const unsigned N = args.Arg<unsigned>("NEvents");
   const bool useProton = args.Arg<int>("useProton");
@@ -91,17 +91,18 @@ int main(int argc, char **argv)
   // detector->SetClad_refrac_index(tilerise,tiledecay);  //clad1, clad2
 
   detector->SetTileScintillation(yield);
-  detector->SetY11decaytime(Y11decayTime);
-  detector->SetY11attenu(absY11);
+  detector->SetFiberdecaytime(FiberdecayTime);
+  detector->SetFiberattenu(absFiber);
   detector->SetFiberR(fiberR);
   detector->SetHoleRadius(HoleR);
 
   detector->SetGaprefrac_index(spare); // Gap material refraction index
-  detector->Setcladdirt(0);          // dirt on the fiber clad
+  //detector->Setcladdirt(0);          // dirt on the fiber clad
   detector->SetWrapReflect(wrapref);
   detector->SetSiPMReflect(sipmeff);
   detector->Set_handwrap(handwrap);
-
+  detector->SetfrontendReflect(0.985);
+  
   runManager->SetUserInitialization(detector);
   runManager->SetUserInitialization(physlist);
 
