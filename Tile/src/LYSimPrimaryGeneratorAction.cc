@@ -88,7 +88,7 @@ void LYSimPrimaryGeneratorAction::RandomizePosition()
     // pos->SetCentreCoords(G4ThreeVector(x, 0, y));
 
     pos->SetPosRot2(G4ThreeVector(0., -1, 0));//test
-    pos->SetCentreCoords(G4ThreeVector(0, 0, 0));//test
+    pos->SetCentreCoords(G4ThreeVector(_beamx, 0, _beamy));//test
 
     // std::cout<<"z/2: "<<z/2<<std::endl;
     // std::cout<<"("<<x<<" 0 "<<y<<")"<<std::endl;
