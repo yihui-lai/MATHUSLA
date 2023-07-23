@@ -405,12 +405,12 @@ G4Material *Make_Y11()
   const G4int nEntries_realabs = sizeof(realabs_e) / sizeof(G4double);
   // for(int i=0;i<nEntries_realabs;i++) realabs_e[i]=realabs_e[i];
 
-  // Add entries into properties table
+  // Add entries into properties table//411 413 commented for testing
   G4MaterialPropertiesTable *mptWLSfiber = new G4MaterialPropertiesTable();
   mptWLSfiber->AddProperty("RINDEX", energySmall, refractiveIndexWLSfiber, 2);
-  mptWLSfiber->AddProperty("WLSCOMPONENT", photonEnergy, emissionFib, nEntries); // WLSCOMPONENT is the relative emission spectrum of the material as a function of the photon's momentum
+  // mptWLSfiber->AddProperty("WLSCOMPONENT", photonEnergy, emissionFib, nEntries); // WLSCOMPONENT is the relative emission spectrum of the material as a function of the photon's momentum
   // mptWLSfiber->AddProperty("WLSABSLENGTH", photonEnergy, absWLSfiber, nEntries); //WLSABSLENGTH is the absorption length of the material as a function of the photon's momentum. -> re-emit
-  mptWLSfiber->AddProperty("WLSABSLENGTH", photonEnergy2, absWLSfiber, 4); // WLSABSLENGTH is the absorption length of the material as a function of the photon's momentum. -> re-emit
+  // mptWLSfiber->AddProperty("WLSABSLENGTH", photonEnergy2, absWLSfiber, 4); // WLSABSLENGTH is the absorption length of the material as a function of the photon's momentum. -> re-emit
   // mptWLSfiber->AddProperty("ABSLENGTH", realabs_e, realabsWLSfiber,nEntries_realabs); //ABSLENGTH is the absorption length of the material as a function of the photon's momentum. -> real absorption
   mptWLSfiber->AddConstProperty("WLSTIMECONSTANT", 11.5 * ns); // accounts for any time delay which may occur between absorption and re-emission of the photon, defalt delta
 
