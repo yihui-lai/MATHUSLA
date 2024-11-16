@@ -137,6 +137,7 @@ LYSimAnalysis::PrepareNewEvent( const G4Event* event )
   format->dt_rms4 = -999;
   format->chan3_photon.clear();
   format->chan4_photon.clear();
+  format->genz.clear();
   format->ph_x.clear();
   format->ph_y.clear();
   format->ph_z.clear();
@@ -236,6 +237,7 @@ LYSimAnalysis::EndOfEvent( const G4Event* event )
   }
 */
 
+/*
       if(format->chan3_photon.size()!=0 || format->chan4_photon.size()!=0){
           double t_mean1,t_mean2;
       if(format->chan3_photon.size()!=0){
@@ -250,6 +252,7 @@ LYSimAnalysis::EndOfEvent( const G4Event* event )
       }
       if(format->chan3_photon.size()!=0 && format->chan4_photon.size()!=0) format->dt_firstphoton = t_mean2-t_mean1 ;
       }
+*/
 
 /*
 //calculate the std
@@ -361,24 +364,25 @@ void LYSimAnalysis::addgenphoton(){
   format->genphotons++;
 }
 
-void LYSimAnalysis::addwlsphoton(){
+void LYSimAnalysis::addwlsphoton(float genz){
   format->wlsphotons++;
+  //format->genz.push_back(genz);
 }
 void LYSimAnalysis::pushchan3(float t){
   //std::cout<<t<<std::endl;
-  format->chan3_photon.push_back(t);
+  //format->chan3_photon.push_back(t);
   format->detectphotons3++;
   //format->chan3_time.Fill(t);
 }
 void LYSimAnalysis::pushchan4(float t){
-  format->chan4_photon.push_back(t);
+  //format->chan4_photon.push_back(t);
   format->detectphotons4++;
   //format->chan4_time.Fill(t);
 }
 void LYSimAnalysis::push_ph_xyz(float x, float y, float z){
-  format->ph_x.push_back(x);
-  format->ph_y.push_back(y);
-  format->ph_z.push_back(z);
+//  format->ph_x.push_back(x);
+//  format->ph_y.push_back(y);
+//  format->ph_z.push_back(z);
 }
 
 

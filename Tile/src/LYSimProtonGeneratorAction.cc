@@ -61,7 +61,7 @@ LYSimProtonGeneratorAction::GeneratePrimaries( G4Event* anEvent )
   pos->SetHalfX( 0.5 * _width );
   pos->SetHalfY( 0.5 * _width );
   pos->SetPosRot2(G4ThreeVector( 0., 0, -1 ));
-  pos->SetCentreCoords( G4ThreeVector(_beamx, 90*mm, _beamz) );
+  pos->SetCentreCoords( G4ThreeVector(_beamx, 490*mm, _beamz) );
 
   particleSource->GeneratePrimaryVertex( anEvent );
 }

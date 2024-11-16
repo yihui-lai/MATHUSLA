@@ -28,14 +28,14 @@ main( int argc, char** argv )
     ( "absmult,a",     usr::po::defvalue<double>( 1000 ),     "absorption length at 425nm, unit mm" )
     ( "tiledecay,td",     usr::po::defvalue<double>( 2.5 ),     "tile decay time, unit ns" )
     ( "tilerise,tr",     usr::po::defvalue<double>( 0.5 ),     "tile rise time, unit ns" )
-    ( "absY11,b",     usr::po::defvalue<double>( 100 ),     "absorption length of Y11, unit mm" )
+    ( "FiberAbs,b",     usr::po::defvalue<double>( 100 ),     "absorption length of Y11, unit mm" )
     ( "yield,y",     usr::po::defvalue<double>( 10 ),     "light yield / MeV" )
     ( "wrapreflect,m", usr::po::defvalue<float>( 0.985 ), "Wrap reflectivity" )
     ( "sipmeff,e", usr::po::defvalue<double>( 1 ), "SiPM eff" )
-    ( "Y11decayTime,d", usr::po::defvalue<double>( 11.5 ), "Y11 WLS time constant" )
+    ( "FiberDecayTime,d", usr::po::defvalue<double>( 11.5 ), "Y11 WLS time constant" )
     ( "NEvents,N",     usr::po::defvalue<unsigned>( 1 ),   "Number of events to run" )
     ( "useProton,P",     usr::po::defvalue<int>( 1 ),  "Flag to switch the source to a true proton source" )
-    ( "handwrap,H",      usr::po::defvalue<int>( 0 ),    "Flag to switch to handwrap" )
+    ( "wrapper_style,A",      usr::po::defvalue<int>( 0 ),    "Flag to switch to wrapper_style" )
     ( "cladlayer,c",      usr::po::defvalue<unsigned>( 1 ),    "Number of cladlayers" )
     ( "fiberR,r", usr::po::defvalue<double>( 0.7 ), "Fiber radius" )
     ( "HoleR,R", usr::po::defvalue<double>( 1 ), "Hole radius" )
@@ -56,14 +56,14 @@ main( int argc, char** argv )
   const double fiberZ     = args.Arg<float>( "fiberZ"   );
   const double fiberZshift     = args.Arg<double>( "fiberZshift"   );
   const double absmult   = args.Arg<double>( "absmult"     );
-  const double absY11   = args.Arg<double>( "absY11"     );
+  const double FiberAbs   = args.Arg<double>( "FiberAbs"     );
   const double yield   = args.Arg<double>( "yield"     );
   const double wrapref   = args.Arg<float>( "wrapreflect" );
-  const double Y11decayTime   = args.Arg<double>( "Y11decayTime" );
+  const double FiberDecayTime   = args.Arg<double>( "FiberDecayTime" );
   const double sipmeff    = args.Arg<double>( "sipmeff"  );
   const unsigned N       = args.Arg<unsigned>( "NEvents" );
   const bool useProton   = args.Arg<int>( "useProton" );
-  const bool handwrap   = args.Arg<int>( "handwrap" );
+  const int wrapper_style   = args.Arg<int>( "wrapper_style" );
   const unsigned cladlayer   = args.Arg<unsigned>( "cladlayer" );
   const double fiberR   = args.Arg<double>( "fiberR" );
   const double HoleR   = args.Arg<double>( "HoleR" );
@@ -92,16 +92,17 @@ main( int argc, char** argv )
   //detector->SetClad_refrac_index(tilerise,tiledecay);  //clad1, clad2
 
   detector->SetTileScintillation(yield);
-  detector->SetY11decaytime(Y11decayTime);
-  detector->SetY11attenu( absY11 );
+  detector->SetFiberDecayTime(FiberDecayTime);
+  detector->SetFiberAttenu( FiberAbs );
   detector->SetFiberR(fiberR);
   detector->SetHoleRadius(HoleR);
 
-  detector->SetGaprefrac_index(spare); //Gap material refraction index
+  //detector->SetGaprefrac_index(spare); //Gap material refraction index
+  detector->SetTileAlpha(spare); //Gap material refraction index
   //detector->Setcladdirt(spare);  //dirt on the clad
   detector->SetWrapReflect( wrapref );
   detector->SetSiPMReflect( sipmeff );  
-  detector->Set_handwrap( handwrap );
+  detector->Set_wrapper_type( wrapper_style );
 
   runManager->SetUserInitialization( detector );
   runManager->SetUserInitialization( physlist );

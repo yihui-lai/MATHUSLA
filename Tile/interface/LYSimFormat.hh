@@ -37,6 +37,7 @@ public:
   double dt_rms4;
   std::vector<float> chan3_photon;
   std::vector<float> chan4_photon;
+  std::vector<float> genz;
   std::vector<float> ph_x;
   std::vector<float> ph_y;
   std::vector<float> ph_z;
@@ -68,6 +69,7 @@ public:
     tree->Branch( "dt_rms4",     &dt_rms4     );
     tree->Branch( "chan3_photon",     &chan3_photon     );
     tree->Branch( "chan4_photon",     &chan4_photon     );
+    tree->Branch( "genz",     &genz     );
     tree->Branch( "ph_x",     &ph_x     );
     tree->Branch( "ph_y",     &ph_y     );
     tree->Branch( "ph_z",     &ph_z     );
@@ -109,7 +111,8 @@ public:
     tree->SetBranchAddress( "dt_rms4",          &dt_rms4     );
     tree->SetBranchAddress( "chan3_photon",     &chan3_photon     );
     tree->SetBranchAddress( "chan4_photon",     &chan4_photon     );
-    tree->SetBranchAddress( "ph_x",     &ph_x     );
+    tree->SetBranchAddress( "genz",     &genz     );
+    tree->SetBranchAddress( "ph_y",     &ph_y     );
     tree->SetBranchAddress( "ph_y",     &ph_y     );
     tree->SetBranchAddress( "ph_z",     &ph_z     );
 

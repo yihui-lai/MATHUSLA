@@ -29,59 +29,39 @@ public:
 
   // Get/Set functions of tile geometry parameters
   inline void
-  SetTileZ ( const G4double x ){ _tilez = x;}
+  SetTileZ ( const G4double x ){ _tilez = x*CLHEP::mm;}
   inline G4double
   GetTileZ() const {return _tilez;}
   inline void
-  SetTileX ( const G4double x ){_tilex = x;}
+  SetTileX ( const G4double x ){_tilex = x*CLHEP::mm;}
   inline G4double
   GetTileX() const {return _tilex;}
   inline void
-  SetTileY ( const G4double y ){_tiley = y;}
+  SetTileY ( const G4double y ){_tiley = y*CLHEP::mm;}
   inline G4double
   GetTileY() const {return _tiley;}
 
   // Get/Set functions of dimple geometry parameters
   
-  inline double
-  GetDimpleRadius() const { return _dimple_radius; }
-  inline void
-  SetDimpleRadius( const double x ){ _dimple_radius = x; }
-  inline double
-  GetDimpleIndent() const { return _dimple_indent; }
-  inline void
-  SetDimpleIndent( const double x ){ _dimple_indent = x; }
-  int
-  GetDimpleType() const {return _dimple_type; }
-  inline void
-  SetDimpleType( const int x ){ _dimple_type = x; }
-  
-
-  // Get/Set functions for SiPM geometry parameters
-  inline double
-  GetSiPMX() const {return _sipm_x; }
-  inline void
-  SetSiPMX( const double x ){ _sipm_x = x; }
-  inline double
-  GetSiPMY() const { return _sipm_y; }
-  inline void
-  SetSiPMY( const double x ){ _sipm_y = x; }
-  inline double
-  GetSiPMRim() const {return _sipm_rimwidth; }
-  inline void
-  SetSiPMRim( const double x ){ _sipm_rimwidth = x; }
-  inline double
-  GetSiPMStand() const { return _sipm_standz; }
-  inline void
-  SetSiPMStand( const double x ){ _sipm_standz = x; }
-
-  enum  DIMPLE_TYPE
-  {
-    SPHERICAL,
-    ELLIPSOID,
-    FLAT_DOME,
-    CYLINDRICAL
-  };
+//  inline double
+//  GetDimpleRadius() const { return _dimple_radius; }
+//  inline void
+//  SetDimpleRadius( const double x ){ _dimple_radius = x; }
+//  inline double
+//  GetDimpleIndent() const { return _dimple_indent; }
+//  inline void
+//  SetDimpleIndent( const double x ){ _dimple_indent = x; }
+//  int
+//  GetDimpleType() const {return _dimple_type; }
+//  inline void
+//  SetDimpleType( const int x ){ _dimple_type = x; }
+//  enum  DIMPLE_TYPE
+//  {
+//    SPHERICAL,
+//    ELLIPSOID,
+//    FLAT_DOME,
+//    CYLINDRICAL
+//  };
 
   // Additional geometric factors.
   double WorldHalfX() const;
@@ -95,51 +75,31 @@ public:
   void SetTileScintillation( const double x );
   void SetTileRisetime(const double x);
   void SetTileDecaytime(const double x);
-  inline double
-  GetTileAbsMult() const { return _absmult; }
-  double
-  GetTileScintillation() const { return _ScintiN; }
-  void SetY11decaytime( const double x );
-  double
-  GetY11decaytime() const { return _y11_decaytime; }
-
-  void SetY11attenu( const double x );
+  inline double GetTileAbsMult() const { return _tile_abs_multi_factor; }
+  double GetTileScintillation() const { return _ScintiN; }
+  void SetFiberDecayTime( const double x );
+  double GetFiberDecayTime() const { return _fiber_decaytime; }
+  void SetFiberAttenu( const double x );
 
   void SetGaprefrac_index( const double x );
   void SetClad_refrac_index( const double x1, const double x2 );
   void SetWrapReflect( const double x );
-  inline double
-  GetWrapReflect() const { return _wrap_reflect; }
+  inline double GetWrapReflect() const { return _wrap_reflect; }
 
   void SetTileAlpha( const double x );
-  inline double
-  GetTileAlpha(){ return _tile_alpha; }
-
-  void SetDimpleAlpha( const double x );
-  inline double
-  GetDimpleAlpha(){ return _dimple_alpha; }
-
-  void
-  SetPCBRadius( const double x ){ _pcb_radius = x; }
-  inline double
-  GetPCBRadius() const { return _pcb_radius; }
+  inline double GetTileAlpha(){ return _tile_alpha; }
 
   void SetSiPMReflect( const double x );
-  inline double
-  GetSiPMReflect() const { return _sipm_eff; }
+  inline double GetSiPMReflect() const { return _sipm_eff; }
 
   // Accesing Custom Materials
-  inline G4Material*
-  GetEJ200(){ return fEJ200; }
-  inline G4OpticalSurface*
-  GetSiPMSurface(){ return fSiPMSurface3; }
-
+  inline G4Material* GetEJ200(){ return fEJ200; }
+  inline G4OpticalSurface* GetSiPMSurface(){ return fSiPMSurface3; }
 
   //wls
-  void
-  Set_handwrap( const bool x ){ _handwrap = x; }
-  inline bool
-  Get_handwrap() const { return _handwrap; }
+  void Set_wrapper_type( const int x ){ _wrapper_type = x; }
+  inline int
+  Get_wrapper_type() const { return _wrapper_type; }
   void
   SetHoleRadius( const double x ){ _hole_radius = x*CLHEP::mm; }
   inline double
@@ -193,20 +153,20 @@ private:
   G4VSolid* ConstructHollowWrapSolid() const;
   G4VSolid* ConstructHollowWrapCladSolid() const;
 
-  G4VSolid* ConstructDimpleSubtract() const;
+//  G4VSolid* ConstructDimpleSubtract() const;
+//
+//  G4VSolid* ConstructSphereDimpleSolid() const;
+//  G4VSolid* ConstructFlatDomeDimpleSolid() const;
+//  G4VSolid* ConstructCylindricalDimpleSolid() const;
+//  G4VSolid* ConstructEllipsoidDimpleSolid() const;
 
-  G4VSolid* ConstructSphereDimpleSolid() const;
-  G4VSolid* ConstructFlatDomeDimpleSolid() const;
-  G4VSolid* ConstructCylindricalDimpleSolid() const;
-  G4VSolid* ConstructEllipsoidDimpleSolid() const;
+//  G4ThreeVector CalcDimpleOffset() const;
+//  double        LocalTileZSpherical( const double r ) const;
+//  double        LocalTileZFlatDome( const double r ) const;
+//  double        LocalTileZCylindrical( const double r ) const;
+//  double        LocalTileZEllipsoid( const double r ) const;
 
-  G4ThreeVector CalcDimpleOffset() const;
-  double        LocalTileZSpherical( const double r ) const;
-  double        LocalTileZFlatDome( const double r ) const;
-  double        LocalTileZCylindrical( const double r ) const;
-  double        LocalTileZEllipsoid( const double r ) const;
-
-  double GetDimpleSphereRadius() const;
+//  double GetDimpleSphereRadius() const;
 
   // Pointer to detector messenger class
   LYSimDetectorMessenger* fdetectorMessenger;
@@ -222,11 +182,12 @@ private:
   G4OpticalSurface* fESROpSurface;
   G4OpticalSurface* fIdealPolishedOpSurface;
   G4OpticalSurface* fTileBulkSurface;
-  G4OpticalSurface* fTileDimpleSurface;
+//  G4OpticalSurface* fTileDimpleSurface;
   G4OpticalSurface* fIdealWhiteOpSurface;
   G4OpticalSurface* fSiPMSurface3;
   G4OpticalSurface* fSiPMSurface4;
   G4OpticalSurface* fPCBSurface;
+  G4OpticalSurface* fwrapperendSurface;
 
   // Pointers for access to Sensitive Detector
   static LYSimPMTSD* fPMTSD;
@@ -237,51 +198,43 @@ private:
   double _tilez;
   double _tile_x1;
   double _tile_x2;
+  double _tile_abs_multi_factor;
+  double _tilerise;
+  double _tiledecay;
 
-  // Wrapping Geometry definitions
-  double wrapgap;// distance between tile and wrapping
-  double wrapthickness;
-
-  // Absorption length multiplier
-  double _absmult;
-  double _wrap_reflect;
-  double _tile_alpha;
-  double _dimple_alpha;
-
-  // Dimple variables;
-  double _dimple_indent;// Depth of dimple
-  double _dimple_radius;// Dimple radius
-  int _dimple_type;
-
-  // Parameters for plate behind SiPM
-  double _pcb_radius;
-  double _sipm_eff;
-
-  double _sipm_deadwidth;
-  double _sipm_x;
-  double _sipm_y;
-  double _sipm_z;
-  double _sipm_standz;
-  double _sipm_rimwidth;
-  double _sipm_glasswidth;
-
-  //wls
-  bool _handwrap;
+  int _holeshape;
   double _hole_radius;
   double _hole_x1;
   double _hole_x2;
+
+  // Wrapping Geometry definitions
+  int _wrapper_type;
+  double _wrapgap;// distance between tile and wrapping
+  double _wrapthickness;
+
+  // Absorption length multiplier
+  double _wrap_reflect;
+  double _tile_alpha;
+
+  // Dimple variables;
+//  double _dimple_indent;// Depth of dimple
+//  double _dimple_radius;// Dimple radius
+//  int _dimple_type;
+
+  // Parameters for plate behind SiPM
+  double _sipm_eff;
+  double _sipm_z;
+
+  //wls
   double _WLSfiberR;
   double _WLSfiberZ;
-  int _cladlayer;
-  int _holeshape;
   double _WLSfiber_clad_thick;
   double _WLSfiber_clad2_thick;
   double _WLS_zoff;
   double _WLS_xoff;
   double _ScintiN;
-  double _tilerise;
-  double _tiledecay;
-  double _y11_decaytime;
+  double _fiber_decaytime;
+  int _cladlayer;
   double _claddirt;
   G4Material* mfiber;
   G4Material* mfiber_clad;

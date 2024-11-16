@@ -246,19 +246,20 @@ MakeS_IdealWhiteSurface()
 G4OpticalSurface*
 MakeS_Absorbing()
 {
+  //////////////////////////////////
+  //Absorbing surface
+  //  //////////////////////////////////
   const unsigned nentries       = 2;
   double phoE[nentries]         = {1.0*eV, 6.0*eV};
-  double reflectivity[nentries] = {0.0, 0.0};
-  //////////////////////////////////
-  // Absorbing surface
-  //////////////////////////////////
+  double reflectivity[nentries] = {0.01, 0.01};
   G4OpticalSurface* surface = new G4OpticalSurface( "AbsorbingOpSurface" );
   surface->SetType( dielectric_dielectric );
   surface->SetFinish( groundfrontpainted );
   surface->SetModel( unified );
-
   G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
-  table->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries );
+  double EFFICIENCY[2] = {0, 0};
+  table->AddProperty("EFFICIENCY", phoE, EFFICIENCY,2);
+  table->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries ); // abs = 1-ref
   surface->SetMaterialPropertiesTable( table );
 
   return surface;
@@ -272,9 +273,9 @@ MakeS_NoAbsorbing()
   //////////////////////////////////
   // Absorbing surface
   //////////////////////////////////
-  G4OpticalSurface* surface = new G4OpticalSurface( "AbsorbingOpSurface" );
-  surface->SetType( dielectric_dielectric );
-  surface->SetFinish( groundfrontpainted );
+  G4OpticalSurface* surface = new G4OpticalSurface( "NoAbsorbingOpSurface" );
+  surface->SetType( dielectric_metal );
+  surface->SetFinish( ground );
   surface->SetModel( unified );
 
   G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
@@ -298,6 +299,12 @@ MakeS_RoughInterface( const double alpha )
   surface->SetModel( unified );
   surface->SetFinish( ground );
   surface->SetSigmaAlpha( alpha );
+
+  G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
+  //double reflectivity[2] = {0, 0};
+  //double phoE[2]          = {1.0*eV, 6.0*eV};
+  //table->AddProperty("EFFICIENCY", phoE, reflectivity,2);
+  surface->SetMaterialPropertiesTable( table );
 
   return surface;
 }
@@ -366,28 +373,119 @@ MakeS_PCBSurface()
 G4OpticalSurface*
 MakeS_TiO2Surface()
 {
-  //Coating clad
+//  //Coating clad
+//
+//  G4OpticalSurface* TiO2Surface = new G4OpticalSurface("TiO2Surface",unified,
+//                                                       ground,dielectric_metal,1.5);
+//  G4MaterialPropertiesTable* TiO2SurfaceProperty = new G4MaterialPropertiesTable();
+//
+//  G4double p_TiO2[11] =    {2.00*eV, 2.75*eV, 2.88*eV, 2.95*eV, 3.02*eV, 3.10*eV, 3.18*eV, 3.26*eV, 3.35*eV, 3.44*eV, 15.75*eV};
+//  G4double refl_TiO2[11] = {0.91,    0.91,    0.90,    0.85,    0.69,    0.44,    0.27,    0.13,    0.08,    0.07,    0.07}; //assume a constant value for energies > 3.44eV (most photons with these energies get absorbed and wave length shifted)
+//  G4double effi_TiO2[11] = {0,       0 ,      0,       0,       0,       0,       0,       0,       0,       0,       0};
+//  for(int i=0; i<11; i++) refl_TiO2[i]=1.0-0.75*(1.0-refl_TiO2[i]);  //a higher reflectivities comparared to the numbers given by Anna 
+//  TiO2SurfaceProperty->AddProperty("REFLECTIVITY",p_TiO2,refl_TiO2,11);
+//  TiO2SurfaceProperty->AddProperty("EFFICIENCY",p_TiO2,effi_TiO2,11);
+//
+//  G4double pp[2] = {2.00*eV, 15.75*eV};
+//  G4double specularlobe[2] = {1.0, 1.0};
+//  G4double specularspike[2] = {0.0, 0.0};
+//  G4double backscatter[2] = {0.0, 0.0};
+//  TiO2SurfaceProperty->AddProperty("SPECULARLOBECONSTANT",pp,specularlobe,2);
+//  TiO2SurfaceProperty->AddProperty("SPECULARSPIKECONSTANT",pp,specularspike,2);
+//  TiO2SurfaceProperty->AddProperty("BACKSCATTERCONSTANT",pp,backscatter,2);
+//  TiO2Surface -> SetMaterialPropertiesTable(TiO2SurfaceProperty);
+//  return TiO2Surface;
 
-  G4OpticalSurface* TiO2Surface = new G4OpticalSurface("TiO2Surface",unified,
-                                                       ground,dielectric_metal,1.5);
-  G4MaterialPropertiesTable* TiO2SurfaceProperty = new G4MaterialPropertiesTable();
-
-  G4double p_TiO2[11] =    {2.00*eV, 2.75*eV, 2.88*eV, 2.95*eV, 3.02*eV, 3.10*eV, 3.18*eV, 3.26*eV, 3.35*eV, 3.44*eV, 15.75*eV};
-  G4double refl_TiO2[11] = {0.91,    0.91,    0.90,    0.85,    0.69,    0.44,    0.27,    0.13,    0.08,    0.07,    0.07}; //assume a constant value for energies > 3.44eV (most photons with these energies get absorbed and wave length shifted)
-  G4double effi_TiO2[11] = {0,       0 ,      0,       0,       0,       0,       0,       0,       0,       0,       0};
-  for(int i=0; i<11; i++) refl_TiO2[i]=1.0-0.75*(1.0-refl_TiO2[i]);  //a higher reflectivities comparared to the numbers given by Anna 
-  TiO2SurfaceProperty->AddProperty("REFLECTIVITY",p_TiO2,refl_TiO2,11);
-  TiO2SurfaceProperty->AddProperty("EFFICIENCY",p_TiO2,effi_TiO2,11);
-
+/*  const unsigned nentries       = 2;
+  double phoE[nentries]         = {1.0*eV, 6.0*eV};
+  double reflectivity[nentries] = {0.75, 0.75};
+  G4OpticalSurface* surface = new G4OpticalSurface( "Ti2O" );
+  surface->SetType( dielectric_dielectric );
+  surface->SetFinish( ground );
+  surface->SetModel( unified );
+  G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
   G4double pp[2] = {2.00*eV, 15.75*eV};
   G4double specularlobe[2] = {1.0, 1.0};
   G4double specularspike[2] = {0.0, 0.0};
   G4double backscatter[2] = {0.0, 0.0};
-  TiO2SurfaceProperty->AddProperty("SPECULARLOBECONSTANT",pp,specularlobe,2);
-  TiO2SurfaceProperty->AddProperty("SPECULARSPIKECONSTANT",pp,specularspike,2);
-  TiO2SurfaceProperty->AddProperty("BACKSCATTERCONSTANT",pp,backscatter,2);
+  //table->AddProperty( "REFLECTIVITY", phoE, reflectivity, nentries ); // abs = 1-ref
+  //table->AddProperty("SPECULARLOBECONSTANT",pp,specularlobe,2);
+  //table->AddProperty("SPECULARSPIKECONSTANT",pp,specularspike,2);
+  //table->AddProperty("BACKSCATTERCONSTANT",pp,backscatter,2);
+  surface->SetSigmaAlpha( 0.1 );
+  surface->SetMaterialPropertiesTable( table );
+
+  return surface;
+*/
+
+
+  const unsigned nentries        = 2;
+  double phoE[nentries]          = {1.0*eV, 6.0*eV};
+  //double specularlobe[nentries]  = {1.0, 1.0};
+  double specularlobe[nentries]  = {0, 0};
+  double specularspike[nentries] = {0, 0};
+  double backscatter[nentries]   = {0., 0.};
+  double rindex[nentries]        = {1.28, 1.28};
+  //double rindex[nentries]        = {1., 1.};
+  double reflectivity[nentries]  = {0.75, 0.75};
+  double efficiency[nentries]    = {0.0, 0.0};
+
+  G4OpticalSurface* surface = new G4OpticalSurface( "Ti2O" );
+  surface->SetType( dielectric_dielectric );
+  surface->SetModel( unified );
+  surface->SetFinish( groundbackpainted );
+  //surface->SetFinish( ground );
+  //surface->SetSigmaAlpha( 1.3*degree );
+  surface->SetSigmaAlpha( 60*CLHEP::deg );
+  //surface->SetSigmaAlpha( 90 );
+
+  G4MaterialPropertiesTable* table = new G4MaterialPropertiesTable();
+
+  table->AddProperty( "RINDEX",                phoE, rindex,        nentries );
+  table->AddProperty( "SPECULARLOBECONSTANT",  phoE, specularlobe,  nentries );
+  table->AddProperty( "SPECULARSPIKECONSTANT", phoE, specularspike, nentries );
+  table->AddProperty( "BACKSCATTERCONSTANT",   phoE, backscatter,   nentries );
+  table->AddProperty( "REFLECTIVITY",          phoE, reflectivity,  nentries );
+  table->AddProperty( "EFFICIENCY",            phoE, efficiency,    nentries );
+
+  surface->SetMaterialPropertiesTable( table );
+
+  return surface;
+
+
+/*   G4OpticalSurface *surface = new G4OpticalSurface("TiO");
+   surface->SetType(dielectric_LUT);
+   surface->SetModel(LUT);
+   //surface->SetFinish(etchedtioair);
+   surface->SetFinish(groundtioair);
+   //surface->SetFinish(polishedtioair);
+   return surface;
+*/
+
+/*
+  G4OpticalSurface* TiO2Surface = new G4OpticalSurface("TiO2Surface",
+                                                       glisur,
+                                                       ground,
+                                                       dielectric_metal,
+                                                       1);
+
+  G4MaterialPropertiesTable* TiO2SurfaceProperty =
+                                             new G4MaterialPropertiesTable();
+
+  G4double p_TiO2[] = {1.00*eV, 8*eV};
+  const G4int nbins = sizeof(p_TiO2)/sizeof(G4double);
+
+  G4double refl_TiO2[] = {0.75, 0.75};
+  assert(sizeof(refl_TiO2) == sizeof(p_TiO2));
+  G4double effi_TiO2[] = {0, 0};
+  assert(sizeof(effi_TiO2) == sizeof(p_TiO2));
+
+  TiO2SurfaceProperty -> AddProperty("REFLECTIVITY",p_TiO2,refl_TiO2,nbins);
+  TiO2SurfaceProperty -> AddProperty("EFFICIENCY",p_TiO2,effi_TiO2,nbins);
+
   TiO2Surface -> SetMaterialPropertiesTable(TiO2SurfaceProperty);
   return TiO2Surface;
+*/
 
 }
 

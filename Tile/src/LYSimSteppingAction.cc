@@ -11,7 +11,7 @@
 #include "LYSimSteppingAction.hh"
 #include "LYSimSteppingMessenger.hh"
 #endif
-
+#include "TMath.h"
 #include "G4EventManager.hh"
 #include "G4OpBoundaryProcess.hh"
 #include "G4RunManager.hh"
@@ -102,7 +102,34 @@ LYSimSteppingAction::UserSteppingAction( const G4Step* step )
   
   if(theTrack){ 
       G4ParticleDefinition *particleType = theTrack->GetDefinition();
-      //if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() ){
+      if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() ){
+         if(thePostPVName.contains("physSiPM_chan") && !thePostPVName.contains("case")){
+             theTrack->SetTrackStatus(fKillTrackAndSecondaries);
+         }
+      }
+  }
+          //if(theTrack->GetCurrentStepNumber()==1 && thePrePVName.contains("TileBulkPhysic")) {
+          //if( thePrePVName.contains("Wrap")) {
+//    switch( boundaryStatus ){
+//    case Detection:
+//    {
+//if(!thePostPVName.contains("physSiPM_chan")){
+//              std::cout<<thePrePVName<<" -> "<<thePostPVName<<std::endl;
+//              double xxvector = (thePostPoint->GetPosition().x()-thePrePoint->GetPosition().x());
+//              double yyvector = (thePostPoint->GetPosition().y()-thePrePoint->GetPosition().y());
+//              double zzvector = (thePostPoint->GetPosition().z()-thePrePoint->GetPosition().z());
+//              double nomvector = TMath::Sqrt(xxvector*xxvector + yyvector*yyvector + zzvector*zzvector);
+//              if(nomvector==0){nomvector=1;}
+//              std::cout<<theTrack->GetCurrentStepNumber()<<"--> from "<<thePrePoint->GetPosition().x()<<", "<<thePrePoint->GetPosition().y()<<", "<<thePrePoint->GetPosition().z()<<std::endl;
+//              std::cout<<theTrack->GetCurrentStepNumber()<<"--> to "<<thePostPoint->GetPosition().x()<<", "<<thePostPoint->GetPosition().y()<<", "<<thePostPoint->GetPosition().z()<<std::endl;
+//              std::cout<<"--> dir: ("<<xxvector/nomvector <<", "<<yyvector/nomvector<<", "<<zzvector/nomvector<<std::endl;
+//
+//}
+//    }
+//    default:
+//      break;
+//    }
+          //}
           //if(thePrePVName.contains("PhyhWLSfiber_cald")){
           //    std::cout<<thePrePVName<<" -> "<<thePostPVName<<std::endl;
           //}
@@ -112,16 +139,21 @@ LYSimSteppingAction::UserSteppingAction( const G4Step* step )
               //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
           //}
       //}
+     /*
       if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() && theTrack->GetCurrentStepNumber()==1 ){
+      //if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() ){
           if(thePrePVName.contains("PhyhWLSfiber_core")){
-              LYSimAnalysis::GetInstance()->addwlsphoton();
+          //if(thePostPVName.contains("Hole")){
+              //std::cout<<"touch hole -->"<<thePrePoint->GetPosition().x()<<", "<<thePrePoint->GetPosition().y()<<", "<<thePrePoint->GetPosition().z()<<std::endl;
+              //LYSimAnalysis::GetInstance()->addwlsphoton(thePrePoint->GetPosition().z() / mm);
+              //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
               //std::cout<<"generate a wls from "<<theTrack->GetCreatorProcess()->GetProcessName()<<std::endl;
               //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
           }else{
               LYSimAnalysis::GetInstance()->addgenphoton();
           }
-      }
-  }
+      }*/
+  //}
 
 
 }

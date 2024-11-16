@@ -57,7 +57,7 @@ public:
   void EndOfRun( const G4Run* aRun );
   void EndOfExperiment();
   void addgenphoton();
-  void addwlsphoton();
+  void addwlsphoton(float genz);
   void pushchan3(float t);
   void pushchan4(float t);
   void push_ph_xyz(float x, float y, float z);

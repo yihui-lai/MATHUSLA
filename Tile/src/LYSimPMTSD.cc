@@ -58,7 +58,7 @@ LYSimPMTSD::ProcessHits_constStep( const G4Step*       aStep,
   hit->SetLength( theTrack->GetTrackLength() );
   hit->SetBounceCount( theTrack->GetCurrentStepNumber() );
 
-  fPMTHitsCollection->insert( hit );
+    fPMTHitsCollection->insert( hit );
 
     G4StepPoint *thePostPointsd = aStep->GetPostStepPoint();
     G4VPhysicalVolume *thePostPVsd = thePostPointsd->GetPhysicalVolume();
@@ -66,11 +66,11 @@ LYSimPMTSD::ProcessHits_constStep( const G4Step*       aStep,
     //std::cout<<"I get one photon! "<<thePostPVNamesd<<std::endl;
 
     const G4ThreeVector &thePrePosition = aStep->GetPostStepPoint()->GetPosition();
-    if(thePostPVNamesd.contains("physSiPM")) LYSimAnalysis::GetInstance()->push_ph_xyz(thePrePosition.x() / mm, thePrePosition.y() / mm, thePrePosition.z() / mm);
+//    if(thePostPVNamesd.contains("physSiPM")) LYSimAnalysis::GetInstance()->push_ph_xyz(thePrePosition.x() / mm, thePrePosition.y() / mm, thePrePosition.z() / mm);
    
     if (thePostPVNamesd.contains("physSiPM_chan3")) LYSimAnalysis::GetInstance()->pushchan3(aStep->GetPostStepPoint()->GetGlobalTime()); 
     else if (thePostPVNamesd.contains("physSiPM_chan4")) LYSimAnalysis::GetInstance()->pushchan4(aStep->GetPostStepPoint()->GetGlobalTime()); 
-    //else std::cout<<thePostPVNamesd<<std::endl;
+//    else std::cout<<aStep->GetPreStepPoint()->GetPhysicalVolume()->GetName()<<" "<<thePostPVNamesd<<" "<<thePrePosition.x() / mm<<" "<< thePrePosition.y() / mm<<" "<<thePrePosition.z() / mm<< " " <<std::endl;
 
   return true;
 

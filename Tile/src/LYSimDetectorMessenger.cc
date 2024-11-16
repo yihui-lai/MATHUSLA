@@ -50,52 +50,52 @@ LYSimDetectorMessenger::LYSimDetectorMessenger( LYSimDetectorConstruction* Det )
   SetTileZCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
   // SiPM geometry commands
-  SetSiPMXCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMX", this );
-  SetSiPMXCmd->SetGuidance( "Set the SiPM transverse dimensions" );
-  SetSiPMXCmd->SetParameterName( "SiPMX", false );
-  SetSiPMXCmd->SetUnitCategory( "Length" );
-  SetSiPMXCmd->SetDefaultUnit( "mm" );
-  SetSiPMXCmd->SetRange( "SiPMX>=0." );
-  SetSiPMXCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetSiPMXCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMX", this );
+  //SetSiPMXCmd->SetGuidance( "Set the SiPM transverse dimensions" );
+  //SetSiPMXCmd->SetParameterName( "SiPMX", false );
+  //SetSiPMXCmd->SetUnitCategory( "Length" );
+  //SetSiPMXCmd->SetDefaultUnit( "mm" );
+  //SetSiPMXCmd->SetRange( "SiPMX>=0." );
+  //SetSiPMXCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetSiPMYCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMY", this );
-  SetSiPMYCmd->SetGuidance( "Set the SiPM transverse dimensions" );
-  SetSiPMYCmd->SetParameterName( "SiPMY", false );
-  SetSiPMYCmd->SetUnitCategory( "Length" );
-  SetSiPMYCmd->SetDefaultUnit( "mm" );
-  SetSiPMYCmd->SetRange( "SiPMY>=0." );
-  SetSiPMYCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetSiPMYCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMY", this );
+  //SetSiPMYCmd->SetGuidance( "Set the SiPM transverse dimensions" );
+  //SetSiPMYCmd->SetParameterName( "SiPMY", false );
+  //SetSiPMYCmd->SetUnitCategory( "Length" );
+  //SetSiPMYCmd->SetDefaultUnit( "mm" );
+  //SetSiPMYCmd->SetRange( "SiPMY>=0." );
+  //SetSiPMYCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetSiPMRimCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMRim", this );
-  SetSiPMRimCmd->SetGuidance( "Set the SiPM transverse dimensions" );
-  SetSiPMRimCmd->SetParameterName( "SiPMRim", false );
-  SetSiPMRimCmd->SetUnitCategory( "Length" );
-  SetSiPMRimCmd->SetDefaultUnit( "mm" );
-  SetSiPMRimCmd->SetRange( "SiPMRim>=0." );
-  SetSiPMRimCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetSiPMRimCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMRim", this );
+  //SetSiPMRimCmd->SetGuidance( "Set the SiPM transverse dimensions" );
+  //SetSiPMRimCmd->SetParameterName( "SiPMRim", false );
+  //SetSiPMRimCmd->SetUnitCategory( "Length" );
+  //SetSiPMRimCmd->SetDefaultUnit( "mm" );
+  //SetSiPMRimCmd->SetRange( "SiPMRim>=0." );
+  //SetSiPMRimCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetSiPMStandCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMStand", this );
-  SetSiPMStandCmd->SetGuidance( "Set the SiPM transverse dimensions" );
-  SetSiPMStandCmd->SetParameterName( "SiPMStand", false );
-  SetSiPMStandCmd->SetUnitCategory( "Length" );
-  SetSiPMStandCmd->SetDefaultUnit( "mm" );
-  SetSiPMStandCmd->SetRange( "SiPMStand>=0." );
-  SetSiPMStandCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetSiPMStandCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetSiPMStand", this );
+  //SetSiPMStandCmd->SetGuidance( "Set the SiPM transverse dimensions" );
+  //SetSiPMStandCmd->SetParameterName( "SiPMStand", false );
+  //SetSiPMStandCmd->SetUnitCategory( "Length" );
+  //SetSiPMStandCmd->SetDefaultUnit( "mm" );
+  //SetSiPMStandCmd->SetRange( "SiPMStand>=0." );
+  //SetSiPMStandCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  // PCB Hole commands
-  SetPCBRadiusCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetPCBRadius", this );
-  SetPCBRadiusCmd->SetGuidance( "Set PCB Hole dimensions" );
-  SetPCBRadiusCmd->SetParameterName( "PCBRadius", false );
-  SetPCBRadiusCmd->SetUnitCategory( "Length" );
-  SetPCBRadiusCmd->SetDefaultUnit( "mm" );
-  SetPCBRadiusCmd->SetRange( "PCBRadius>=0." );
-  SetPCBRadiusCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //// PCB Hole commands
+  //SetPCBRadiusCmd = new G4UIcmdWithADoubleAndUnit( "/LYSim/SetPCBRadius", this );
+  //SetPCBRadiusCmd->SetGuidance( "Set PCB Hole dimensions" );
+  //SetPCBRadiusCmd->SetParameterName( "PCBRadius", false );
+  //SetPCBRadiusCmd->SetUnitCategory( "Length" );
+  //SetPCBRadiusCmd->SetDefaultUnit( "mm" );
+  //SetPCBRadiusCmd->SetRange( "PCBRadius>=0." );
+  //SetPCBRadiusCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetPCBReflectCmd = new G4UIcmdWithADouble( "/LYSim/SetPCBReflect", this );
-  SetPCBReflectCmd->SetGuidance( "Set reflectivity of exposed PCB" );
-  SetPCBReflectCmd->SetParameterName( "PCBReflect", false );
-  SetPCBReflectCmd->SetRange( "PCBReflect>=0." );
-  SetPCBReflectCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetPCBReflectCmd = new G4UIcmdWithADouble( "/LYSim/SetPCBReflect", this );
+  //SetPCBReflectCmd->SetGuidance( "Set reflectivity of exposed PCB" );
+  //SetPCBReflectCmd->SetParameterName( "PCBReflect", false );
+  //SetPCBReflectCmd->SetRange( "PCBReflect>=0." );
+  //SetPCBReflectCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
   // Optical setting commands
   SetTileAbsMultCmd = new G4UIcmdWithADouble( "/LYSim/SetTileAbsMult", this );
@@ -116,37 +116,37 @@ LYSimDetectorMessenger::LYSimDetectorMessenger( LYSimDetectorConstruction* Det )
   SetTileAlphaCmd->SetRange( "TileAlpha>=0." );
   SetTileAlphaCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetDimpleAlphaCmd = new G4UIcmdWithADouble( "/LYSim/SetDimpleAlpha", this );
-  SetDimpleAlphaCmd->SetGuidance( "Set micro facet distribution of dimple" );
-  SetDimpleAlphaCmd->SetParameterName( "DimpleAlpha", false );
-  SetDimpleAlphaCmd->SetRange( "DimpleAlpha>=0." );
-  SetDimpleAlphaCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetDimpleAlphaCmd = new G4UIcmdWithADouble( "/LYSim/SetDimpleAlpha", this );
+  //SetDimpleAlphaCmd->SetGuidance( "Set micro facet distribution of dimple" );
+  //SetDimpleAlphaCmd->SetParameterName( "DimpleAlpha", false );
+  //SetDimpleAlphaCmd->SetRange( "DimpleAlpha>=0." );
+  //SetDimpleAlphaCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  // Dimple Geometry commands
-  SetDimpleIndentCmd = new G4UIcmdWithADoubleAndUnit(
-    "/LYSim/SetDimpleIndent", this );
-  SetDimpleIndentCmd->SetGuidance(
-    "Setting the reccess depth of the dimple [mm]" );
-  SetDimpleIndentCmd->SetParameterName( "DimpleIndent", false );
-  SetDimpleIndentCmd->SetUnitCategory( "Length" );
-  SetDimpleIndentCmd->SetDefaultUnit( "mm" );
-  SetDimpleIndentCmd->SetRange( "DimpleIndent>=0." );
-  SetDimpleIndentCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //// Dimple Geometry commands
+  //SetDimpleIndentCmd = new G4UIcmdWithADoubleAndUnit(
+  //  "/LYSim/SetDimpleIndent", this );
+  //SetDimpleIndentCmd->SetGuidance(
+  //  "Setting the reccess depth of the dimple [mm]" );
+  //SetDimpleIndentCmd->SetParameterName( "DimpleIndent", false );
+  //SetDimpleIndentCmd->SetUnitCategory( "Length" );
+  //SetDimpleIndentCmd->SetDefaultUnit( "mm" );
+  //SetDimpleIndentCmd->SetRange( "DimpleIndent>=0." );
+  //SetDimpleIndentCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetDimpleRadiusCmd = new G4UIcmdWithADoubleAndUnit(
-    "/LYSim/SetDimpleRadius", this );
-  SetDimpleRadiusCmd->SetGuidance(
-    "Setting the reccess depth of the dimple [mm]" );
-  SetDimpleRadiusCmd->SetParameterName( "DimpleIndent", false );
-  SetDimpleRadiusCmd->SetUnitCategory( "Length" );
-  SetDimpleRadiusCmd->SetDefaultUnit( "mm" );
-  SetDimpleRadiusCmd->SetRange( "DimpleIndent>=0." );
-  SetDimpleRadiusCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetDimpleRadiusCmd = new G4UIcmdWithADoubleAndUnit(
+  //  "/LYSim/SetDimpleRadius", this );
+  //SetDimpleRadiusCmd->SetGuidance(
+  //  "Setting the reccess depth of the dimple [mm]" );
+  //SetDimpleRadiusCmd->SetParameterName( "DimpleIndent", false );
+  //SetDimpleRadiusCmd->SetUnitCategory( "Length" );
+  //SetDimpleRadiusCmd->SetDefaultUnit( "mm" );
+  //SetDimpleRadiusCmd->SetRange( "DimpleIndent>=0." );
+  //SetDimpleRadiusCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 
-  SetDimpleTypeCmd = new G4UIcmdWithAString( "/LYSim/SetDimpleType", this );
-  SetDimpleTypeCmd->SetGuidance( "Setting the type of dimple to use" );
-  SetDimpleTypeCmd->SetCandidates( "Spherical FlatDome Cylindrical Ellipsoid" );
-  SetDimpleTypeCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
+  //SetDimpleTypeCmd = new G4UIcmdWithAString( "/LYSim/SetDimpleType", this );
+  //SetDimpleTypeCmd->SetGuidance( "Setting the type of dimple to use" );
+  //SetDimpleTypeCmd->SetCandidates( "Spherical FlatDome Cylindrical Ellipsoid" );
+  //SetDimpleTypeCmd->AvailableForStates( G4State_PreInit, G4State_Idle );
 }
 
 LYSimDetectorMessenger::~LYSimDetectorMessenger()
@@ -181,43 +181,47 @@ LYSimDetectorMessenger::SetNewValue( G4UIcommand* command, G4String val )
   } else if( command == SetTileYCmd ){
     Detector->SetTileY(
       G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetSiPMXCmd ){
-    Detector->SetSiPMX( G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetSiPMYCmd ){
-    Detector->SetSiPMY( G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetSiPMRimCmd ){
-    Detector->SetSiPMRim( G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetSiPMStandCmd ){
-    Detector->SetSiPMStand(
-      G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetPCBRadiusCmd ){
-    Detector->SetPCBRadius(
-      G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetPCBReflectCmd ){
-    Detector->SetSiPMReflect( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
-  } else if( command == SetTileAbsMultCmd ){
+  }
+  //else if( command == SetSiPMXCmd ){
+  //  Detector->SetSiPMX( G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //} else if( command == SetSiPMYCmd ){
+  //  Detector->SetSiPMY( G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //} else if( command == SetSiPMRimCmd ){
+  //  Detector->SetSiPMRim( G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //} else if( command == SetSiPMStandCmd ){
+  //  Detector->SetSiPMStand(
+  //    G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //} else if( command == SetPCBRadiusCmd ){
+  //  Detector->SetPCBRadius(
+  //    G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //} else if( command == SetPCBReflectCmd ){
+  //  Detector->SetSiPMReflect( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
+  //} 
+  else if( command == SetTileAbsMultCmd ){
     Detector->SetTileAbsMult( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
   } else if( command == SetWrapReflectCmd ){
     Detector->SetWrapReflect( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
   } else if( command == SetTileAlphaCmd ){
     Detector->SetTileAlpha( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
-  } else if( command == SetDimpleAlphaCmd ){
-    Detector->SetDimpleAlpha( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
-  } else if( command == SetDimpleIndentCmd ){
-    Detector->SetDimpleIndent(
-      G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetDimpleRadiusCmd ){
-    Detector->SetDimpleRadius(
-      G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
-  } else if( command == SetDimpleTypeCmd ){
-    if( val == "Spherical" ){
-      Detector->SetDimpleType( LYSimDetectorConstruction::SPHERICAL );
-    } else if( val == "FlatDome" ){
-      Detector->SetDimpleType( LYSimDetectorConstruction::FLAT_DOME );
-    } else if( val == "Cylindrical" ){
-      Detector->SetDimpleType( LYSimDetectorConstruction::CYLINDRICAL );
-    } else if( val == "Ellipsoid" ){
-      Detector->SetDimpleType( LYSimDetectorConstruction::ELLIPSOID );
-    }
   }
+  //else if( command == SetDimpleAlphaCmd ){
+  //  Detector->SetDimpleAlpha( G4UIcmdWithADouble::GetNewDoubleValue( val ) );
+  //} else if( command == SetDimpleIndentCmd ){
+  //  Detector->SetDimpleIndent(
+  //    G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //} else if( command == SetDimpleRadiusCmd ){
+  //  Detector->SetDimpleRadius(
+  //    G4UIcmdWithADoubleAndUnit::GetNewDoubleValue( val ) );
+  //}
+  //else if( command == SetDimpleTypeCmd ){
+  //  if( val == "Spherical" ){
+  //    Detector->SetDimpleType( LYSimDetectorConstruction::SPHERICAL );
+  //  } else if( val == "FlatDome" ){
+  //    Detector->SetDimpleType( LYSimDetectorConstruction::FLAT_DOME );
+  //  } else if( val == "Cylindrical" ){
+  //    Detector->SetDimpleType( LYSimDetectorConstruction::CYLINDRICAL );
+  //  } else if( val == "Ellipsoid" ){
+  //    Detector->SetDimpleType( LYSimDetectorConstruction::ELLIPSOID );
+  //  }
+  //}
 }

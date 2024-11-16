@@ -141,7 +141,7 @@ Make_EJ200()
 
   return material;
 }
-void Update_Y11_timeconstant(G4Material* material, const double mult)
+void Update_fiber_timeconstant(G4Material* material, const double mult)
 {
   G4MaterialPropertiesTable *tabler = material->GetMaterialPropertiesTable();
   tabler->RemoveConstProperty("WLSTIMECONSTANT");
