@@ -103,9 +103,25 @@ LYSimSteppingAction::UserSteppingAction( const G4Step* step )
   if(theTrack){ 
       G4ParticleDefinition *particleType = theTrack->GetDefinition();
       if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() ){
+
+        if (theTrack->GetCurrentStepNumber()==1 ){
+          if(thePrePVName.contains("PhyhWLSfiber_core")){
+              //std::cout<<"touch hole -->"<<thePrePoint->GetPosition().x()<<", "<<thePrePoint->GetPosition().y()<<", "<<thePrePoint->GetPosition().z()<<std::endl;
+              LYSimAnalysis::GetInstance()->addwlsphoton(thePrePoint->GetPosition().z() / mm);
+              //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
+              //std::cout<<"generate a wls from "<<theTrack->GetCreatorProcess()->GetProcessName()<<std::endl;
+              //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
+          }else{
+              LYSimAnalysis::GetInstance()->addgenphoton();
+          }
+        }
+
          if(thePostPVName.contains("physSiPM_chan") && !thePostPVName.contains("case")){
              theTrack->SetTrackStatus(fKillTrackAndSecondaries);
          }
+         //if(thePostPVName.contains("TileBulkPhysic")){
+         //    theTrack->SetTrackStatus(fKillTrackAndSecondaries);
+         //}         
       }
   }
           //if(theTrack->GetCurrentStepNumber()==1 && thePrePVName.contains("TileBulkPhysic")) {
@@ -139,20 +155,7 @@ LYSimSteppingAction::UserSteppingAction( const G4Step* step )
               //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
           //}
       //}
-     /*
-      if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() && theTrack->GetCurrentStepNumber()==1 ){
-      //if (particleType == G4OpticalPhoton::OpticalPhotonDefinition() ){
-          if(thePrePVName.contains("PhyhWLSfiber_core")){
-          //if(thePostPVName.contains("Hole")){
-              //std::cout<<"touch hole -->"<<thePrePoint->GetPosition().x()<<", "<<thePrePoint->GetPosition().y()<<", "<<thePrePoint->GetPosition().z()<<std::endl;
-              //LYSimAnalysis::GetInstance()->addwlsphoton(thePrePoint->GetPosition().z() / mm);
-              //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
-              //std::cout<<"generate a wls from "<<theTrack->GetCreatorProcess()->GetProcessName()<<std::endl;
-              //theTrack->SetTrackStatus(fKillTrackAndSecondaries);
-          }else{
-              LYSimAnalysis::GetInstance()->addgenphoton();
-          }
-      }*/
+     
   //}
 
 
