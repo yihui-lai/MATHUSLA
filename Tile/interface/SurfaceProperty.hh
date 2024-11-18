@@ -16,7 +16,7 @@ extern G4OpticalSurface* MakeS_IdealWhiteSurface();
 extern G4OpticalSurface* MakeS_Absorbing();
 extern G4OpticalSurface* MakeS_NoAbsorbing();
 extern G4OpticalSurface* MakeS_RoughMirror();
-extern G4OpticalSurface* MakeS_RoughInterface( double );
+extern G4OpticalSurface* MakeS_RoughInterface( );
 extern G4OpticalSurface* MakeS_SiPM();
 extern G4OpticalSurface* MakeS_PCBSurface();
 extern G4OpticalSurface* MakeS_AirAir();
@@ -24,6 +24,7 @@ extern G4OpticalSurface* MakeS_AirAir();
 //wls
 
 extern G4OpticalSurface* MakeS_TiO2Surface();
+extern G4OpticalSurface* MakeS_specularlobeSurface();
 
 
 #endif

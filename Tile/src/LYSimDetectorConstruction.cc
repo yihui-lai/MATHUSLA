@@ -120,12 +120,13 @@ LYSimDetectorConstruction::LYSimDetectorConstruction()
 
   //surface
   _tile_alpha   = 0.01;
-  fTileBulkSurface        = MakeS_RoughInterface( _tile_alpha );
+  fTileBulkSurface        = MakeS_RoughInterface();
   fSiPMSurface3            = MakeS_SiPM();
   fSiPMSurface4            = MakeS_SiPM();
   fTiO2Surface = MakeS_TiO2Surface();   // Extrusion (TiO2 Coating) Surface
   fwrapperendSurface = MakeS_Absorbing();
-  fESROpSurface           = MakeS_RoughMirror();
+  //fESROpSurface           = MakeS_RoughMirror();
+  fESROpSurface           = MakeS_specularlobeSurface();
 
 }
 
@@ -184,7 +185,11 @@ LYSimDetectorConstruction::Construct()
   if(verbose>10) std::cout<<"---> hole shape set to be "<<_holeshape<<" radius is "<<_hole_radius << std::endl;
   
   G4VSolid* solidTile = ConstructTrapazoidSolid( "TileTrap", _tilex, _tiley, _tilez, _tile_x1, _tile_x2 );
+  if(verbose>10) std::cout<<"---> Tile size:  "<< _tilex<<" "<< _tiley<<" "<< _tilez << std::endl;
+
   G4VSolid* tileBulk1 = new G4SubtractionSolid( "TileSolid_Bulk", solidTile, solidHoleBound, 0, G4ThreeVector( _hole_x1, 0, 0 ) );
+  if(verbose>10) std::cout<<"---> hole x1:  "<< _hole_x1 <<" x2: "<< _hole_x2<< std::endl;
+
   if(_hole_x1!=_hole_x2){
     G4VSolid* tileBulk = new G4SubtractionSolid( "TileSolid_Bulk", tileBulk1, solidHoleBound, 0, G4ThreeVector( _hole_x2, 0, 0 ) );
     logicTileBulk = new G4LogicalVolume( tileBulk, fEJ200, "TileBulkLogic" );
@@ -197,6 +202,7 @@ LYSimDetectorConstruction::Construct()
 
   // wrapper or clad, nothing at both ends
   G4LogicalVolume* logicWrap;
+  if(verbose>10) std::cout<<"---> wrapper_type "<<_wrapper_type<< std::endl;
   if(_wrapper_type==0){
     // Cladded, no air gap between scnitillator and wrapper
     G4VSolid* solidExtrusion = ConstructHollowWrapCladSolid();
@@ -210,13 +216,11 @@ LYSimDetectorConstruction::Construct()
                                                  , 0
                                                  , checkOverlaps );
     G4LogicalBorderSurface* WrapSurface1 = new G4LogicalBorderSurface( "WrapSurface1", physTileBulk, physWrap, fTiO2Surface );
-    //G4LogicalSkinSurface* WrapSurface = new G4LogicalSkinSurface( "WrapSurface", logicWrap, fTiO2Surface ); // Set wrapper surface to be TiO2
-
-    //G4LogicalBorderSurface* WrapSurface2 = new G4LogicalBorderSurface( "WrapSurface2", physWrap, physTileBulk, fTiO2Surface );
 
   }else if(_wrapper_type==1){
     // Hand wrap, a thin air gap between scnitillator and wrapper
-    G4VSolid* solidExtrusion = ConstructHollowWrapSolid();
+    //G4VSolid* solidExtrusion = ConstructHollowWrapSolid();
+    G4VSolid* solidExtrusion = ConstructHollowWrapCladSolid();
     logicWrap = new G4LogicalVolume(solidExtrusion, fEpoxy, "Extrusion");
     G4VPhysicalVolume* physWrap = new G4PVPlacement( 0
                                                  , G4ThreeVector( 0, 0, 0 )
@@ -226,7 +230,8 @@ LYSimDetectorConstruction::Construct()
                                                  , false
                                                  , 0
                                                  , checkOverlaps );
-    G4LogicalSkinSurface* WrapSurface = new G4LogicalSkinSurface( "WrapSurface" , logicWrap, fESROpSurface ); // Set wrapper surface to be ESR
+    G4LogicalBorderSurface* WrapSurface1 = new G4LogicalBorderSurface( "WrapSurface1", physTileBulk, physWrap, fESROpSurface );
+    //G4LogicalSkinSurface* WrapSurface = new G4LogicalSkinSurface( "WrapSurface" , logicWrap, fESROpSurface ); // Set wrapper surface to be ESR
   }else if(_wrapper_type==2){
     // Cladded, no air gap between scnitillator and wrapper
     G4VSolid* solidExtrusion = ConstructHollowWrapCladSolid();
@@ -341,14 +346,6 @@ LYSimDetectorConstruction::Construct()
   table_out->AddProperty( "EFFICIENCY",          phoE, efficiency,  nentries );
   surface_IdealnonPolished_out->SetMaterialPropertiesTable( table_out );
 
-/*
-  G4OpticalSurface* opSurfaceexample = new G4OpticalSurface("RoughSurface",          // Surface Name
-                                      glisur,                  // SetModel
-                                      ground,                  // SetFinish
-                                      dielectric_dielectric,   // SetType
-                                      0.2);      // SetPolish
-*/
-
   // reasonable cladding for the outer layer
   if(_cladlayer==2){
         G4VPhysicalVolume* physWLSfiber_clad2 = new G4PVPlacement( 0, G4ThreeVector(_hole_x1+_WLS_xoff, 0, -_WLS_zoff) , logicWLSfiber_clad2 , "PhyhWLSfiber_cald2", logicWorld, false, 0, checkOverlaps );
@@ -403,19 +400,10 @@ LYSimDetectorConstruction::Construct()
   G4VPhysicalVolume* physSiPM_chan3case = new G4PVPlacement( 0, SiPMOffset_chan3, logicSiPMcase, "physSiPM_chan3case", logicWorld, false, 0, checkOverlaps );
   G4VPhysicalVolume* physSiPM_chan4case = new G4PVPlacement( 0, SiPMOffset_chan4, logicSiPMcase, "physSiPM_chan4case", logicWorld, false, 0, checkOverlaps );
 
-
-
   // Defining surfaces
   // SiPM surface
   new G4LogicalSkinSurface( "SiPMSurface", logicSiPM, fSiPMSurface3 );
-  //G4OpticalSurface* FiberEndSurface = new G4OpticalSurface("FiberEndSurface",unified,ground,dielectric_dielectric,0.02);
   new G4LogicalSkinSurface( "SiPMSurfacecase", logicSiPMcase, MakeS_Mirror() );
-  /*
-  new G4LogicalBorderSurface("SiPMSurface3_out", physWLSfiber, physSiPM_chan3, fSiPMSurface3);
-  new G4LogicalBorderSurface("SiPMSurface4_out", physWLSfiber, physSiPM_chan4, fSiPMSurface4);
-  new G4LogicalBorderSurface("SiPMSurface3_in", physSiPM_chan3,physWLSfiber, fSiPMSurface3);
-  new G4LogicalBorderSurface("SiPMSurface4_in", physSiPM_chan4,physWLSfiber, fSiPMSurface4);
-  */
 
   // Setting the sensitive detector
   if( !fPMTSD ){
@@ -717,6 +705,7 @@ LYSimDetectorConstruction::SetTileAlpha( const double a )
 {
   //fTileBulkSurface->SetSigmaAlpha( a );
   fTiO2Surface->SetSigmaAlpha( a*CLHEP::deg );
+  fESROpSurface->SetSigmaAlpha( a*CLHEP::deg );
   //fTileBulkSurface-> SetPolish(0.0);
   //fTiO2Surface-> SetPolish(0.0);
   _tile_alpha = a;

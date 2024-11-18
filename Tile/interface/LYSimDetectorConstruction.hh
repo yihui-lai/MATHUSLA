@@ -113,7 +113,11 @@ public:
   inline double
   GetHoleX2() const { return _hole_x2; }
   void
-  SetFiberR( const double x ){ _WLSfiberR = x*CLHEP::mm; }//SetHoleRadius((_WLSfiberR+_WLSfiber_clad_thick+_WLSfiber_clad2_thick)*1.01); }
+  SetFiberR( const double x ){ 
+      _WLSfiberR = x*CLHEP::mm; 
+      _WLSfiber_clad_thick = 0.04*_WLSfiberR;
+      _WLSfiber_clad2_thick = 0.04*_WLSfiberR ;
+  }
   inline double
   GetFiberR() const { return _WLSfiberR; }
   void SetFiberClad(const unsigned x){ _cladlayer = x; } 
